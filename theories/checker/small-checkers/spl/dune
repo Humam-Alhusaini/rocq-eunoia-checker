@@ -1,6 +1,6 @@
 (rocq.theory
  (generate_project_file)
- (package rocq-smtcoq)
+ (package rocq-eunoia-checker)
  (name SMTCoq.checker.small_checker.spl)
  (theories
   Stdlib

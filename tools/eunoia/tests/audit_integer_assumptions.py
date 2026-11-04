@@ -2,6 +2,7 @@
 """Audit named computation examples and their new runtime/query entry points."""
 from pathlib import Path
 import json
+import os
 import re
 import subprocess
 import sys
@@ -24,7 +25,7 @@ source = ['From Stdlib Require Import String.',
 for name in names:
     source += [f'Eval compute in "audit:{name}".', f'Print Assumptions {name}.']
 (artifacts / 'IntegerAssumptionAudit.v').write_text('\n'.join(source) + '\n')
-command = ['/home/charles/code/friends/.toolchains/smtrocq-env', 'rocq', 'compile',
+command = [os.environ.get('EUNOIA_ENV', str(root / 'tools/rocq-env')), 'rocq', 'compile',
            '-q', '-Q', '.', 'SMTCoq.checker.eunoia', 'IntegerAssumptionAudit.v']
 proc = subprocess.run(command, cwd=artifacts, text=True, capture_output=True)
 output = proc.stdout + proc.stderr

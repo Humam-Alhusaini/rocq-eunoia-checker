@@ -1,0 +1,22 @@
+name: Standalone checker
+on: [push, pull_request, workflow_dispatch]
+permissions:
+  contents: read
+jobs:
+  checker:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build and test without SMTCoq plugin or external solvers
+        run: |
+          docker run --rm --user "$(id -u):$(id -g)" \
+            --mount "type=bind,src=$PWD,dst=/work" -w /work \
+            --entrypoint /bin/bash \
+            ghcr.io/rocq-trakt/rocq@sha256:21d9edc7a97aabe15577ae442854c2a03cc81097ff7b5fa899d8d6fe62d05c68 \
+            -lc 'make build && make test && python3 -B tools/check-assumptions.py --output /tmp/eunoia-assumptions && python3 -B benchmarks/run.py --output results/semantic --repeats 2 --rounds 1 --skip-build'
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: standalone-checker-benchmark
+          path: results/

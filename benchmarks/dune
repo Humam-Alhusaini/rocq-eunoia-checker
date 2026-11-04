@@ -1,0 +1,5 @@
+(rule
+ (alias runtest)
+ (deps run.py report.py cases.json test_bench.py
+  (source_tree ../theories/checker/eunoia))
+ (action (run python3 -B -m unittest discover -s . -p test_*.py -v)))

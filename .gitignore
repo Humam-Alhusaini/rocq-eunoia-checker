@@ -1,0 +1,6 @@
+_build/
+*.install
+_RocqProject
+__pycache__/
+*.pyc
+results/

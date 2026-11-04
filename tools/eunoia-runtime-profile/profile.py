@@ -23,7 +23,7 @@ sys.path.insert(0, str(ROOT / "tools/eunoia"))
 from replay_fixtures import decode, generate
 from compile import atom, parse, seq
 
-ENV = Path("/home/charles/code/friends/.toolchains/smtrocq-env")
+ENV = Path(os.environ.get("EUNOIA_ENV", ROOT / "tools/rocq-env"))
 MODULES = ("EoSyntax", "EoRuntime", "EoArithmetic", "EoOrder", "CpcGenerated",
            "TraceReplay", "LiaTraceReplay")
 
@@ -68,7 +68,7 @@ def timings(log, repeats):
         if line.startswith("PROFILE "):
             _, name, phase = line.split()
             label = (name, phase)
-        match = re.match(r"Finished transaction in ([\d.]+) secs \(([\d.]+)u,([\d.]+)s\)", line)
+        match = re.match(r"(?:Finished|Completed)(?: (?:successfully|failing))? transaction in ([\d.]+) secs \(([\d.]+)u,([\d.]+)s\)", line)
         if match and label:
             wall, user, system = map(float, match.groups())
             rows.append(dict(fixture=label[0].removesuffix("_all_steps"), phase=label[1],

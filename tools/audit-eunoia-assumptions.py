@@ -46,7 +46,7 @@ def main():
     root = Path(__file__).resolve().parent.parent
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--env", type=Path, default=Path(
-        "/home/charles/code/friends/.toolchains/smtrocq-env"))
+        root / "tools/rocq-env"))
     parser.add_argument("--import", dest="imports", type=identifier, action="append", required=True)
     parser.add_argument("--theorem", type=identifier, action="append", required=True)
     parser.add_argument("--baseline", type=Path,

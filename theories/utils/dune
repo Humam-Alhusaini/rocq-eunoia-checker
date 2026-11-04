@@ -1,5 +1,5 @@
 (rocq.theory
  (generate_project_file)
- (package rocq-smtcoq)
+ (package rocq-eunoia-checker)
  (name SMTCoq.utils)
  (theories Stdlib Ltac2))

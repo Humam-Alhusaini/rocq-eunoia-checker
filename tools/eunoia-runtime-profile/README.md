@@ -2,10 +2,11 @@
 
 `profile.py` measures the existing Rocq fixture replays, without invoking a
 solver or changing their inputs. Run from any directory through Python 3;
-Rocq always uses the private `smtrocq-env` wrapper. No dependencies are installed.
+Rocq uses the current PATH via `tools/rocq-env`, or the wrapper selected by
+`EUNOIA_ENV`. No dependencies are installed.
 
 ```sh
-git show c79eeba:theories/checker/eunoia/EoRuntime.v > /tmp/EoRuntime-before-sharing.v
+# Supply a candidate runtime at /tmp/EoRuntime-before-sharing.v for comparison.
 PYTHONDONTWRITEBYTECODE=1 python3 tools/eunoia-runtime-profile/profile.py \
   --runtime /tmp/EoRuntime-before-sharing.v \
   --output /tmp/runtime-before --repeats 10 --rounds 3
@@ -64,7 +65,5 @@ recursive kernel checking.
 These replays test generated computation, **not the external semantic gate**.
 Production still needs generated evaluation and the existing verified semantic
 gate on every main step. This tool does not measure witness search, marshaling,
-solver time, or whole public-tactic latency. See
-[`runtime-performance.md`](../../docs/eunoia/runtime-performance.md) for results
-and limits. No shared Dune/test registration is changed; run these commands
-explicitly when reviewing this optimization.
+solver time, or whole public-tactic latency. See the repository README for
+the separate semantic certificate benchmark and interpretation limits.

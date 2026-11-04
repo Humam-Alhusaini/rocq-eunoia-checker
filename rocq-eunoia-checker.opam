@@ -1,0 +1,9 @@
+opam-version: "2.0"
+synopsis: "Signature-generated Eunoia checking and standalone Rocq benchmarks"
+maintainer: "Humam Alhusaini"
+authors: ["SMTCoq and SMTRocq contributors"]
+license: "CECILL-C"
+homepage: "https://github.com/Humam-Alhusaini/rocq-eunoia-checker"
+bug-reports: "https://github.com/Humam-Alhusaini/rocq-eunoia-checker/issues"
+depends: ["dune" {>= "3.21"} "rocq-core" {>= "9.2"} "rocq-stdlib" "conf-python-3" {with-test}]
+build: [["dune" "build" "-p" name "-j" jobs] ["dune" "runtest" "-p" name "-j" jobs] {with-test}]
