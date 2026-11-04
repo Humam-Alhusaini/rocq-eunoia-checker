@@ -74,3 +74,19 @@ matched experiment found helper mining slower overall and left it optional.
 
 [Exact component timings and source hashes](helper-cache-component-2026-11-04.json)
 retain this sample separately from the older semantic/source measurements.
+
+## Indexed evaluator synchronization
+
+The next synchronized snapshot tracks upstream
+`f8f7b360f1cf1e44f7e04ca0b3cd765c05cab145`: all 99 proof/signature files
+match their recorded upstream hashes. It adds the optional, proved program-name
+trie and exact indexed-evaluator refinements. `make build`, `make test`, and the
+64-target assumption audit passed, including all 32 indexed CPC captures.
+The isolated profiler additionally compiled fresh `uf1` and `lia1` replays
+with `--interpreter indexed --repeats 1 --rounds 1` and independently checked
+their kernels. These concurrent smoke timings are not performance claims.
+
+The main tactic's matched indexed experiment found a slowdown and kept this
+option disabled. This synchronization provides a separately measurable checker
+implementation; it does not assert an end-to-end improvement. The older helper
+component report above remains tied to its own `f9a50f3` checkpoint.

@@ -39,10 +39,15 @@ def fixtures():
         (p, True) for p in sorted((base / "reduced-fixtures").glob("*.cpc"))]
 
 
-def source(paths, repeats):
+def source(paths, repeats, interpreter="reference"):
     parts = []
+    if interpreter == "indexed":
+        parts.append('From SMTCoq.checker.eunoia Require Import EoSyntax EoRuntime TraceReplay LiaTraceReplay CpcIndexed.\nDefinition indexed_final query roots steps goal :=\n match replay_with derive_indexed query roots steps with Some env=>lookup goal env|None=>None end.\nDefinition indexed_trace_final := trace_final_with derive_indexed derive_assuming_indexed.\n')
     for path, scoped in paths:
         code = generate([path], scoped=scoped)
+        if interpreter == "indexed":
+            code = code.replace(" : trace_final ", " : indexed_trace_final ")
+            code = code.replace(" : final_term ", " : indexed_final ")
         # Time repeated evaluation while the goal remains unchanged. Each VM
         # invocation computes the complete replay and compares the actual result.
         # Then separately time proof-producing reduction and kernel Qed checking.
@@ -81,6 +86,7 @@ def timings(log, repeats):
 def main():
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--output", required=True, type=Path, help="new artifact directory outside the checkout")
+    ap.add_argument("--interpreter", choices=("reference", "indexed"), default="reference")
     ap.add_argument("--runtime", type=Path, default=ROOT / "theories/checker/eunoia/EoRuntime.v")
     ap.add_argument("--repeats", type=int, default=20)
     ap.add_argument("--rounds", type=int, default=3)
@@ -101,7 +107,7 @@ def main():
         paths = [(p, s) for p, s in paths if p.stem in args.fixture]
     out.mkdir(parents=True)
     summary = dict(command=sys.argv, root=str(ROOT), runtime=str(args.runtime.resolve()),
-                   repeats=args.repeats, rounds=args.rounds, timeout_s=args.timeout,
+                   interpreter=args.interpreter, repeats=args.repeats, rounds=args.rounds, timeout_s=args.timeout,
                    git_head=subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=ROOT, text=True).strip(),
                    git_status=subprocess.check_output(["git", "status", "--short"], cwd=ROOT, text=True),
                    platform=platform.platform(), cpu_count=os.cpu_count(),
@@ -131,7 +137,11 @@ def main():
 
     try:
         run([ENV, "rocq", "--version"], "version")
-        for module in MODULES:
+        modules = MODULES if args.interpreter == "reference" else (
+            "EoSyntax", "EoRuntime", "EoArithmetic", "EoOrder", "CpcGenerated",
+            "EoCheckedMemo", "EoRuleMemo", "EoNameIndex", "EoIndexed", "CpcIndexed",
+            "TraceReplay", "LiaTraceReplay")
+        for module in modules:
             if module == "EoRuntime":
                 path = args.runtime
             elif module in ("TraceReplay", "LiaTraceReplay"):
@@ -157,13 +167,13 @@ def main():
                 raise RuntimeError("refinement lemmas are not closed under the global context")
             run([ENV, "rocq", "check", "-silent", "-Q", ".", "SMTCoq.checker.eunoia",
                  "SMTCoq.checker.eunoia.SurfaceOutRefinement"], "SurfaceOutRefinement-kernel")
-        workload = source(paths, args.repeats)
+        workload = source(paths, args.repeats, args.interpreter)
         for round_number in range(args.rounds):
             # Reverse fixture order on alternating rounds to expose order effects.
             if round_number % 2:
-                workload = source(list(reversed(paths)), args.repeats)
+                workload = source(list(reversed(paths)), args.repeats, args.interpreter)
             else:
-                workload = source(paths, args.repeats)
+                workload = source(paths, args.repeats, args.interpreter)
             module = f"Profile{round_number}"
             (out / f"{module}.v").write_text(workload)
             log = run([ENV, "rocq", "compile", "-q", "-Q", ".", "SMTCoq.checker.eunoia", f"{module}.v"], module)

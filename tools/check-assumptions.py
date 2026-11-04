@@ -22,6 +22,9 @@ def main():
     for index in range(0, len(flags), 3):
         command += ["--loadpath", flags[index + 1], flags[index + 2]]
     for module, theorems in {
+        "EunoiaProgramIndex": ["checker_refinement", "checker_correct", "checker_b_correct", "checker_eq_correct"],
+        "EoNameIndex": ["lookup_insert", "lookup_from_list"],
+        "EoIndexed": ["evaluate_indexed_refinement", "run_rule_refinement", "run_surface_refinement"],
         "EunoiaHelperCache": ["checker_refinement", "checker_correct", "checker_b_correct", "checker_eq_correct"],
         "EoCheckedMemo": ["key_eqb_equivalence", "evaluate_cached_refinement", "validate_entries_sound", "checked_evaluate_correct"],
         "EoRuleMemo": ["run_rule_cached_refinement", "run_surface_cached_refinement"],
@@ -44,6 +47,11 @@ def main():
     module = "SMTCoq.checker.eunoia.CpcMemo"
     command += ["--import", module]
     for theorem in ("validate_context_sound", "derive_context_cached_refinement", "derive_checked_correct"):
+        command += ["--theorem", module + "." + theorem]
+    module = "SMTCoq.checker.eunoia.CpcIndexed"
+    command += ["--import", module]
+    for theorem in ("program_lookup_correct", "derive_context_with_index_refinement",
+                    "derive_indexed_refinement", "derive_assuming_indexed_refinement"):
         command += ["--theorem", module + "." + theorem]
     subprocess.run(command, cwd=ROOT, check=True)
 

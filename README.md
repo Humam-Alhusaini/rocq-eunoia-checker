@@ -4,17 +4,20 @@ A standalone extraction of SMTRocq's signature-generated Eunoia/CPC checker,
 with benchmarks that do not invoke an SMT solver, the SMTCoq tactic, or native
 certificate search. Extracted from [SMTRocq PR #2](https://github.com/Humam-Alhusaini/SMTRocq/pull/2)
 initially at `0613ce2b18315b811ed8d19b9a7820e206ffec0f`, now synchronized with
-core `46c954b8c07dcc71c8bdacf6516656c104aeeda6`.
+core `f8f7b360f1cf1e44f7e04ca0b3cd765c05cab145`.
 
 The repository includes the generated rule interpreter, strict CPC reader,
 checked trace/scoping machinery, semantic certificate gates, proofs, fixtures,
-signature compiler, and required SMTCoq theory sources. All 93 current Rocq proof and Eunoia signature files match that upstream
+signature compiler, and required SMTCoq theory sources. All 99 current Rocq proof and Eunoia signature files match that upstream
 checkpoint byte for byte. Their hashes are in
 [provenance/upstream.json](provenance/upstream.json); the original extraction
 record remains in [provenance/extraction-0613ce2b.json](provenance/extraction-0613ce2b.json).
 The initial 115 relevant commits
 retain their authorship, with rewritten commit IDs mapped in
 [provenance/commit-map.tsv](provenance/commit-map.tsv).
+
+The verified signature-program index is also included and tested against the
+reference evaluator; it remains an experimental tactic path upstream.
 
 The generic checked-helper cache and its reference-refinement proofs are included;
 its collection and validation tests use captured CPC data, with no solver invocation.
@@ -87,7 +90,10 @@ python3 -B tools/eunoia-runtime-profile/profile.py \
 This replays 29 original/reduced UF/LIA solver captures through generated source
 computation, retaining hashes, step counts, timings, assumption checks and kernel
 checks. It is **not semantic proof acceptance**: its test type queries and roots
-are computation inputs. Integer-cast capture regressions additionally run in
+are computation inputs. `--interpreter indexed` selects the proved program-name index on the same
+captured computation workload; the default remains `reference`. This source
+comparison is separate from full tactic performance.
+Integer-cast capture regressions additionally run in
 `make test`; the profiler's default 29-capture corpus excludes those three.
 
 The optional checked-helper sharing component has a separate runner:
