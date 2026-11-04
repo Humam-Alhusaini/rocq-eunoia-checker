@@ -68,7 +68,7 @@ def timings(log, repeats):
         if line.startswith("PROFILE "):
             _, name, phase = line.split()
             label = (name, phase)
-        match = re.match(r"(?:Finished|Completed)(?: (?:successfully|failing))? transaction in ([\d.]+) secs \(([\d.]+)u,([\d.]+)s\)", line)
+        match = re.match(r"Finished transaction in ([\d.]+) secs \(([\d.]+)u,([\d.]+)s\)", line)
         if match and label:
             wall, user, system = map(float, match.groups())
             rows.append(dict(fixture=label[0].removesuffix("_all_steps"), phase=label[1],

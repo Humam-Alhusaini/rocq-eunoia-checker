@@ -3,13 +3,16 @@
 A standalone extraction of SMTRocq's signature-generated Eunoia/CPC checker,
 with benchmarks that do not invoke an SMT solver, the SMTCoq tactic, or native
 certificate search. Extracted from [SMTRocq PR #2](https://github.com/Humam-Alhusaini/SMTRocq/pull/2)
-at `0613ce2b18315b811ed8d19b9a7820e206ffec0f`.
+initially at `0613ce2b18315b811ed8d19b9a7820e206ffec0f`, now synchronized with
+validated core `8a5c14b65aa55e2dfa374169dadca329282ddad4`.
 
 The repository includes the generated rule interpreter, strict CPC reader,
 checked trace/scoping machinery, semantic certificate gates, proofs, fixtures,
-signature compiler, and required SMTCoq theory sources. All 80 extracted Rocq
-proof and Eunoia signature files retain their original bytes. Their hashes are
-in [provenance/upstream.json](provenance/upstream.json); 115 relevant commits
+signature compiler, and required SMTCoq theory sources. All 85 current Rocq proof and Eunoia signature files match that upstream
+checkpoint byte for byte. Their hashes are in
+[provenance/upstream.json](provenance/upstream.json); the original extraction
+record remains in [provenance/extraction-0613ce2b.json](provenance/extraction-0613ce2b.json).
+The initial 115 relevant commits
 retain their authorship, with rewritten commit IDs mapped in
 [provenance/commit-map.tsv](provenance/commit-map.tsv).
 
@@ -29,9 +32,9 @@ make test
 python3 -B tools/check-assumptions.py --output /tmp/eunoia-assumptions
 ```
 
-The generator follows the pinned signature's include graph: 51 selected rules
-and 53 helpers; 558 other rules reject. Tests cover deterministic regeneration,
-47 compiler tests, 111 reader cases, positive and corrupted certificates,
+The generator follows the pinned signature's include graph: 87 selected rules
+and 59 helpers; 522 other rules reject. Tests cover deterministic regeneration,
+48 compiler tests, 111 reader cases, positive and corrupted certificates,
 scope/liveness controls, captured proof replays, and independent kernel checks.
 `make test` includes the full generated-runtime validation; its outputs remain
 in temporary directories. Set `EUNOIA_KEEP_TEST_DIR=1` to retain them.
