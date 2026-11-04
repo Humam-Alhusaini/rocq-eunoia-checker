@@ -119,3 +119,30 @@ rejections but was slower overall: 39.226 s specialized versus 33.420 s
 reference over two seven-case rounds per path. The specialization remains off
 by default upstream. The independent profiler exposes it for measurement; its
 helper-loop gains are not a full-tactic speedup.
+
+## Direct helper compilation synchronization
+
+This snapshot tracks upstream `67cc9a31a069f1ad8a0b8cb3a4cd70e031fe3c75`.
+All 116 proof/signature files match their recorded upstream hashes. The
+signature compiler emits 58 guarded helpers plus one proved reference fallback
+under its case-count resource policy, with flat, scoped and shared checker
+adapters. Rule coverage remains 87 selected rules and 59 helpers.
+
+The build and regression suite passed. The complete assumption audit explicitly
+includes the 31 new direct-runtime targets and passed all **110 targets**. An
+initial 79-target report omitted that new selection and is not used as complete
+validation of this snapshot. All 32 captured source traces replay through the
+direct evaluator, and fresh `uf1`/`lia1` profiler proofs passed independent
+kernel checking with `--interpreter direct --repeats 1 --rounds 1`.
+
+The repeated-rule runner is separate from both captured-source and complete
+semantic-checker benchmarks. It includes typing, surface conversion, evaluation,
+and separately reported `Qed`; it invokes no solver or native certificate
+search. Concurrent smoke measurements are validation diagnostics only, not
+published performance comparisons.
+
+Both new entry points passed their smoke checks with fresh artifacts: the
+actual-trace profiler produced eight timing rows and passed its kernel check;
+the complete repeated-rule runner produced all eight VM/`Qed` rows for one
+round, four closed proofs, and an independent kernel check. These checks ran
+alongside other validation, so their timings are retained only as diagnostics.

@@ -4,11 +4,11 @@ A standalone extraction of SMTRocq's signature-generated Eunoia/CPC checker,
 with benchmarks that do not invoke an SMT solver, the SMTCoq tactic, or native
 certificate search. Extracted from [SMTRocq PR #2](https://github.com/Humam-Alhusaini/SMTRocq/pull/2)
 initially at `0613ce2b18315b811ed8d19b9a7820e206ffec0f`, now synchronized with
-core `f1ef28e1fd1a0faa88fe712307fea66db228c43b`.
+core `67cc9a31a069f1ad8a0b8cb3a4cd70e031fe3c75`.
 
 The repository includes the generated rule interpreter, strict CPC reader,
 checked trace/scoping machinery, semantic certificate gates, proofs, fixtures,
-signature compiler, and required SMTCoq theory sources. All 107 current Rocq proof and Eunoia signature files match that upstream
+signature compiler, and required SMTCoq theory sources. All 116 current Rocq proof and Eunoia signature files match that upstream
 checkpoint byte for byte. Their hashes are in
 [provenance/upstream.json](provenance/upstream.json); the original extraction
 record remains in [provenance/extraction-0613ce2b.json](provenance/extraction-0613ce2b.json).
@@ -163,3 +163,20 @@ describe the original SMTRocq environment; use the commands above for this repo.
 The signature-specialized helper evaluator is included with exact computation
 refinement proofs and all 32 captured source replays. See upstream measurements
 before interpreting component timings as tactic improvements.
+
+Direct signature compilation is included with proved reference fallbacks and
+flat, scoped, and shared checker adapters. Its source profiler and repeated-rule
+runner are separate from tactic measurements.
+
+For the repeated complete source-rule diagnostic:
+
+```sh
+python3 benchmarks/direct_helpers.py --output /tmp/eunoia-direct-rules --rounds 3
+```
+
+It alternates ordering between fresh rounds, compares reference and direct
+execution at 1,000 and 3,000 calls, and records VM and `Qed` separately. Every
+round requires closed proofs and an independent kernel check. These are source
+computation costs, separate from the complete semantic checker and tactic.
+Use `--interpreter direct` in the actual-trace source profiler for captured CPC
+workloads instead of repeated copies of one rule input.
