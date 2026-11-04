@@ -4,17 +4,20 @@ A standalone extraction of SMTRocq's signature-generated Eunoia/CPC checker,
 with benchmarks that do not invoke an SMT solver, the SMTCoq tactic, or native
 certificate search. Extracted from [SMTRocq PR #2](https://github.com/Humam-Alhusaini/SMTRocq/pull/2)
 initially at `0613ce2b18315b811ed8d19b9a7820e206ffec0f`, now synchronized with
-validated core `8a5c14b65aa55e2dfa374169dadca329282ddad4`.
+core `46c954b8c07dcc71c8bdacf6516656c104aeeda6`.
 
 The repository includes the generated rule interpreter, strict CPC reader,
 checked trace/scoping machinery, semantic certificate gates, proofs, fixtures,
-signature compiler, and required SMTCoq theory sources. All 85 current Rocq proof and Eunoia signature files match that upstream
+signature compiler, and required SMTCoq theory sources. All 93 current Rocq proof and Eunoia signature files match that upstream
 checkpoint byte for byte. Their hashes are in
 [provenance/upstream.json](provenance/upstream.json); the original extraction
 record remains in [provenance/extraction-0613ce2b.json](provenance/extraction-0613ce2b.json).
 The initial 115 relevant commits
 retain their authorship, with rewritten commit IDs mapped in
 [provenance/commit-map.tsv](provenance/commit-map.tsv).
+
+The generic checked-helper cache and its reference-refinement proofs are included;
+its collection and validation tests use captured CPC data, with no solver invocation.
 
 ## Build and test
 
@@ -56,7 +59,7 @@ tools use the current PATH via `tools/rocq-env`.
 
 ## Benchmark independently
 
-There are two distinct measurement layers. Keep their results separate.
+Keep the semantic and source-computation measurement layers separate.
 
 **Semantic certificate checking:**
 
@@ -87,7 +90,20 @@ checks. It is **not semantic proof acceptance**: its test type queries and roots
 are computation inputs. Integer-cast capture regressions additionally run in
 `make test`; the profiler's default 29-capture corpus excludes those three.
 
-Both runners retain raw logs, generated measurement sources, tool versions,
+The optional checked-helper sharing component has a separate runner:
+
+```sh
+python3 -B benchmarks/helper_cache.py --output /tmp/eunoia-helpers --rounds 3
+```
+
+It compares 1,000 and 3,000 complete `arith_poly_norm` source-rule calls with
+reference evaluation and validated sharing. Cache validation and surface
+conversion are inside the VM measurements; candidate collection occurs before
+timing. Each positive theorem needs `Qed`, a fresh `.vo`, empty assumptions and
+independent kernel checking. This synthetic repeated-rule component does not
+measure a full proof trace or predict end-to-end tactic performance.
+
+The runners retain raw logs, generated measurement sources, tool versions,
 source hashes, exit statuses and JSON summaries. VM evaluation, proof-producing
 reduction, reflexivity and `Qed` have separate timing boundaries; process wall
 time and independent kernel checks are outside those VM measurements. Very

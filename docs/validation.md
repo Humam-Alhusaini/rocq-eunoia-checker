@@ -47,3 +47,17 @@ individual proof-phase measurements imprecise; use more rounds for comparisons.
 | changed_coefficient_rejected | rejection-control | 0.000810 |
 | transitivity_clause | local-UF-certificate | 0.000570 |
 | congruence_clause | local-UF-certificate | 0.000590 |
+
+## Helper-cache synchronization, 2026-11-04
+
+The current synchronization tracks upstream `46c954b8c07dcc71c8bdacf6516656c104aeeda6`.
+All 93 proof/signature files in the provenance manifest match that revision
+byte for byte. The generic cache proves exact reference-computation refinement;
+all hint entries are validated, including unused ones. The source producer is
+checked against 32 captured CPC fixtures without invoking a solver.
+
+The new standalone helper benchmark runner passed a complete smoke run with
+fresh closed proofs and independent kernel checking. Its concurrent smoke
+timings are validation diagnostics and are not published as performance data.
+The older semantic/source samples above retain their original checkpoint and
+should not be attributed to this synchronization.
