@@ -61,3 +61,16 @@ fresh closed proofs and independent kernel checking. Its concurrent smoke
 timings are validation diagnostics and are not published as performance data.
 The older semantic/source samples above retain their original checkpoint and
 should not be attributed to this synchronization.
+
+The synchronized standalone snapshot passed `make build`, `make test`, and its
+51-target assumption audit. A separate idle-machine component run at
+`f9a50f3` passed all three alternating-order rounds, with four fresh closed
+proofs and an independent kernel check per round. Median VM times for 3,000
+full source-rule calls were 3.516 s for reference evaluation and 2.312 s for
+validated sharing; corresponding `Qed` medians were 3.663 s and 2.286 s.
+Candidate collection is outside those component timers. These values are not
+full-trace, tactic, solver or cross-prover comparisons. The main tactic's
+matched experiment found helper mining slower overall and left it optional.
+
+[Exact component timings and source hashes](helper-cache-component-2026-11-04.json)
+retain this sample separately from the older semantic/source measurements.

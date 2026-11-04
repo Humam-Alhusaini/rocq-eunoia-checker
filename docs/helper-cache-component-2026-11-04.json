@@ -1,0 +1,187 @@
+{
+  "git_head": "f9a50f3bd1fe067c44db2212f3209494ccbd9c58",
+  "layer": "source-rule component; collection excluded",
+  "medians": {
+    "cached_1000": {
+      "qed": 0.792,
+      "vm": 0.783
+    },
+    "cached_3000": {
+      "qed": 2.286,
+      "vm": 2.312
+    },
+    "reference_1000": {
+      "qed": 1.27,
+      "vm": 1.222
+    },
+    "reference_3000": {
+      "qed": 3.663,
+      "vm": 3.516
+    }
+  },
+  "modules": {
+    "CpcGenerated": "f8a1ccbb18d94f841d90625636185811622a13565ece78398b4c1bb56978fc70",
+    "CpcMemo": "53a0d09ea62d1353391d305a4b8fbcea8442aca332da87a0c77fb741dce38e1d",
+    "CpcMemoCollector": "a66f57f5fb18e44994adae1e738ef92a62c86c4920a8f4b61515ba3b8d09043a",
+    "EoArithmetic": "c6d5a1a2b8c737da219a20b23cf6a415fe6d6a8660c458df2b521df9f4695017",
+    "EoCheckedMemo": "2c134f82962a9bb95a5280297451d04d2b91b9c78227a1e0d1b6268f1a50b71e",
+    "EoMemoCollector": "e1a7cb2cf4969fb8c4a5fe9fd2aca02f0f07d334fa9e609349a4381ed242c802",
+    "EoOrder": "3da2c8f89b6a3249294c43351db6487744efc5cc2eaae8f0e28b215106ec6423",
+    "EoRuleMemo": "09db4e12a400fe9cbf76f25e0e761db8bc449b906616c1412f8d7517cbfca27e",
+    "EoRuntime": "09a893b95d1fecf0fafa211072117ae6c704933fc1e50e3c6db8429ba59d44f6",
+    "EoSyntax": "f30674318987d354dd4f450382d7861a3b03df13bd6c3d63c53643cb67c8dfd8",
+    "HelperMemoTests": "f4e766e2875606bcdf533395335acbc352bdf9bab465fb95e6cdd2d61a243590",
+    "LiaTraceReplay": "53efb20abbce53990bbfc9e528834d62faa268e36d7285f277d5ba07071f50ab",
+    "TraceReplay": "79cca400a288f9df7dadd6168d7e26c44d3dba0e34a004bf20065ff0023ed0ba"
+  },
+  "passed": true,
+  "runner_sha256": "22fc832fb8eb38bc954f05989d3dfccb7ea161ef5e2447def326f7bc10f6822c",
+  "summary_sha256": "441c0a9d607829705e853fbfffefaf96cfb79c68ce5daa8a6c3d8d5e4f7efd97",
+  "template_sha256": "603654fec18d1269e0ff2e965302c309fcf2ccd927ca80d670df6b349ebb33f3",
+  "timings": [
+    {
+      "case": "reference_1000",
+      "phase": "vm",
+      "round": 0,
+      "wall_s": 1.222
+    },
+    {
+      "case": "reference_1000",
+      "phase": "qed",
+      "round": 0,
+      "wall_s": 1.27
+    },
+    {
+      "case": "cached_1000",
+      "phase": "vm",
+      "round": 0,
+      "wall_s": 0.77
+    },
+    {
+      "case": "cached_1000",
+      "phase": "qed",
+      "round": 0,
+      "wall_s": 0.759
+    },
+    {
+      "case": "reference_3000",
+      "phase": "vm",
+      "round": 0,
+      "wall_s": 3.516
+    },
+    {
+      "case": "reference_3000",
+      "phase": "qed",
+      "round": 0,
+      "wall_s": 3.495
+    },
+    {
+      "case": "cached_3000",
+      "phase": "vm",
+      "round": 0,
+      "wall_s": 2.257
+    },
+    {
+      "case": "cached_3000",
+      "phase": "qed",
+      "round": 0,
+      "wall_s": 2.27
+    },
+    {
+      "case": "cached_3000",
+      "phase": "vm",
+      "round": 1,
+      "wall_s": 2.66
+    },
+    {
+      "case": "cached_3000",
+      "phase": "qed",
+      "round": 1,
+      "wall_s": 2.286
+    },
+    {
+      "case": "reference_3000",
+      "phase": "vm",
+      "round": 1,
+      "wall_s": 3.508
+    },
+    {
+      "case": "reference_3000",
+      "phase": "qed",
+      "round": 1,
+      "wall_s": 3.683
+    },
+    {
+      "case": "cached_1000",
+      "phase": "vm",
+      "round": 1,
+      "wall_s": 0.891
+    },
+    {
+      "case": "cached_1000",
+      "phase": "qed",
+      "round": 1,
+      "wall_s": 0.793
+    },
+    {
+      "case": "reference_1000",
+      "phase": "vm",
+      "round": 1,
+      "wall_s": 1.221
+    },
+    {
+      "case": "reference_1000",
+      "phase": "qed",
+      "round": 1,
+      "wall_s": 1.186
+    },
+    {
+      "case": "reference_1000",
+      "phase": "vm",
+      "round": 2,
+      "wall_s": 1.433
+    },
+    {
+      "case": "reference_1000",
+      "phase": "qed",
+      "round": 2,
+      "wall_s": 1.448
+    },
+    {
+      "case": "cached_1000",
+      "phase": "vm",
+      "round": 2,
+      "wall_s": 0.783
+    },
+    {
+      "case": "cached_1000",
+      "phase": "qed",
+      "round": 2,
+      "wall_s": 0.792
+    },
+    {
+      "case": "reference_3000",
+      "phase": "vm",
+      "round": 2,
+      "wall_s": 3.722
+    },
+    {
+      "case": "reference_3000",
+      "phase": "qed",
+      "round": 2,
+      "wall_s": 3.663
+    },
+    {
+      "case": "cached_3000",
+      "phase": "vm",
+      "round": 2,
+      "wall_s": 2.312
+    },
+    {
+      "case": "cached_3000",
+      "phase": "qed",
+      "round": 2,
+      "wall_s": 2.38
+    }
+  ]
+}
