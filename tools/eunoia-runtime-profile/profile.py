@@ -43,11 +43,16 @@ def source(paths, repeats, interpreter="reference"):
     parts = []
     if interpreter == "indexed":
         parts.append('From SMTCoq.checker.eunoia Require Import EoSyntax EoRuntime TraceReplay LiaTraceReplay CpcIndexed.\nDefinition indexed_final query roots steps goal :=\n match replay_with derive_indexed query roots steps with Some env=>lookup goal env|None=>None end.\nDefinition indexed_trace_final := trace_final_with derive_indexed derive_assuming_indexed.\n')
+    if interpreter == "staged":
+        parts.append('From Stdlib Require Import String List.\nFrom SMTCoq.checker.eunoia Require Import EoSyntax EoRuntime CpcGenerated TraceReplay LiaTraceReplay.\nFrom SMTCoq.checker.eunoia Require Import CpcStagedRules.\nDefinition staged_final query roots steps goal :=\n let table:=CpcStagedRules.prepare default_primitive 500 query in\n let compute:=fun _ _ name args premises=>CpcStagedRules.derive_prepared table default_primitive 500 query name None args premises in\n match replay_with compute query roots steps with Some env=>lookup goal env|None=>None end.\nDefinition staged_trace_final query roots commands goal :=\n let table:=CpcStagedRules.prepare default_primitive 500 query in\n let compute:=fun _ _ name args premises=>CpcStagedRules.derive_prepared table default_primitive 500 query name None args premises in\n let assuming:=fun _ _ name assumption args premises=>CpcStagedRules.derive_prepared table default_primitive 500 query name (Some assumption) args premises in\n trace_final_with compute assuming query roots commands goal.\n')
     for path, scoped in paths:
         code = generate([path], scoped=scoped)
         if interpreter == "indexed":
             code = code.replace(" : trace_final ", " : indexed_trace_final ")
             code = code.replace(" : final_term ", " : indexed_final ")
+        if interpreter == "staged":
+            code = code.replace(" : trace_final ", " : staged_trace_final ")
+            code = code.replace(" : final_term ", " : staged_final ")
         # Time repeated evaluation while the goal remains unchanged. Each VM
         # invocation computes the complete replay and compares the actual result.
         # Then separately time proof-producing reduction and kernel Qed checking.
@@ -86,7 +91,7 @@ def timings(log, repeats):
 def main():
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--output", required=True, type=Path, help="new artifact directory outside the checkout")
-    ap.add_argument("--interpreter", choices=("reference", "indexed"), default="reference")
+    ap.add_argument("--interpreter", choices=("reference", "indexed", "staged"), default="reference")
     ap.add_argument("--runtime", type=Path, default=ROOT / "theories/checker/eunoia/EoRuntime.v")
     ap.add_argument("--repeats", type=int, default=20)
     ap.add_argument("--rounds", type=int, default=3)
@@ -141,6 +146,11 @@ def main():
             "EoSyntax", "EoRuntime", "EoArithmetic", "EoOrder", "CpcGenerated",
             "EoCheckedMemo", "EoRuleMemo", "EoNameIndex", "EoIndexed", "CpcIndexed",
             "TraceReplay", "LiaTraceReplay")
+        if args.interpreter == "staged":
+            modules = ("EoSyntax", "EoRuntime", "EoArithmetic", "EoOrder", "CpcGenerated",
+                       "EoCheckedMemo", "EoRuleMemo", "CpcMemo", "EoMemoCollector",
+                       "EoStaged", "EoFuelLayers", "EoCompiledPrograms", "CpcStaged",
+                       "CpcStagedEval", "CpcStagedRules", "TraceReplay", "LiaTraceReplay")
         for module in modules:
             if module == "EoRuntime":
                 path = args.runtime

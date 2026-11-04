@@ -90,3 +90,32 @@ The main tactic's matched indexed experiment found a slowdown and kept this
 option disabled. This synchronization provides a separately measurable checker
 implementation; it does not assert an end-to-end improvement. The older helper
 component report above remains tied to its own `f9a50f3` checkpoint.
+
+## Signature-specialized evaluator synchronization
+
+The snapshot synchronized from upstream
+`f1ef28e1fd1a0faa88fe712307fea66db228c43b` contains 107 proof/signature files
+matching their recorded hashes exactly. It adds expression specialization,
+structural fuel layers, generated helper compilation, and surface/full-checker
+refinements. The generic proofs are closed; the inherited SMTCoq assumption
+baseline is unchanged.
+
+`make build`, `make test`, and the expanded 79-target assumption audit passed.
+All 32 captured CPC traces are replayed through the specialized source evaluator.
+The isolated profiler supports `--interpreter staged`; a fresh `uf1`/`lia1`
+smoke run with one repeat and one round passed all eight timing phases and its
+independent kernel check. These concurrent validation timings are not published
+as performance evidence. Full-tactic comparisons remain a separate upstream
+experiment; the specialized path is optional.
+
+```sh
+python3 tools/eunoia-runtime-profile/profile.py --interpreter staged \
+  --fixture uf1 --fixture lia1 --repeats 1 --rounds 1 \
+  --output /tmp/eunoia-staged-smoke
+```
+
+The upstream matched tactic experiment at `f1ef28e` preserved all successes and
+rejections but was slower overall: 39.226 s specialized versus 33.420 s
+reference over two seven-case rounds per path. The specialization remains off
+by default upstream. The independent profiler exposes it for measurement; its
+helper-loop gains are not a full-tactic speedup.

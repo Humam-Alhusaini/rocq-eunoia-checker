@@ -4,11 +4,11 @@ A standalone extraction of SMTRocq's signature-generated Eunoia/CPC checker,
 with benchmarks that do not invoke an SMT solver, the SMTCoq tactic, or native
 certificate search. Extracted from [SMTRocq PR #2](https://github.com/Humam-Alhusaini/SMTRocq/pull/2)
 initially at `0613ce2b18315b811ed8d19b9a7820e206ffec0f`, now synchronized with
-core `f8f7b360f1cf1e44f7e04ca0b3cd765c05cab145`.
+core `f1ef28e1fd1a0faa88fe712307fea66db228c43b`.
 
 The repository includes the generated rule interpreter, strict CPC reader,
 checked trace/scoping machinery, semantic certificate gates, proofs, fixtures,
-signature compiler, and required SMTCoq theory sources. All 99 current Rocq proof and Eunoia signature files match that upstream
+signature compiler, and required SMTCoq theory sources. All 107 current Rocq proof and Eunoia signature files match that upstream
 checkpoint byte for byte. Their hashes are in
 [provenance/upstream.json](provenance/upstream.json); the original extraction
 record remains in [provenance/extraction-0613ce2b.json](provenance/extraction-0613ce2b.json).
@@ -159,3 +159,7 @@ SMTCoq-derived code retains its CeCILL-C license and copyright notices; see
 [LICENSE](LICENSE). Pinned cvc5 Eunoia signatures retain their own upstream notices
 and provenance under `tools/eunoia/signatures`. Historical validation documents
 describe the original SMTRocq environment; use the commands above for this repo.
+
+The signature-specialized helper evaluator is included with exact computation
+refinement proofs and all 32 captured source replays. See upstream measurements
+before interpreting component timings as tactic improvements.

@@ -1,7 +1,7 @@
 {
   "repository": "https://github.com/Humam-Alhusaini/SMTRocq",
   "pull_request": 2,
-  "commit": "f8f7b360f1cf1e44f7e04ca0b3cd765c05cab145",
+  "commit": "f1ef28e1fd1a0faa88fe712307fea66db228c43b",
   "extracted_at": "2026-11-04",
   "logical_namespaces": "SMTCoq.* retained for compatibility; sources bundled, no installed SMTCoq dependency",
   "unchanged_proof_and_signature_sha256": {
@@ -10,10 +10,15 @@
     "theories/checker/eunoia/CpcIndexed.v": "54f1d54d29924ade7efcc4303cff2b63ba57f057ef8a81607b8f114a8d35ede9",
     "theories/checker/eunoia/CpcMemo.v": "53a0d09ea62d1353391d305a4b8fbcea8442aca332da87a0c77fb741dce38e1d",
     "theories/checker/eunoia/CpcMemoCollector.v": "a66f57f5fb18e44994adae1e738ef92a62c86c4920a8f4b61515ba3b8d09043a",
+    "theories/checker/eunoia/CpcStaged.v": "0ad15c2bc6cebb61b4e996562fd86f181b1085f6da166cd0e1593c3fea69d49a",
+    "theories/checker/eunoia/CpcStagedEval.v": "9f82c0be31427374f1c2f795f47413241019e28bdac537436d6bf33624d51cff",
+    "theories/checker/eunoia/CpcStagedRules.v": "798775ec6ef5b867cb5b40765c38d15c64c6713f8124b951ea9da52dec1c8a64",
     "theories/checker/eunoia/EoArithmetic.v": "c6d5a1a2b8c737da219a20b23cf6a415fe6d6a8660c458df2b521df9f4695017",
     "theories/checker/eunoia/EoArithmeticTests.v": "bd3e089b07c47da68de5500563c94262496b350f6f272c5225ef3f6f0c51091d",
     "theories/checker/eunoia/EoCheckedMemo.v": "2c134f82962a9bb95a5280297451d04d2b91b9c78227a1e0d1b6268f1a50b71e",
     "theories/checker/eunoia/EoCheckedMemoTests.v": "25db1bfe36017ef8481ecc52addabca590920f0c054e05b988251c49e995cee1",
+    "theories/checker/eunoia/EoCompiledPrograms.v": "18a9bd06a48a1f5b0cf5287d3b29e4cc80d3d27b68e72684df689265930165b0",
+    "theories/checker/eunoia/EoFuelLayers.v": "e4f653c7890d858cb8dba0f377b63117e13214939e4fa29efb62a23988c814af",
     "theories/checker/eunoia/EoIndexed.v": "978fdbd1a5aa0b0f0616d4fa2991ad23d05de6147c21eeb0cf05ccc829d07b26",
     "theories/checker/eunoia/EoMemoCollector.v": "e1a7cb2cf4969fb8c4a5fe9fd2aca02f0f07d334fa9e609349a4381ed242c802",
     "theories/checker/eunoia/EoNameIndex.v": "70044f519e048922d78c18382735803dc606093a2b6fe59d58ac97810c4fcaf3",
@@ -21,6 +26,7 @@
     "theories/checker/eunoia/EoOrder.v": "3da2c8f89b6a3249294c43351db6487744efc5cc2eaae8f0e28b215106ec6423",
     "theories/checker/eunoia/EoRuleMemo.v": "09db4e12a400fe9cbf76f25e0e761db8bc449b906616c1412f8d7517cbfca27e",
     "theories/checker/eunoia/EoRuntime.v": "09a893b95d1fecf0fafa211072117ae6c704933fc1e50e3c6db8429ba59d44f6",
+    "theories/checker/eunoia/EoStaged.v": "d88588ec932d995938517f7c1dd3541424b52023d68fc871ab9989ee88ac8d6f",
     "theories/checker/eunoia/EoSyntax.v": "f30674318987d354dd4f450382d7861a3b03df13bd6c3d63c53643cb67c8dfd8",
     "theories/checker/eunoia/EunoiaAdapter.v": "9206eda4cf923c9f23b9e824ad261be2242e472da8210260d399c5ec41cbf154",
     "theories/checker/eunoia/EunoiaBool.v": "9db3174db5e1857e4d19f2b7dc2277ad76e1930beda1abd5fe6e959f4f8cda6b",
@@ -47,6 +53,8 @@
     "theories/checker/eunoia/EunoiaScopeTests.v": "1e7e69fe6517cf718bd455b023695884f0f43ece09d39325e097f852b5b846eb",
     "theories/checker/eunoia/EunoiaScopedAdapter.v": "79999c5ef222d90b63d1020c12d2871dd359626f4c311c2d128b10b7eec1892f",
     "theories/checker/eunoia/EunoiaScopedAdapterTests.v": "5d4041c2b95cc294f1605d93a00598d8942ba80bb86912d0396e5e624f2956d5",
+    "theories/checker/eunoia/EunoiaStaged.v": "836b68a3568bfa4477330932f3a2aa6869c23e8d6906198fa6cda784d214bd37",
+    "theories/checker/eunoia/EunoiaStagedTests.v": "b6be825f9a52b4bf12cae305df586fc4a2da66a3dcef130d36beed5af2f4e9c5",
     "theories/checker/eunoia/EunoiaTactic.v": "9ff9a60b4943317adaaf0372cfe531cf6613340586521c1650111a77916a6cb8",
     "theories/checker/eunoia/EunoiaTacticTests.v": "41ed1640a1c2dbdc8e1640667ad192bd35d7bcd7d305975ca657cb8ca1ae4edf",
     "theories/checker/eunoia/EunoiaUf.v": "0e8fd678976976936f533af21a337e44545736b8e67e779b764d0b1be7150bbc",
@@ -106,5 +114,5 @@
     "tools/eunoia/signatures/cpc/theories/Strings.eo": "9b92523b67acf53c4b8b6e5e3065c2032edda2f2a7b8ba625cec1986440dabb0"
   },
   "synchronized_at": "2026-11-04",
-  "previous_checkpoint": "provenance/extraction-46c954b.json"
+  "previous_checkpoint": "provenance/extraction-f8f7b36.json"
 }
