@@ -146,3 +146,15 @@ actual-trace profiler produced eight timing rows and passed its kernel check;
 the complete repeated-rule runner produced all eight VM/`Qed` rows for one
 round, four closed proofs, and an independent kernel check. These checks ran
 alongside other validation, so their timings are retained only as diagnostics.
+
+A separate frozen run at `b961527` passed all three alternating-order rounds:
+four fresh closed proofs and an independent kernel check per round, yielding
+24 VM/`Qed` timing rows. For 3,000 complete rule calls, median VM times were
+3.630 s reference and 3.383 s direct; `Qed` medians were 3.731 s and 3.301 s.
+These VM/`Qed` figures measure source-rule computation, not the complete tactic.
+A Python compiler check ran between measured rounds during kernel verification;
+independent-check wall times are not presented as performance comparisons.
+Upstream's full tactic remained slower with direct compilation enabled.
+
+[Exact component rows and source hashes](direct-helper-component-2026-11-04.json)
+retain the sample independently of later canonicalization experiments.
