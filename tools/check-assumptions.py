@@ -22,6 +22,7 @@ def main():
     for index in range(0, len(flags), 3):
         command += ["--loadpath", flags[index + 1], flags[index + 2]]
     for module, theorems in {
+        "EoRename": ["refinement"],
         'EoDirect': ['compile_refinement', 'run_program_correct', 'call_compiled_correct'],
         'CpcDirect': ['dispatch_correct'],
         'CpcDirectEntry': ['choose_correct', 'dispatch_correct'],
@@ -68,6 +69,9 @@ def main():
     for theorem in ("program_lookup_correct", "derive_context_with_index_refinement",
                     "derive_indexed_refinement", "derive_assuming_indexed_refinement"):
         command += ["--theorem", module + "." + theorem]
+    command += ["--import", "SMTCoq.checker.eunoia.CpcGenerated",
+                "--theorem", "SMTCoq.checker.eunoia.CpcGenerated.cpc_canonicalize_correct",
+                "--theorem", "SMTCoq.checker.eunoia.CpcGenerated.cpc_surface_correct"]
     subprocess.run(command, cwd=ROOT, check=True)
 
 

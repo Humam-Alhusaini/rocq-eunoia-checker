@@ -24,7 +24,7 @@ from replay_fixtures import decode, generate
 from compile import atom, parse, seq
 
 ENV = Path(os.environ.get("EUNOIA_ENV", ROOT / "tools/rocq-env"))
-MODULES = ("EoSyntax", "EoRuntime", "EoArithmetic", "EoOrder", "CpcGenerated",
+MODULES = ("EoSyntax", "EoRuntime", "EoArithmetic", 'EoOrder', 'EoNameIndex', 'EoRename', 'CpcGenerated',
            "TraceReplay", "LiaTraceReplay")
 
 
@@ -148,16 +148,16 @@ def main():
     try:
         run([ENV, "rocq", "--version"], "version")
         modules = MODULES if args.interpreter == "reference" else (
-            "EoSyntax", "EoRuntime", "EoArithmetic", "EoOrder", "CpcGenerated",
-            "EoCheckedMemo", "EoRuleMemo", "EoNameIndex", "EoIndexed", "CpcIndexed",
+            "EoSyntax", "EoRuntime", "EoArithmetic", 'EoOrder', 'EoNameIndex', 'EoRename', 'CpcGenerated',
+            "EoCheckedMemo", "EoRuleMemo", "EoIndexed", "CpcIndexed",
             "TraceReplay", "LiaTraceReplay")
         if args.interpreter == "staged":
-            modules = ("EoSyntax", "EoRuntime", "EoArithmetic", "EoOrder", "CpcGenerated",
+            modules = ("EoSyntax", "EoRuntime", "EoArithmetic", 'EoOrder', 'EoNameIndex', 'EoRename', 'CpcGenerated',
                        "EoCheckedMemo", "EoRuleMemo", "CpcMemo", "EoMemoCollector",
                        "EoStaged", "EoFuelLayers", "EoCompiledPrograms", "CpcStaged",
                        "CpcStagedEval", "CpcStagedRules", "TraceReplay", "LiaTraceReplay")
         if args.interpreter == "direct":
-            modules = ('EoSyntax', 'EoRuntime', 'EoArithmetic', 'EoOrder', 'CpcGenerated', 'EoCheckedMemo', 'EoRuleMemo', 'CpcMemo', 'EoMemoCollector', 'EoDirect', 'CpcDirect', 'CpcDirectEntry', 'CpcDirectEval', 'CpcDirectRules', 'TraceReplay', 'LiaTraceReplay')
+            modules = ('EoSyntax', 'EoRuntime', 'EoArithmetic', 'EoOrder', 'EoNameIndex', 'EoRename', 'CpcGenerated', 'EoCheckedMemo', 'EoRuleMemo', 'CpcMemo', 'EoMemoCollector', 'EoDirect', 'CpcDirect', 'CpcDirectEntry', 'CpcDirectEval', 'CpcDirectRules', 'TraceReplay', 'LiaTraceReplay')
         for module in modules:
             if module == "EoRuntime":
                 path = args.runtime

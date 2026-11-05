@@ -1,22 +1,22 @@
 {
   "repository": "https://github.com/Humam-Alhusaini/SMTRocq",
   "pull_request": 2,
-  "commit": "67cc9a31a069f1ad8a0b8cb3a4cd70e031fe3c75",
-  "extracted_at": "2026-11-04",
+  "commit": "14c2dd8beb03005ad0fdda3e31c879df7887d9e3",
+  "extracted_at": "2026-11-05",
   "logical_namespaces": "SMTCoq.* retained for compatibility; sources bundled, no installed SMTCoq dependency",
   "unchanged_proof_and_signature_sha256": {
     "theories/checker/MainChecker.v": "6da281a03bf583f5cd90af6bf8f0cd0e1aae48e35b5b25b9cf923aa7c91ea2bd",
     "theories/checker/eunoia/CpcDirect.v": "48e1884153829d68a7e4dbf317c70ffa2a1cb3de8138c856c2f7cab1fd73938a",
     "theories/checker/eunoia/CpcDirectEntry.v": "c545a912a1033f87f46fa9319a1a4ff1150e1b4b4a71d2e8e6f1bf9403c4590a",
     "theories/checker/eunoia/CpcDirectEval.v": "0e4e05dc80f51b1f771c61b1b54db416b07e7dc16b034fe2c768ec585802a994",
-    "theories/checker/eunoia/CpcDirectRules.v": "c22c7869826c9a33b5da9566f0ed8909a0d1c25e87a0d9a85ccdbac6db78a435",
-    "theories/checker/eunoia/CpcGenerated.v": "f8a1ccbb18d94f841d90625636185811622a13565ece78398b4c1bb56978fc70",
-    "theories/checker/eunoia/CpcIndexed.v": "54f1d54d29924ade7efcc4303cff2b63ba57f057ef8a81607b8f114a8d35ede9",
-    "theories/checker/eunoia/CpcMemo.v": "53a0d09ea62d1353391d305a4b8fbcea8442aca332da87a0c77fb741dce38e1d",
-    "theories/checker/eunoia/CpcMemoCollector.v": "a66f57f5fb18e44994adae1e738ef92a62c86c4920a8f4b61515ba3b8d09043a",
+    "theories/checker/eunoia/CpcDirectRules.v": "51b7ecc70a6c924743743c04940bb38f7e24d0e487f56e2cfdabfec0624f375b",
+    "theories/checker/eunoia/CpcGenerated.v": "cdac09a8bf7415132dccabe9e18ac4dc06bd9661a34c0212cf6a69d9db86d780",
+    "theories/checker/eunoia/CpcIndexed.v": "af751048d257545a89b29de204196868b6478b852c957b21ab26b8e114bc0349",
+    "theories/checker/eunoia/CpcMemo.v": "07ac1586fedbb2d236ecb8587e7314ff34d2856f23f24da19648463804d36c3c",
+    "theories/checker/eunoia/CpcMemoCollector.v": "66b3184a4c5475b92309050bd3a28e1f9f9767453befac8900c31c4e8e93fac1",
     "theories/checker/eunoia/CpcStaged.v": "0ad15c2bc6cebb61b4e996562fd86f181b1085f6da166cd0e1593c3fea69d49a",
     "theories/checker/eunoia/CpcStagedEval.v": "9f82c0be31427374f1c2f795f47413241019e28bdac537436d6bf33624d51cff",
-    "theories/checker/eunoia/CpcStagedRules.v": "798775ec6ef5b867cb5b40765c38d15c64c6713f8124b951ea9da52dec1c8a64",
+    "theories/checker/eunoia/CpcStagedRules.v": "10ed01f2f93089dda9b92d63e8a04575f2943f6b14287e796e07fd9f79b49de4",
     "theories/checker/eunoia/EoArithmetic.v": "c6d5a1a2b8c737da219a20b23cf6a415fe6d6a8660c458df2b521df9f4695017",
     "theories/checker/eunoia/EoArithmeticTests.v": "bd3e089b07c47da68de5500563c94262496b350f6f272c5225ef3f6f0c51091d",
     "theories/checker/eunoia/EoCheckedMemo.v": "2c134f82962a9bb95a5280297451d04d2b91b9c78227a1e0d1b6268f1a50b71e",
@@ -29,6 +29,7 @@
     "theories/checker/eunoia/EoNameIndex.v": "70044f519e048922d78c18382735803dc606093a2b6fe59d58ac97810c4fcaf3",
     "theories/checker/eunoia/EoNameIndexTests.v": "8c8e13853fc26ba5747cd9f5e5ca843b67d098411aaa544aa34bb0071e806bab",
     "theories/checker/eunoia/EoOrder.v": "3da2c8f89b6a3249294c43351db6487744efc5cc2eaae8f0e28b215106ec6423",
+    "theories/checker/eunoia/EoRename.v": "97f7660d3ac7d8f713deb1c42611631a08e035f35e8ab7a9b10ca7827578551a",
     "theories/checker/eunoia/EoRuleMemo.v": "09db4e12a400fe9cbf76f25e0e761db8bc449b906616c1412f8d7517cbfca27e",
     "theories/checker/eunoia/EoRuntime.v": "09a893b95d1fecf0fafa211072117ae6c704933fc1e50e3c6db8429ba59d44f6",
     "theories/checker/eunoia/EoStaged.v": "d88588ec932d995938517f7c1dd3541424b52023d68fc871ab9989ee88ac8d6f",
@@ -123,5 +124,5 @@
     "tools/eunoia/signatures/cpc/theories/Strings.eo": "9b92523b67acf53c4b8b6e5e3065c2032edda2f2a7b8ba625cec1986440dabb0"
   },
   "synchronized_at": "2026-11-04",
-  "previous_checkpoint": "provenance/extraction-f1ef28e.json"
+  "previous_checkpoint": "provenance/extraction-67cc9a3.json"
 }

@@ -158,3 +158,21 @@ Upstream's full tactic remained slower with direct compilation enabled.
 
 [Exact component rows and source hashes](direct-helper-component-2026-11-04.json)
 retain the sample independently of later canonicalization experiments.
+
+## Indexed signature aliases (2026-11-05)
+
+This snapshot tracks upstream `14c2dd8beb03005ad0fdda3e31c879df7887d9e3`.
+All 117 bundled proof and signature files match that commit byte for byte; the
+previous extraction manifest is archived as `provenance/extraction-67cc9a3.json`.
+`EoRename.refinement` and the two generated pointwise correctness lemmas prove
+that precomputed alias indexes preserve the original renaming computation.
+Every source evaluator uses the same generated conversion functions.
+
+`make build`, `make test`, and the expanded **113-target** assumption audit
+passed, including all 48 compiler tests and the generated source replay suite.
+The new renaming proofs are closed; semantic theorem assumptions remain within
+the inherited baseline. No new theory support is claimed by this optimization.
+
+A fresh reference-interpreter `uf1`/`lia1` smoke run produced all eight expected
+timing phases and passed its independent kernel check. It ran concurrently
+with other validation, so these timings are diagnostics, not performance data.

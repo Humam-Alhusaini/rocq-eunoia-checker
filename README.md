@@ -4,11 +4,11 @@ A standalone extraction of SMTRocq's signature-generated Eunoia/CPC checker,
 with benchmarks that do not invoke an SMT solver, the SMTCoq tactic, or native
 certificate search. Extracted from [SMTRocq PR #2](https://github.com/Humam-Alhusaini/SMTRocq/pull/2)
 initially at `0613ce2b18315b811ed8d19b9a7820e206ffec0f`, now synchronized with
-core `67cc9a31a069f1ad8a0b8cb3a4cd70e031fe3c75`.
+core `14c2dd8beb03005ad0fdda3e31c879df7887d9e3`.
 
 The repository includes the generated rule interpreter, strict CPC reader,
 checked trace/scoping machinery, semantic certificate gates, proofs, fixtures,
-signature compiler, and required SMTCoq theory sources. All 116 current Rocq proof and Eunoia signature files match that upstream
+signature compiler, and required SMTCoq theory sources. All 117 current Rocq proof and Eunoia signature files match that upstream
 checkpoint byte for byte. Their hashes are in
 [provenance/upstream.json](provenance/upstream.json); the original extraction
 record remains in [provenance/extraction-0613ce2b.json](provenance/extraction-0613ce2b.json).
@@ -180,3 +180,6 @@ round requires closed proofs and an independent kernel check. These are source
 computation costs, separate from the complete semantic checker and tactic.
 Use `--interpreter direct` in the actual-trace source profiler for captured CPC
 workloads instead of repeated copies of one rule input.
+
+Signature alias conversion now uses precomputed indexes with closed pointwise
+refinement proofs. The source rules and supported fragment are unchanged.

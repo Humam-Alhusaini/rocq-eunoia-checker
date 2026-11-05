@@ -17,7 +17,7 @@ import time
 
 ROOT = Path(__file__).resolve().parents[1]
 ENV = os.environ.get("EUNOIA_ENV", str(ROOT / "tools/rocq-env"))
-MODULES = ("EoSyntax", "EoRuntime", "EoArithmetic", "EoOrder", "CpcGenerated",
+MODULES = ("EoSyntax", "EoRuntime", "EoArithmetic", 'EoOrder', 'EoNameIndex', 'EoRename', 'CpcGenerated',
            "EoCheckedMemo", "EoRuleMemo", "CpcMemo", "EoMemoCollector", "CpcMemoCollector",
            "TraceReplay", "LiaTraceReplay", "HelperMemoTests")
 
