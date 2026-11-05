@@ -1,7 +1,7 @@
 {
   "repository": "https://github.com/Humam-Alhusaini/SMTRocq",
   "pull_request": 2,
-  "commit": "983c85afb0059c3e1475155ac79715b10632e45a",
+  "commit": "313f127c4ff762438e9b7edcae969f89103fe535",
   "extracted_at": "2026-11-05",
   "logical_namespaces": "SMTCoq.* retained for compatibility; sources bundled, no installed SMTCoq dependency",
   "unchanged_proof_and_signature_sha256": {
@@ -121,8 +121,10 @@
     "tools/eunoia/signatures/cpc/theories/Quantifiers.eo": "c8723077df95d264cea72f3c1dbcb8b34959452e5926f26a69d5c7bd8ab40c62",
     "tools/eunoia/signatures/cpc/theories/Reals.eo": "d0e67e757a8232f2b5583abe7d7941c6d18e3c33c1ff37efa176157c2be42b0f",
     "tools/eunoia/signatures/cpc/theories/Sets.eo": "d1dd145a7e41b72e53d89733cd57378dfcc19b2e7cf61cf58a253527a686617a",
-    "tools/eunoia/signatures/cpc/theories/Strings.eo": "9b92523b67acf53c4b8b6e5e3065c2032edda2f2a7b8ba625cec1986440dabb0"
+    "tools/eunoia/signatures/cpc/theories/Strings.eo": "9b92523b67acf53c4b8b6e5e3065c2032edda2f2a7b8ba625cec1986440dabb0",
+    "theories/checker/eunoia/EunoiaProgramIndexFlat.v": "90560d596c1908750a1bd49e655da1b56f232f31488f15cf5ff4a21fb1319517",
+    "theories/checker/eunoia/EunoiaProgramIndexScoped.v": "3d82a5ec745f13048801175d9e76098ed7c1892d72a7e3910651fed5eb32598f"
   },
   "synchronized_at": "2026-11-04",
-  "previous_checkpoint": "provenance/extraction-14c2dd8.json"
+  "previous_checkpoint": "provenance/extraction-983c85a.json"
 }

@@ -191,3 +191,17 @@ passed. The new equality refinement is closed. A fresh reference `uf1`/`lia1`
 source smoke run produced all eight expected timing phases and passed its
 independent kernel check. These validation runs overlapped with main-repository
 validation; their timings are diagnostics and do not establish a speedup.
+
+## Indexed representation adapters (2026-11-05)
+
+This snapshot includes 119 proof/signature files matching upstream `313f127`
+byte for byte. The additional flat and scoped program-index adapters transport
+acceptance to the existing semantic checkers using the indexed-source
+refinement theorem. No generated rule or semantic assumption changes.
+
+`make build`, `make test`, and the expanded **129-target** assumption audit
+passed. Fresh indexed `uf1`/`lia1` source proofs produced all eight expected
+timing phases and passed independent kernel checking. These checks ran after
+the upstream isolated timing window; their concurrent diagnostic timings are
+not performance claims. Upstream's adaptive index remained slower overall and
+stays optional.

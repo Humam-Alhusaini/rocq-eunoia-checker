@@ -22,6 +22,8 @@ def main():
     for index in range(0, len(flags), 3):
         command += ["--loadpath", flags[index + 1], flags[index + 2]]
     for module, theorems in {
+        "EunoiaProgramIndexFlat": ["flat_step_ext", "flat_run_ext", "flat_checker_ext", "checker_refinement", "checker_correct", "checker_b_refinement", "checker_b_correct", "checker_eq_refinement", "checker_eq_correct"],
+        "EunoiaProgramIndexScoped": ["checker_refinement", "checker_correct", "checker_b_refinement", "checker_b_correct", "checker_eq_refinement", "checker_eq_correct"],
         "EoRename": ["refinement"],
         'EoDirect': ['compile_refinement', 'run_program_correct', 'call_compiled_correct'],
         'CpcDirect': ['dispatch_correct'],
