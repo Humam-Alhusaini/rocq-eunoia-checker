@@ -22,6 +22,10 @@ def main():
     for index in range(0, len(flags), 3):
         command += ["--loadpath", flags[index + 1], flags[index + 2]]
     for module, theorems in {
+        'EoSpecialized': ['prepare_one_correct', 'prepare_one_ext', 'find_key', 'run_using_correct', 'run_surface_correct', 'derive_context_correct'],
+        'EunoiaSpecialized': ['checker_refinement', 'checker_correct', 'checker_b_refinement', 'checker_b_correct', 'checker_eq_refinement', 'checker_eq_correct'],
+        'EunoiaSpecializedFlat': ['flat_step_ext', 'flat_run_ext', 'flat_checker_ext', 'checker_refinement', 'checker_correct', 'checker_b_refinement', 'checker_b_correct', 'checker_eq_refinement', 'checker_eq_correct'],
+        'EunoiaSpecializedScoped': ['checker_refinement', 'checker_correct', 'checker_b_refinement', 'checker_b_correct', 'checker_eq_refinement', 'checker_eq_correct'],
         "EunoiaProgramIndexFlat": ["flat_step_ext", "flat_run_ext", "flat_checker_ext", "checker_refinement", "checker_correct", "checker_b_refinement", "checker_b_correct", "checker_eq_refinement", "checker_eq_correct"],
         "EunoiaProgramIndexScoped": ["checker_refinement", "checker_correct", "checker_b_refinement", "checker_b_correct", "checker_eq_refinement", "checker_eq_correct"],
         "EoRename": ["refinement"],
@@ -62,6 +66,9 @@ def main():
         command += ["--import", prefix]
         for theorem in theorems:
             command += ["--theorem", prefix + "." + module + "." + theorem]
+    module = "SMTCoq.checker.eunoia.CpcSpecialized"
+    command += ["--import", module]
+    command += ["--theorem", module + ".CpcSpecialized.rules_correct"]
     module = "SMTCoq.checker.eunoia.CpcMemo"
     command += ["--import", module]
     for theorem in ("validate_context_sound", "derive_context_cached_refinement", "derive_checked_correct"):

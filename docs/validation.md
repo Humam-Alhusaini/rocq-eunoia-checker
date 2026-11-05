@@ -1,5 +1,32 @@
 # Extraction validation (2026-11-04)
 
+## Signature compilation checkpoint (2026-11-05)
+
+The current extraction contains 125 proof/signature files matching SMTRocq
+`6ccf13befa9033e69c7a6f00fbad7e6af15a4a99` byte for byte. It includes all 59
+compiled helpers with split case proofs and 87 independently proved rule
+implementations for proof-specific registries. The proof-only aggregate
+`CpcSpecialized.rules_correct` contains all 87 correspondence proofs.
+
+The install build and full regression suite passed at the executable checkpoint
+`358d37d`; the only subsequent generated declaration was the aggregate theorem.
+The updated install build and 157-declaration assumption audit passed after that
+proof-only addition. No assumptions beyond the existing 52-name baseline were
+introduced. Source replays and checker tests retain separate semantic gates.
+
+The source profiler's `specialized` mode was smoke-tested on captured UF and LIA
+proofs, selecting each fixture's actual used-rule registry. All eight timing
+phases and independent kernel checking passed. These diagnostics ran alongside
+validation and establish tool operation, not a comparative performance result.
+The initial smoke attempt failed because its replay-module loadpath was absent;
+the corrected attempt and the failure are both retained under ignored `results/`.
+
+Upstream's complete-helper tactic comparison was slower and the new rule
+registry also has slower focused profiles. These remain experimental execution
+paths; this checkpoint makes no new tactic-performance claim.
+
+## Original extraction
+
 Upstream: SMTRocq `0613ce2b18315b811ed8d19b9a7820e206ffec0f`.
 All 80 retained proof/signature files match the upstream bytes in
 `provenance/upstream.json`. No checker proof or semantic definition was edited.

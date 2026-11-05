@@ -47,8 +47,21 @@ def source(paths, repeats, interpreter="reference"):
         parts.append('From Stdlib Require Import String List.\nFrom SMTCoq.checker.eunoia Require Import EoSyntax EoRuntime CpcGenerated TraceReplay LiaTraceReplay.\nFrom SMTCoq.checker.eunoia Require Import CpcStagedRules.\nDefinition staged_final query roots steps goal :=\n let table:=CpcStagedRules.prepare default_primitive 500 query in\n let compute:=fun _ _ name args premises=>CpcStagedRules.derive_prepared table default_primitive 500 query name None args premises in\n match replay_with compute query roots steps with Some env=>lookup goal env|None=>None end.\nDefinition staged_trace_final query roots commands goal :=\n let table:=CpcStagedRules.prepare default_primitive 500 query in\n let compute:=fun _ _ name args premises=>CpcStagedRules.derive_prepared table default_primitive 500 query name None args premises in\n let assuming:=fun _ _ name assumption args premises=>CpcStagedRules.derive_prepared table default_primitive 500 query name (Some assumption) args premises in\n trace_final_with compute assuming query roots commands goal.\n')
     if interpreter == "direct":
         parts.append('From Stdlib Require Import String List.\nFrom SMTCoq.checker.eunoia Require Import EoSyntax EoRuntime CpcGenerated TraceReplay LiaTraceReplay.\nFrom SMTCoq.checker.eunoia Require Import CpcDirectRules.\nDefinition direct_final query roots steps goal :=\n let compute:=fun _ _ name args premises=>CpcDirectRules.derive_context default_primitive 500 query name None args premises in\n match replay_with compute query roots steps with Some env=>lookup goal env|None=>None end.\nDefinition direct_trace_final query roots commands goal :=\n let compute:=fun _ _ name args premises=>CpcDirectRules.derive_context default_primitive 500 query name None args premises in\n let assuming:=fun _ _ name assumption args premises=>CpcDirectRules.derive_context default_primitive 500 query name (Some assumption) args premises in\n trace_final_with compute assuming query roots commands goal.\n')
+    if interpreter == "specialized":
+        parts.append("From Stdlib Require Import String List.\nFrom SMTCoq.checker.eunoia Require Import EoSyntax EoRuntime CpcGenerated TraceReplay LiaTraceReplay EoSpecialized CpcSpecialized.\nImport ListNotations.\n")
+        inventory = json.loads((ROOT / "tools/eunoia/cpc-specialized-manifest.json").read_text())["implementations"]
     for path, scoped in paths:
         code = generate([path], scoped=scoped)
+        if interpreter == "specialized":
+            used = set(re.findall(r":rule\s+([^\s)]+)", path.read_text()))
+            if used - inventory.keys():
+                raise ValueError("fixture uses a rule absent from the generated inventory")
+            records = "[" + ";".join("CpcSpecialized." + inventory[n] for n in sorted(used)) + "]"
+            stem = "specialized_" + re.sub(r"[^A-Za-z0-9_]", "_", path.stem)
+            parts.append(f"Definition {stem}_final query roots steps goal :=\n let compute:=fun _ _ name args premises=>EoSpecialized.derive_context {records} default_primitive 500 query name None args premises in\n match replay_with compute query roots steps with Some env=>lookup goal env|None=>None end.\n")
+            parts.append(f"Definition {stem}_trace_final query roots commands goal :=\n let compute:=fun _ _ name args premises=>EoSpecialized.derive_context {records} default_primitive 500 query name None args premises in\n let assuming:=fun _ _ name assumption args premises=>EoSpecialized.derive_context {records} default_primitive 500 query name (Some assumption) args premises in\n trace_final_with compute assuming query roots commands goal.\n")
+            code = code.replace(" : trace_final ", " : " + stem + "_trace_final ")
+            code = code.replace(" : final_term ", " : " + stem + "_final ")
         if interpreter == "indexed":
             code = code.replace(" : trace_final ", " : indexed_trace_final ")
             code = code.replace(" : final_term ", " : indexed_final ")
@@ -96,7 +109,7 @@ def timings(log, repeats):
 def main():
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--output", required=True, type=Path, help="new artifact directory outside the checkout")
-    ap.add_argument("--interpreter", choices=("reference", "indexed", "staged", "direct"), default="reference")
+    ap.add_argument("--interpreter", choices=("reference", "indexed", "staged", "direct", "specialized"), default="reference")
     ap.add_argument("--runtime", type=Path, default=ROOT / "theories/checker/eunoia/EoRuntime.v")
     ap.add_argument("--repeats", type=int, default=20)
     ap.add_argument("--rounds", type=int, default=3)
@@ -158,6 +171,8 @@ def main():
                        "CpcStagedEval", "CpcStagedRules", "TraceReplay", "LiaTraceReplay")
         if args.interpreter == "direct":
             modules = ('EoSyntax', 'EoRuntime', 'EoArithmetic', 'EoOrder', 'EoNameIndex', 'EoRename', 'CpcGenerated', 'EoCheckedMemo', 'EoRuleMemo', 'CpcMemo', 'EoMemoCollector', 'EoDirect', 'CpcDirect', 'CpcDirectEntry', 'CpcDirectEval', 'CpcDirectRules', 'TraceReplay', 'LiaTraceReplay')
+        if args.interpreter == "specialized":
+            modules = ('EoSyntax', 'EoRuntime', 'EoArithmetic', 'EoOrder', 'EoNameIndex', 'EoRename', 'CpcGenerated', 'EoCheckedMemo', 'EoRuleMemo', 'EoMemoCollector', 'EoDirect', 'CpcDirect', 'CpcDirectEntry', 'EoSpecialized', 'CpcSpecialized', 'TraceReplay', 'LiaTraceReplay')
         for module in modules:
             if module == "EoRuntime":
                 path = args.runtime

@@ -4,11 +4,11 @@ A standalone extraction of SMTRocq's signature-generated Eunoia/CPC checker,
 with benchmarks that do not invoke an SMT solver, the SMTCoq tactic, or native
 certificate search. Extracted from [SMTRocq PR #2](https://github.com/Humam-Alhusaini/SMTRocq/pull/2)
 initially at `0613ce2b18315b811ed8d19b9a7820e206ffec0f`, now synchronized with
-core `313f127c4ff762438e9b7edcae969f89103fe535`.
+core `6ccf13befa9033e69c7a6f00fbad7e6af15a4a99`.
 
 The repository includes the generated rule interpreter, strict CPC reader,
 checked trace/scoping machinery, semantic certificate gates, proofs, fixtures,
-signature compiler, and required SMTCoq theory sources. All 119 current Rocq proof and Eunoia signature files match that upstream
+signature compiler, and required SMTCoq theory sources. All 125 current Rocq proof and Eunoia signature files match that upstream
 checkpoint byte for byte. Their hashes are in
 [provenance/upstream.json](provenance/upstream.json); the original extraction
 record remains in [provenance/extraction-0613ce2b.json](provenance/extraction-0613ce2b.json).
@@ -188,3 +188,12 @@ Source-term application equality now short-circuits after an unequal function
 subtree, with a closed definitional-refinement proof. Matched upstream tactic
 timings tracked control variation and do not establish an additional tactic
 speedup. See [validation](docs/validation.md) for the standalone checks.
+
+The extraction includes all 59 compiled helpers with modular case proofs, and
+87 individually proved rule implementations for proof-specific registries.
+These are experimental execution paths; upstream tactic comparisons have not
+established a speedup. Standalone source timings remain distinct from tactic timings.
+
+To time the compiled rule registry on captured source proofs, use
+`python3 tools/eunoia-runtime-profile/profile.py --interpreter specialized --output /tmp/eunoia-specialized-source`. Each fixture selects its own used-rule registry.
+This measures source replay, with no solver or tactic invocation.
