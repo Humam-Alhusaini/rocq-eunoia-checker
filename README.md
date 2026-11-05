@@ -4,7 +4,7 @@ A standalone extraction of SMTRocq's signature-generated Eunoia/CPC checker,
 with benchmarks that do not invoke an SMT solver, the SMTCoq tactic, or native
 certificate search. Extracted from [SMTRocq PR #2](https://github.com/Humam-Alhusaini/SMTRocq/pull/2)
 initially at `0613ce2b18315b811ed8d19b9a7820e206ffec0f`, now synchronized with
-core `14c2dd8beb03005ad0fdda3e31c879df7887d9e3`.
+core `983c85afb0059c3e1475155ac79715b10632e45a`.
 
 The repository includes the generated rule interpreter, strict CPC reader,
 checked trace/scoping machinery, semantic certificate gates, proofs, fixtures,

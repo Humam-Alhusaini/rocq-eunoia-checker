@@ -72,6 +72,8 @@ def main():
     command += ["--import", "SMTCoq.checker.eunoia.CpcGenerated",
                 "--theorem", "SMTCoq.checker.eunoia.CpcGenerated.cpc_canonicalize_correct",
                 "--theorem", "SMTCoq.checker.eunoia.CpcGenerated.cpc_surface_correct"]
+    command += ["--import", "SMTCoq.checker.eunoia.EoSyntax",
+                "--theorem", "SMTCoq.checker.eunoia.EoSyntax.term_eqb_refinement"]
     subprocess.run(command, cwd=ROOT, check=True)
 
 

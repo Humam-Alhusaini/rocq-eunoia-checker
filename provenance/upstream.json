@@ -1,7 +1,7 @@
 {
   "repository": "https://github.com/Humam-Alhusaini/SMTRocq",
   "pull_request": 2,
-  "commit": "14c2dd8beb03005ad0fdda3e31c879df7887d9e3",
+  "commit": "983c85afb0059c3e1475155ac79715b10632e45a",
   "extracted_at": "2026-11-05",
   "logical_namespaces": "SMTCoq.* retained for compatibility; sources bundled, no installed SMTCoq dependency",
   "unchanged_proof_and_signature_sha256": {
@@ -19,7 +19,7 @@
     "theories/checker/eunoia/CpcStagedRules.v": "10ed01f2f93089dda9b92d63e8a04575f2943f6b14287e796e07fd9f79b49de4",
     "theories/checker/eunoia/EoArithmetic.v": "c6d5a1a2b8c737da219a20b23cf6a415fe6d6a8660c458df2b521df9f4695017",
     "theories/checker/eunoia/EoArithmeticTests.v": "bd3e089b07c47da68de5500563c94262496b350f6f272c5225ef3f6f0c51091d",
-    "theories/checker/eunoia/EoCheckedMemo.v": "2c134f82962a9bb95a5280297451d04d2b91b9c78227a1e0d1b6268f1a50b71e",
+    "theories/checker/eunoia/EoCheckedMemo.v": "b3441ab268aee30deed3ab29d730d0c96e77b82672456aa28fd77fe6ef627e42",
     "theories/checker/eunoia/EoCheckedMemoTests.v": "25db1bfe36017ef8481ecc52addabca590920f0c054e05b988251c49e995cee1",
     "theories/checker/eunoia/EoCompiledPrograms.v": "18a9bd06a48a1f5b0cf5287d3b29e4cc80d3d27b68e72684df689265930165b0",
     "theories/checker/eunoia/EoDirect.v": "a03d358de517bd5970e269326556ecc09632acbeb0b70142417346a848273170",
@@ -33,8 +33,8 @@
     "theories/checker/eunoia/EoRuleMemo.v": "09db4e12a400fe9cbf76f25e0e761db8bc449b906616c1412f8d7517cbfca27e",
     "theories/checker/eunoia/EoRuntime.v": "09a893b95d1fecf0fafa211072117ae6c704933fc1e50e3c6db8429ba59d44f6",
     "theories/checker/eunoia/EoStaged.v": "d88588ec932d995938517f7c1dd3541424b52023d68fc871ab9989ee88ac8d6f",
-    "theories/checker/eunoia/EoSyntax.v": "f30674318987d354dd4f450382d7861a3b03df13bd6c3d63c53643cb67c8dfd8",
-    "theories/checker/eunoia/EunoiaAdapter.v": "9206eda4cf923c9f23b9e824ad261be2242e472da8210260d399c5ec41cbf154",
+    "theories/checker/eunoia/EoSyntax.v": "222923b200e1675a127dc71d691510ed096b4e972d4eb2e8d739b5bfe4a7e645",
+    "theories/checker/eunoia/EunoiaAdapter.v": "ec70153da127145f91b9abb3d130e4ac72bcc83e697c01e9a78c189898bbc065",
     "theories/checker/eunoia/EunoiaBool.v": "9db3174db5e1857e4d19f2b7dc2277ad76e1930beda1abd5fe6e959f4f8cda6b",
     "theories/checker/eunoia/EunoiaBoolTests.v": "b9f29e34b9048ed2f93b62d1edcc350cc24e77e91c8ef120ffd8863b83237d45",
     "theories/checker/eunoia/EunoiaBridge.v": "c8cdc011fc4913daa9337e6ab6b590071f27d8f33734dda2e14fd4112d050747",
@@ -124,5 +124,5 @@
     "tools/eunoia/signatures/cpc/theories/Strings.eo": "9b92523b67acf53c4b8b6e5e3065c2032edda2f2a7b8ba625cec1986440dabb0"
   },
   "synchronized_at": "2026-11-04",
-  "previous_checkpoint": "provenance/extraction-67cc9a3.json"
+  "previous_checkpoint": "provenance/extraction-14c2dd8.json"
 }

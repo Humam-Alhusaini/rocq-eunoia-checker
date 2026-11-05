@@ -176,3 +176,18 @@ the inherited baseline. No new theory support is claimed by this optimization.
 A fresh reference-interpreter `uf1`/`lia1` smoke run produced all eight expected
 timing phases and passed its independent kernel check. It ran concurrently
 with other validation, so these timings are diagnostics, not performance data.
+
+## Definitionally equal term comparison (2026-11-05)
+
+The prepared snapshot tracks upstream `983c85a` across the same 117 proof and
+signature files. Application equality branches on its function comparison,
+avoiding the argument comparison after a mismatch. The new pointwise refinement
+theorem is proved by `reflexivity` against the original recursive definition.
+Existing equality-specification proofs retain their statements and use an
+explicit conjunction view during rewriting.
+
+`make build`, `make test`, and the complete **114-target** assumption audit
+passed. The new equality refinement is closed. A fresh reference `uf1`/`lia1`
+source smoke run produced all eight expected timing phases and passed its
+independent kernel check. These validation runs overlapped with main-repository
+validation; their timings are diagnostics and do not establish a speedup.
