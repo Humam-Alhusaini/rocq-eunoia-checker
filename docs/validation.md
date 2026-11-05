@@ -179,7 +179,7 @@ with other validation, so these timings are diagnostics, not performance data.
 
 ## Definitionally equal term comparison (2026-11-05)
 
-The prepared snapshot tracks upstream `983c85a` across the same 117 proof and
+This snapshot tracks upstream `983c85a` across the same 117 proof and
 signature files. Application equality branches on its function comparison,
 avoiding the argument comparison after a mismatch. The new pointwise refinement
 theorem is proved by `reflexivity` against the original recursive definition.

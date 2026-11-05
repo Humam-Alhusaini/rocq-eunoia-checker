@@ -183,3 +183,8 @@ workloads instead of repeated copies of one rule input.
 
 Signature alias conversion now uses precomputed indexes with closed pointwise
 refinement proofs. The source rules and supported fragment are unchanged.
+
+Source-term application equality now short-circuits after an unequal function
+subtree, with a closed definitional-refinement proof. Matched upstream tactic
+timings tracked control variation and do not establish an additional tactic
+speedup. See [validation](docs/validation.md) for the standalone checks.
