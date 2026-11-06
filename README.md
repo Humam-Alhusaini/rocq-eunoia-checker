@@ -3,15 +3,24 @@
 A standalone extraction of SMTRocq's signature-generated Eunoia/CPC checker,
 with benchmarks that do not invoke an SMT solver, the SMTCoq tactic, or native
 certificate search. Extracted from [SMTRocq PR #2](https://github.com/Humam-Alhusaini/SMTRocq/pull/2)
-at `0613ce2b18315b811ed8d19b9a7820e206ffec0f`.
+initially at `0613ce2b18315b811ed8d19b9a7820e206ffec0f`, now synchronized with
+core `6ccf13befa9033e69c7a6f00fbad7e6af15a4a99`.
 
 The repository includes the generated rule interpreter, strict CPC reader,
 checked trace/scoping machinery, semantic certificate gates, proofs, fixtures,
-signature compiler, and required SMTCoq theory sources. All 80 extracted Rocq
-proof and Eunoia signature files retain their original bytes. Their hashes are
-in [provenance/upstream.json](provenance/upstream.json); 115 relevant commits
+signature compiler, and required SMTCoq theory sources. All 125 current Rocq proof and Eunoia signature files match that upstream
+checkpoint byte for byte. Their hashes are in
+[provenance/upstream.json](provenance/upstream.json); the original extraction
+record remains in [provenance/extraction-0613ce2b.json](provenance/extraction-0613ce2b.json).
+The initial 115 relevant commits
 retain their authorship, with rewritten commit IDs mapped in
 [provenance/commit-map.tsv](provenance/commit-map.tsv).
+
+The verified signature-program index is also included and tested against the
+reference evaluator; it remains an experimental tactic path upstream.
+
+The generic checked-helper cache and its reference-refinement proofs are included;
+its collection and validation tests use captured CPC data, with no solver invocation.
 
 ## Build and test
 
@@ -29,9 +38,9 @@ make test
 python3 -B tools/check-assumptions.py --output /tmp/eunoia-assumptions
 ```
 
-The generator follows the pinned signature's include graph: 51 selected rules
-and 53 helpers; 558 other rules reject. Tests cover deterministic regeneration,
-47 compiler tests, 111 reader cases, positive and corrupted certificates,
+The generator follows the pinned signature's include graph: 87 selected rules
+and 59 helpers; 522 other rules reject. Tests cover deterministic regeneration,
+48 compiler tests, 111 reader cases, positive and corrupted certificates,
 scope/liveness controls, captured proof replays, and independent kernel checks.
 `make test` includes the full generated-runtime validation; its outputs remain
 in temporary directories. Set `EUNOIA_KEEP_TEST_DIR=1` to retain them.
@@ -53,7 +62,7 @@ tools use the current PATH via `tools/rocq-env`.
 
 ## Benchmark independently
 
-There are two distinct measurement layers. Keep their results separate.
+Keep the semantic and source-computation measurement layers separate.
 
 **Semantic certificate checking:**
 
@@ -81,10 +90,26 @@ python3 -B tools/eunoia-runtime-profile/profile.py \
 This replays 29 original/reduced UF/LIA solver captures through generated source
 computation, retaining hashes, step counts, timings, assumption checks and kernel
 checks. It is **not semantic proof acceptance**: its test type queries and roots
-are computation inputs. Integer-cast capture regressions additionally run in
+are computation inputs. `--interpreter indexed` selects the proved program-name index on the same
+captured computation workload; the default remains `reference`. This source
+comparison is separate from full tactic performance.
+Integer-cast capture regressions additionally run in
 `make test`; the profiler's default 29-capture corpus excludes those three.
 
-Both runners retain raw logs, generated measurement sources, tool versions,
+The optional checked-helper sharing component has a separate runner:
+
+```sh
+python3 -B benchmarks/helper_cache.py --output /tmp/eunoia-helpers --rounds 3
+```
+
+It compares 1,000 and 3,000 complete `arith_poly_norm` source-rule calls with
+reference evaluation and validated sharing. Cache validation and surface
+conversion are inside the VM measurements; candidate collection occurs before
+timing. Each positive theorem needs `Qed`, a fresh `.vo`, empty assumptions and
+independent kernel checking. This synthetic repeated-rule component does not
+measure a full proof trace or predict end-to-end tactic performance.
+
+The runners retain raw logs, generated measurement sources, tool versions,
 source hashes, exit statuses and JSON summaries. VM evaluation, proof-producing
 reduction, reflexivity and `Qed` have separate timing boundaries; process wall
 time and independent kernel checks are outside those VM measurements. Very
@@ -134,3 +159,49 @@ SMTCoq-derived code retains its CeCILL-C license and copyright notices; see
 [LICENSE](LICENSE). Pinned cvc5 Eunoia signatures retain their own upstream notices
 and provenance under `tools/eunoia/signatures`. Historical validation documents
 describe the original SMTRocq environment; use the commands above for this repo.
+
+The signature-specialized helper evaluator is included with exact computation
+refinement proofs and all 32 captured source replays. See upstream measurements
+before interpreting component timings as tactic improvements.
+
+Direct signature compilation is included with proved reference fallbacks and
+flat, scoped, and shared checker adapters. Its source profiler and repeated-rule
+runner are separate from tactic measurements.
+
+For the repeated complete source-rule diagnostic:
+
+```sh
+python3 benchmarks/direct_helpers.py --output /tmp/eunoia-direct-rules --rounds 3
+```
+
+It alternates ordering between fresh rounds, compares reference and direct
+execution at 1,000 and 3,000 calls, and records VM and `Qed` separately. Every
+round requires closed proofs and an independent kernel check. These are source
+computation costs, separate from the complete semantic checker and tactic.
+Use `--interpreter direct` in the actual-trace source profiler for captured CPC
+workloads instead of repeated copies of one rule input.
+
+Signature alias conversion now uses precomputed indexes with closed pointwise
+refinement proofs. The source rules and supported fragment are unchanged.
+
+Source-term application equality now short-circuits after an unequal function
+subtree, with a closed definitional-refinement proof. Matched upstream tactic
+timings tracked control variation and do not establish an additional tactic
+speedup. See [validation](docs/validation.md) for the standalone checks.
+
+The extraction includes all 59 compiled helpers with modular case proofs, and
+87 individually proved rule implementations for proof-specific registries.
+These are experimental execution paths; upstream tactic comparisons have not
+established a speedup. Standalone source timings remain distinct from tactic timings.
+
+To time the compiled rule registry on captured source proofs, use
+`python3 tools/eunoia-runtime-profile/profile.py --interpreter specialized --output /tmp/eunoia-specialized-source`. Each fixture selects its own used-rule registry.
+This measures source replay, with no solver or tactic invocation.
+
+The indexed model encoder reuses the bundled SMTCoq atom/formula tables to
+compute Eunoia encodings once. `EunoiaModelDagCheck.checker_refinement` proves
+that the complete checker returns exactly the original result for every input;
+generated source rules, bindings, scopes and semantic gates remain checked.
+The fixed benchmark also includes scoped shared/inline examples and corruption
+controls from this checker. These small standalone fixtures validate the
+measurement path; upstream tactic improvements are reported separately.

@@ -8,7 +8,7 @@ From SMTCoq.utils Require Import Misc PArray CompDec.
 From SMTCoq.structures Require Import CompDecInstances.
 From SMTCoq.checker.fol Require Import State Terms.
 From SMTCoq.checker Require Import MainChecker.
-From SMTCoq.checker.eunoia Require Import EoSyntax EoArithmetic CpcGenerated EunoiaChecker EunoiaBridge.
+From SMTCoq.checker.eunoia Require Import EoSyntax EoArithmetic EunoiaIntegerEmbedding CpcGenerated EunoiaChecker EunoiaBridge.
 
 Import ListNotations.
 Local Open Scope string_scope.
@@ -49,7 +49,12 @@ Fixpoint lower_arithmetic (fuel : nat) (t : term) : option term :=
     let '(head, args) := spine t [] in
     match head, traverse (lower_arithmetic k) args with
     | Symbol s, Some xs =>
-      if String.eqb s "+" || String.eqb s "*" then
+      if String.eqb s "@purify" then
+        (* CPC purification names the original term. Keep raw syntax for
+           generated rule evaluation; only the table-binding view unfolds it.
+           Every resulting local implication is still certified by the gate. *)
+        match xs with [x] => Some x | _ => None end
+      else if String.eqb s "+" || String.eqb s "*" then
         match xs with
         | a :: b :: c :: rest =>
           let fix chain x xs := match xs with
@@ -65,11 +70,12 @@ Fixpoint lower_arithmetic (fuel : nat) (t : term) : option term :=
 
 Lemma term_eqb_spec : forall a b, term_eqb a b = true <-> a = b.
 Proof.
-  induction a as [s|f IHf a IHa]; destruct b; simpl;
+  induction a as [s|f IHf a IHa]; destruct b as [t|g b]; simpl;
     try (split; [discriminate | congruence]).
   - rewrite String.eqb_eq.
     split; [intro H; subst; reflexivity | intro H; inversion H; auto].
-  - rewrite andb_true_iff, IHf, IHa.
+  - change (term_eqb f g && term_eqb a b = true <-> Apply f a = Apply g b).
+    rewrite andb_true_iff, IHf, IHa.
     split; [intros [-> ->]; reflexivity | intro H; inversion H; auto].
 Qed.
 
@@ -86,7 +92,7 @@ Definition is_numeral (s : string) : bool :=
 Definition reserved : list string :=
   ["Bool"; "Int"; "Type"; "->"; "true"; "false"; "not"; "and";
    "or"; "=>"; "xor"; "ite"; "="; "+"; "-"; "*"; "<"; "<="; ">"; ">=";
-   "Real"; "@List"; "@list"; "@list.nil";
+   "Real"; "to_real"; "to_int"; "/"; "/_total"; "@purify"; "@List"; "@list"; "@list.nil";
    "eo::List"; "eo::List::cons"; "eo::List::nil"].
 
 Definition is_literal_name (s : string) : bool :=
@@ -177,7 +183,7 @@ Section Tables.
 
   (* Existing Atom typechecking is authoritative; no certificate type oracle.
      Every recursive read is bounded and strictly below its parent. *)
-  Fixpoint encode_atom (fuel : nat) (i : int) : option term :=
+  Fixpoint encode_atom_reference (fuel : nat) (i : int) : option term :=
     match fuel with
     | O => None
     | S k =>
@@ -193,15 +199,15 @@ Section Tables.
           | Atom.Auop Atom.UO_Zneg j =>
             option_map (fun p => Symbol (numeral (Zneg p))) (positive_at k j)
           | Atom.Auop Atom.UO_Zopp j =>
-            option_map (fun a => app "-" [a]) (encode_atom k j)
+            option_map (fun a => app "-" [a]) (encode_atom_reference k j)
           | Atom.Abop op a b =>
-            match binop_name op, encode_atom k a, encode_atom k b with
+            match binop_name op, encode_atom_reference k a, encode_atom_reference k b with
             | Some s, Some x, Some y => Some (app s [x; y])
             | _, _, _ => None
             end
           | Atom.Aapp f args =>
             if f <? PArray.length t_func then
-              match name_at f (function_names names), traverse (encode_atom k) args,
+              match name_at f (function_names names), traverse (encode_atom_reference k) args,
                     traverse encode_sort (fst (Atom.v_type _ _ (t_func.[f]))),
                     encode_sort (snd (Atom.v_type _ _ (t_func.[f]))) with
               | Some s, Some xs, Some _, Some _ => Some (app s xs)
@@ -213,6 +219,52 @@ Section Tables.
         end
       else None
     end.
+
+  Definition encode_atom_with_type (type_of : int -> Typ.type)
+      : nat -> int -> option term :=
+    fix visit (fuel : nat) (i : int) : option term :=
+    match fuel with
+    | O => None
+    | S k =>
+      if (i <? PArray.length t_atom) && Atom.lt_atom i (t_atom.[i]) &&
+         Atom.check_aux t_i t_func type_of (t_atom.[i]) (type_of i) then
+        match encode_sort (type_of i) with
+        | None => None
+        | Some _ =>
+          match t_atom.[i] with
+          | Atom.Acop Atom.CO_Z0 => Some (Symbol "0")
+          | Atom.Auop Atom.UO_Zpos j =>
+            option_map (fun p => Symbol (numeral (Zpos p))) (positive_at k j)
+          | Atom.Auop Atom.UO_Zneg j =>
+            option_map (fun p => Symbol (numeral (Zneg p))) (positive_at k j)
+          | Atom.Auop Atom.UO_Zopp j =>
+            option_map (fun a => app "-" [a]) (visit k j)
+          | Atom.Abop op a b =>
+            match binop_name op, visit k a, visit k b with
+            | Some s, Some x, Some y => Some (app s [x; y])
+            | _, _, _ => None
+            end
+          | Atom.Aapp f args =>
+            if f <? PArray.length t_func then
+              match name_at f (function_names names), traverse (visit k) args,
+                    traverse encode_sort (fst (Atom.v_type _ _ (t_func.[f]))),
+                    encode_sort (snd (Atom.v_type _ _ (t_func.[f]))) with
+              | Some s, Some xs, Some _, Some _ => Some (app s xs)
+              | _, _, _, _ => None
+              end
+            else None
+          | _ => None
+          end
+        end
+      else None
+    end.
+
+  Definition encode_atom (fuel : nat) (i : int) : option term :=
+    let interpreted := @Atom.t_interp t_i t_func t_atom in
+    encode_atom_with_type (@Atom.get_type' t_i interpreted) fuel i.
+  Lemma encode_atom_refinement : forall fuel i,
+    encode_atom fuel i = encode_atom_reference fuel i.
+  Proof. reflexivity. Qed.
 
   Fixpoint double_nots (fuel : nat) (n : int) (t : term) : option term :=
     if n =? 0 then Some t else
@@ -226,7 +278,7 @@ Section Tables.
   Definition nary (s : string) (xs : list term) : option term :=
     match xs with _ :: _ :: _ => Some (app s xs) | _ => None end.
 
-  Fixpoint encode_literal (fuel : nat) (l : _lit) : option term :=
+  Fixpoint encode_literal_reference (fuel : nat) (l : _lit) : option term :=
     match fuel with
     | O => None
     | S k =>
@@ -238,27 +290,27 @@ Section Tables.
           | Form.Ffalse => Some (Symbol "false")
           | Form.Fatom a =>
             if (a <? PArray.length t_atom) && Typ.eqb (get_type a) Typ.Tbool
-            then encode_atom k a else None
+            then encode_atom_reference k a else None
           | Form.Fnot2 n a =>
-            match encode_literal k a with
+            match encode_literal_reference k a with
             | Some t => double_nots k n t
             | None => None
             end
           | Form.Fand args | Form.For args | Form.Fimp args =>
-            match traverse (encode_literal k) (to_list args) with
+            match traverse (encode_literal_reference k) (to_list args) with
             | Some xs => nary
                 (match t_form.[i] with Form.Fand _ => "and" | Form.For _ => "or"
                  | _ => "=>" end) xs
             | None => None
             end
           | Form.Fxor a b | Form.Fiff a b =>
-            match encode_literal k a, encode_literal k b with
+            match encode_literal_reference k a, encode_literal_reference k b with
             | Some x, Some y => Some (app
                 (match t_form.[i] with Form.Fxor _ _ => "xor" | _ => "=" end) [x; y])
             | _, _ => None
             end
           | Form.Fite a b c =>
-            match encode_literal k a, encode_literal k b, encode_literal k c with
+            match encode_literal_reference k a, encode_literal_reference k b, encode_literal_reference k c with
             | Some x, Some y, Some z => Some (app "ite" [x; y; z])
             | _, _, _ => None
             end
@@ -268,55 +320,129 @@ Section Tables.
       else None
     end.
 
+  Definition encode_literal_with_type (type_of : int -> Typ.type)
+      : nat -> _lit -> option term :=
+    let atom_encoder := encode_atom_with_type type_of in
+    fix visit (fuel : nat) (l : _lit) : option term :=
+    match fuel with
+    | O => None
+    | S k =>
+      let i := Lit.blit l in
+      if (i <? PArray.length t_form) && Form.lt_form i (t_form.[i]) then
+        let base :=
+          match t_form.[i] with
+          | Form.Ftrue => Some (Symbol "true")
+          | Form.Ffalse => Some (Symbol "false")
+          | Form.Fatom a =>
+            if (a <? PArray.length t_atom) && Typ.eqb (type_of a) Typ.Tbool
+            then atom_encoder k a else None
+          | Form.Fnot2 n a =>
+            match visit k a with
+            | Some t => double_nots k n t
+            | None => None
+            end
+          | Form.Fand args | Form.For args | Form.Fimp args =>
+            match traverse (visit k) (to_list args) with
+            | Some xs => nary
+                (match t_form.[i] with Form.Fand _ => "and" | Form.For _ => "or"
+                 | _ => "=>" end) xs
+            | None => None
+            end
+          | Form.Fxor a b | Form.Fiff a b =>
+            match visit k a, visit k b with
+            | Some x, Some y => Some (app
+                (match t_form.[i] with Form.Fxor _ _ => "xor" | _ => "=" end) [x; y])
+            | _, _ => None
+            end
+          | Form.Fite a b c =>
+            match visit k a, visit k b, visit k c with
+            | Some x, Some y, Some z => Some (app "ite" [x; y; z])
+            | _, _, _ => None
+            end
+          | _ => None
+          end in
+        option_map (fun t => if Lit.is_pos l then t else app "not" [t]) base
+      else None
+    end.
+
+  Definition encode_literal (fuel : nat) (l : _lit) : option term :=
+    let interpreted := @Atom.t_interp t_i t_func t_atom in
+    encode_literal_with_type (@Atom.get_type' t_i interpreted) fuel l.
+  Lemma encode_literal_refinement : forall fuel l,
+    encode_literal fuel l = encode_literal_reference fuel l.
+  Proof. reflexivity. Qed.
+
   (* These are views of a precise clause, never a decoder guessing its indices.
      [false] denotes [] explicitly; a singleton Ffalse remains that singleton. *)
   Definition encode_clause (fuel : nat) (c : C.t) : option term :=
+    let interpreted := @Atom.t_interp t_i t_func t_atom in
+    let encode := encode_literal_with_type (@Atom.get_type' t_i interpreted) fuel in
     match c with
     | [] => Some (Symbol "false")
-    | [l] => encode_literal fuel l
-    | _ => option_map (app "or") (traverse (encode_literal fuel) c)
+    | [l] => encode l
+    | _ => option_map (app "or") (traverse encode c)
     end.
 
-  Definition binds (fuel : nat) (c : C.t) (t : term) : bool :=
-    EunoiaChecker.clause_wf (PArray.length t_form) c &&
-    match encode_clause fuel c, lower_arithmetic fuel t with
-    | Some u, Some v => term_eqb u v
-    | _, _ => false
+  (* A computed cache, never supplied by the proof producer. Misses use the
+     original encoder; a pointwise theorem preserves arbitrary fuel/tables. *)
+  Fixpoint lookup_encoding (entries : list (_lit * option term)) (l : _lit)
+      : option (option term) :=
+    match entries with
+    | [] => None
+    | (key, value) :: rest =>
+      if l =? key then Some value else lookup_encoding rest l
     end.
 
-  Lemma binds_spec : forall fuel c t, binds fuel c t = true <->
-    EunoiaChecker.clause_wf (PArray.length t_form) c = true /\
-    exists u, encode_clause fuel c = Some u /\ lower_arithmetic fuel t = Some u.
+  Lemma lookup_encoding_sound : forall (f : _lit -> option term) keys l value,
+    lookup_encoding (map (fun key => (key, f key)) keys) l = Some value ->
+    value = f l.
   Proof.
-    intros fuel c t; unfold binds; rewrite andb_true_iff.
-    destruct (encode_clause fuel c) as [u | ] eqn:Hu;
-      destruct (lower_arithmetic fuel t) as [v | ] eqn:Hv.
-    - rewrite term_eqb_spec; split.
-      + intros [H ->]; split; [exact H| eauto].
-      + intros [H [w [H1 H2]]]; inversion H1; inversion H2; subst; auto.
-    - split; [intros [_ H]; discriminate| intros [_ [w [_ H]]]; discriminate].
-    - split; [intros [_ H]; discriminate| intros [_ [w [H _]]]; discriminate].
-    - split; [intros [_ H]; discriminate| intros [_ [w [H _]]]; discriminate].
+    intros f keys; induction keys as [ | index rest IH]; intros l value H; simpl in H.
+    - discriminate.
+    - destruct (l =? index) eqn:He.
+      + apply Uint63.eqb_spec in He; subst index. inversion H; reflexivity.
+      + now apply (IH l value).
   Qed.
 
-  Fixpoint bind_terms (fuel : nat) (cs : list C.t) (ts : list term) : bool :=
-    match cs, ts with
-    | [], [] => true
-    | c :: cs, t :: ts => binds fuel c t && bind_terms fuel cs ts
-    | _, _ => false
+  Definition encoding_entries (fuel : nat) (literals : list _lit)
+      : list (_lit * option term) :=
+    let unique := fold_right (fun l acc =>
+      if existsb (fun key => l =? key) acc then acc else l :: acc)
+      [] (firstn 1024 literals) in
+    let interpreted := @Atom.t_interp t_i t_func t_atom in
+    let encode := encode_literal_with_type (@Atom.get_type' t_i interpreted) fuel in
+    map (fun l => (l, encode l)) (firstn 512 unique).
+
+  Definition memo_encoding entries (fuel : nat) (l : _lit) :=
+    match lookup_encoding entries l with
+      | Some value => value | None => encode_literal fuel l end.
+
+  Lemma memo_encoding_refinement : forall fuel keys l,
+    memo_encoding (encoding_entries fuel keys) fuel l = encode_literal fuel l.
+  Proof.
+    intros fuel keys l; unfold memo_encoding, encoding_entries.
+    destruct (lookup_encoding _ l) as [value | ] eqn:H; [ | reflexivity].
+    now apply lookup_encoding_sound in H.
+  Qed.
+
+  Definition cached_clause entries (fuel : nat) : C.t -> option term :=
+    let encode := memo_encoding entries fuel in
+    fun c => match c with
+    | [] => Some (Symbol "false")
+    | [l] => encode l
+    | _ => option_map (app "or") (traverse encode c)
     end.
 
-  Lemma bind_terms_spec : forall fuel cs ts, bind_terms fuel cs ts = true <->
-    Forall2 (fun c t =>
-      EunoiaChecker.clause_wf (PArray.length t_form) c = true /\
-      (exists u, encode_clause fuel c = Some u /\ lower_arithmetic fuel t = Some u)) cs ts.
+  Lemma cached_clause_refinement : forall fuel keys c,
+    cached_clause (encoding_entries fuel keys) fuel c = encode_clause fuel c.
   Proof.
-    intros fuel cs; induction cs as [ | c cs IH]; destruct ts as [ | t ts]; simpl.
-    - split; constructor.
-    - split; [discriminate | intro H; inversion H].
-    - split; [discriminate | intro H; inversion H].
-    - rewrite andb_true_iff, binds_spec, IH.
-      split; [intros [H1 H2]; constructor; assumption | intro H; inversion H; auto].
+    intros fuel keys c.
+    assert (forall xs, traverse (memo_encoding (encoding_entries fuel keys) fuel) xs =
+      traverse (encode_literal fuel) xs) as H.
+    { induction xs as [ | x xs IH]; simpl; [reflexivity | ].
+      rewrite memo_encoding_refinement, IH; reflexivity. }
+    destruct c as [ | x [ | y xs]]; unfold cached_clause, encode_clause;
+      [reflexivity | apply memo_encoding_refinement | now rewrite H].
   Qed.
 
   (* A partial syntactic type query, derived from the same function signatures
@@ -343,7 +469,9 @@ Section Tables.
     end.
 
   Definition builtin_type (s : string) (xs : list Typ.type) : option Typ.type :=
-    if String.eqb s "true" || String.eqb s "false" then
+    if String.eqb s "@purify" then
+      match xs with [ty] => Some ty | _ => None end
+    else if String.eqb s "true" || String.eqb s "false" then
       match xs with [] => Some Typ.Tbool | _ => None end
     else if String.eqb s "not" then
       match xs with [Typ.Tbool] => Some Typ.Tbool | _ => None end
@@ -427,6 +555,57 @@ Section Tables.
         else match infer fuel t with Some ft => type_term ft | None => None end
       end.
 
+  Fixpoint consume_term_types (expected actual : list term) : option (list term) :=
+    match expected,actual with
+    | _,[] => Some expected
+    | e::es,a::xs => if term_eqb e a then consume_term_types es xs else None
+    | _,_ => None end.
+  Definition syntax_builtin_type (name : string) (types : list term) : option term :=
+    let all_real := forallb (fun ty => term_eqb ty (Symbol "Real")) types in
+    let all_int := forallb (fun ty => term_eqb ty (Symbol "Int")) types in
+    let all_bool := forallb (fun ty => term_eqb ty (Symbol "Bool")) types in
+    if String.eqb name "to_real" then
+      match types with [Symbol "Int"] => Some (Symbol "Real") | _ => None end
+    else if String.eqb name "to_int" then
+      match types with [Symbol "Real"] => Some (Symbol "Int") | _ => None end
+    else if String.eqb name "@purify" then
+      match types with [ty] => Some ty | _ => None end
+    else if String.eqb name "+" || String.eqb name "*" then
+      match types with _::_::_ => if all_real then Some (Symbol "Real")
+        else if all_int then Some (Symbol "Int") else None | _ => None end
+    else if String.eqb name "-" then
+      match types with [_] | [_;_] => if all_real then Some (Symbol "Real")
+        else if all_int then Some (Symbol "Int") else None | _ => None end
+    else if String.eqb name "/" then
+      match types with [Symbol "Real";Symbol "Real"] => Some (Symbol "Real") | _ => None end
+    else if existsb (String.eqb name) ["<";"<=";">";">="] then
+      match types with [Symbol "Real";Symbol "Real"] | [Symbol "Int";Symbol "Int"] =>
+        Some (Symbol "Bool") | _ => None end
+    else if String.eqb name "=" then
+      match types with [a;b] => if term_eqb a b then Some (Symbol "Bool") else None | _ => None end
+    else if String.eqb name "not" then
+      match types with [Symbol "Bool"] => Some (Symbol "Bool") | _ => None end
+    else if String.eqb name "and" || String.eqb name "or" then
+      match types with _::_ => if all_bool then Some (Symbol "Bool") else None | _ => None end
+    else if String.eqb name "=>" || String.eqb name "xor" then
+      match types with _::_::_ => if all_bool then Some (Symbol "Bool") else None | _ => None end
+    else if String.eqb name "ite" then
+      match types with [Symbol "Bool";a;b] =>
+        if term_eqb a b then Some a else None | _ => None end
+    else None.
+  Definition syntax_application_type (name : string) (actual : list term) : option term :=
+    match function_named name (function_names names) with
+    | Some (expected,result) =>
+      match traverse encode_sort expected,encode_sort result with
+      | Some types,Some ret =>
+        match consume_term_types types actual with
+        | Some [] => Some ret
+        | Some remaining => Some (app "->" (remaining ++ [ret]))
+        | None => None end
+      | _,_ => None end
+    | None => syntax_builtin_type name actual
+    end.
+
   (* CPC proof arguments can contain heterogeneous lists and rational
      coefficients. These are signature syntax, not new Atom/Form sorts or
      interpretations. The existing object query remains authoritative for
@@ -456,27 +635,115 @@ Section Tables.
             if forallb (fun a =>
               match syntax_typeof k a with Some _ => true | None => false end) args
             then Some (Symbol "@List") else None
+          | Symbol name, xs =>
+            match traverse (syntax_typeof k) xs with
+            | Some types => syntax_application_type name types
+            | None => None end
           | _, _ => None
           end
         end
       end
     end.
 
-  Definition typeof (fuel : nat) : term -> option term :=
-    let ready := names_wf in
-    fun t => if ready then syntax_typeof fuel t else None.
+  Definition typeof_with_ready (ready : bool) (fuel : nat) (t : term) :=
+    if ready then syntax_typeof fuel t else None.
+  Definition typeof (fuel : nat) := typeof_with_ready names_wf fuel.
+  Lemma typeof_with_ready_refinement : forall fuel t,
+    typeof_with_ready names_wf fuel t = typeof fuel t.
+  Proof. reflexivity. Qed.
 
   Definition tables_wf : bool :=
     names_wf && Form.check_form t_form && Atom.check_atom t_atom &&
     Atom.wt t_i t_func t_atom.
 
-  Record rule_payload := Payload {
+  (* Only rational intermediates with closed positive denominators are
+     represented by existing integer terms. Raw source syntax is never changed
+     for generated derivation. Every lowered implication still needs its local
+     SMTCoq semantic certificate. *)
+  Definition normalize_source fuel t :=
+    EunoiaIntegerEmbedding.normalize lower_arithmetic (syntax_typeof fuel) fuel t.
+  Lemma normalize_source_ordinary : forall fuel t,
+    EunoiaIntegerEmbedding.requires_embedding t = false ->
+    normalize_source fuel t = lower_arithmetic fuel t.
+  Proof. intros; unfold normalize_source; now apply EunoiaIntegerEmbedding.normalize_ordinary. Qed.
+
+  Definition binds (fuel : nat) (c : C.t) (t : term) : bool :=
+    EunoiaChecker.clause_wf (PArray.length t_form) c &&
+    match encode_clause fuel c, normalize_source fuel t with
+    | Some u, Some v => term_eqb u v
+    | _, _ => false
+    end.
+
+  Definition cached_binds entries fuel c t :=
+    EunoiaChecker.clause_wf (PArray.length t_form) c &&
+    match cached_clause entries fuel c, normalize_source fuel t with
+    | Some u, Some v => term_eqb u v | _, _ => false end.
+  Lemma cached_binds_refinement : forall fuel keys c t,
+    cached_binds (encoding_entries fuel keys) fuel c t = binds fuel c t.
+  Proof.
+    intros; unfold cached_binds, binds; rewrite cached_clause_refinement; reflexivity.
+  Qed.
+
+  Lemma binds_spec : forall fuel c t, binds fuel c t = true <->
+    EunoiaChecker.clause_wf (PArray.length t_form) c = true /\
+    exists u, encode_clause fuel c = Some u /\ normalize_source fuel t = Some u.
+  Proof.
+    intros fuel c t; unfold binds; rewrite andb_true_iff.
+    destruct (encode_clause fuel c) as [u | ] eqn:Hu;
+      destruct (normalize_source fuel t) as [v | ] eqn:Hv.
+    - rewrite term_eqb_spec; split.
+      + intros [H ->]; split; [exact H| eauto].
+      + intros [H [w [H1 H2]]]; inversion H1; inversion H2; subst; auto.
+    - split; [intros [_ H]; discriminate| intros [_ [w [_ H]]]; discriminate].
+    - split; [intros [_ H]; discriminate| intros [_ [w [H _]]]; discriminate].
+    - split; [intros [_ H]; discriminate| intros [_ [w [H _]]]; discriminate].
+  Qed.
+
+  Fixpoint bind_terms (fuel : nat) (cs : list C.t) (ts : list term) : bool :=
+    match cs, ts with
+    | [], [] => true
+    | c :: cs, t :: ts => binds fuel c t && bind_terms fuel cs ts
+    | _, _ => false
+    end.
+
+  Fixpoint cached_bind_terms entries fuel cs ts :=
+    match cs,ts with
+    | [],[] => true
+    | c::cs,t::ts => cached_binds entries fuel c t && cached_bind_terms entries fuel cs ts
+    | _,_ => false end.
+  Lemma cached_bind_terms_refinement : forall fuel keys cs ts,
+    cached_bind_terms (encoding_entries fuel keys) fuel cs ts = bind_terms fuel cs ts.
+  Proof.
+    intros fuel keys cs; induction cs as [ | c cs IH]; intros [ | t ts]; simpl;
+      try reflexivity. rewrite cached_binds_refinement, IH; reflexivity.
+  Qed.
+
+  Lemma bind_terms_spec : forall fuel cs ts, bind_terms fuel cs ts = true <->
+    Forall2 (fun c t =>
+      EunoiaChecker.clause_wf (PArray.length t_form) c = true /\
+      (exists u, encode_clause fuel c = Some u /\ normalize_source fuel t = Some u)) cs ts.
+  Proof.
+    intros fuel cs; induction cs as [ | c cs IH]; destruct ts as [ | t ts]; simpl.
+    - split; constructor.
+    - split; [discriminate | intro H; inversion H].
+    - split; [discriminate | intro H; inversion H].
+    - rewrite andb_true_iff, binds_spec, IH.
+      split; [intros [H1 H2]; constructor; assumption | intro H; inversion H; auto].
+  Qed.
+
+  Record rule_payload := MakePayload {
     rule_name : string;
     arguments : list term;
     premise_terms : list term;
     result_term : term;
-    result_clause : C.t
+    result_clause : C.t;
+    source_assumption : option term
   }.
+
+  Definition Payload name args premises result clause :=
+    MakePayload name args premises result clause None.
+  Definition ScopedPayload name args premises result clause assumption :=
+    MakePayload name args premises result clause (Some assumption).
 
   (* Polymorphic only to expose the binding theorem independently of generator
      correctness. The public evaluator below always uses CpcGenerated.derive. *)
@@ -486,6 +753,9 @@ Section Tables.
     let ready := tables_wf in
     let query := typeof fuel in
     fun p cs =>
+    match source_assumption p with
+    | Some _ => None
+    | None =>
     if ready && bind_terms fuel cs (premise_terms p) then
       match derive fuel query (rule_name p) (arguments p) (premise_terms p) with
       | Some t =>
@@ -493,7 +763,40 @@ Section Tables.
         then Some (result_clause p) else None
       | None => None
       end
-    else None.
+    else None
+    end.
+
+  Definition prepared_eval_with entries (ready names_ready : bool)
+      (derive : nat -> (term -> option term) -> string -> list term -> list term -> option term)
+      (fuel : nat) (p : rule_payload) (cs : list C.t) : option C.t :=
+    match source_assumption p with
+    | Some _ => None
+    | None =>
+      if ready && cached_bind_terms entries fuel cs (premise_terms p) then
+        match derive fuel (typeof_with_ready names_ready fuel) (rule_name p) (arguments p) (premise_terms p) with
+        | Some t =>
+          if term_eqb t (result_term p) && cached_binds entries fuel (result_clause p) t
+          then Some (result_clause p) else None
+        | None => None end
+      else None end.
+  Definition cached_eval_with entries derive fuel :=
+    prepared_eval_with entries tables_wf names_wf derive fuel.
+  Lemma prepared_eval_with_refinement : forall entries derive fuel p cs,
+    prepared_eval_with entries tables_wf names_wf derive fuel p cs =
+    cached_eval_with entries derive fuel p cs.
+  Proof. reflexivity. Qed.
+
+  Lemma cached_eval_with_refinement : forall derive fuel keys p cs,
+    cached_eval_with (encoding_entries fuel keys) derive fuel p cs = eval_with derive fuel p cs.
+  Proof.
+    intros; unfold cached_eval_with, prepared_eval_with, eval_with.
+    fold (typeof fuel).
+    destruct (source_assumption p); [reflexivity | ].
+    rewrite cached_bind_terms_refinement.
+    destruct (tables_wf && bind_terms fuel cs (premise_terms p)); [ | reflexivity].
+    destruct (derive fuel (typeof fuel) (rule_name p) (arguments p) (premise_terms p));
+      [now rewrite cached_binds_refinement | reflexivity].
+  Qed.
 
   Definition eval := eval_with CpcGenerated.derive.
 
@@ -505,6 +808,7 @@ Section Tables.
     binds fuel c (result_term p) = true /\ c = result_clause p.
   Proof.
     intros derive fuel p cs c H; unfold eval_with in H.
+    destruct (source_assumption p); try discriminate.
     destruct (tables_wf && bind_terms fuel cs (premise_terms p)) eqn:Hg;
       try discriminate.
     destruct (derive fuel (typeof fuel) (rule_name p) (arguments p) (premise_terms p))
@@ -544,8 +848,12 @@ Section Tables.
       (fuel : nat) (capacity : int) (roots : list C.t) (root_terms : list term)
       (claims : list (clause_id * C.t))
       (trace : list (@EunoiaChecker.step rule_payload witness)) (goal : clause_id) : bool :=
-    tables_wf && bind_terms fuel roots root_terms &&
-    EunoiaChecker.checker (eval fuel) gate (PArray.length t_form) capacity
+    let ready := tables_wf in
+    let names_ready := names_wf in
+    let entries := encoding_entries fuel
+      (List.concat roots ++ flat_map EunoiaChecker.conclusion trace)%list in
+    ready && bind_terms fuel roots root_terms &&
+    EunoiaChecker.checker (prepared_eval_with entries ready names_ready CpcGenerated.derive fuel) gate (PArray.length t_form) capacity
       roots claims trace goal.
 
   Theorem checker_correct : forall witness gate fuel capacity roots root_terms claims
@@ -762,8 +1070,11 @@ Module Examples.
   Proof. vm_compute; reflexivity. Qed.
   Example query_malformed_rational : query (Symbol "1/0") = None.
   Proof. vm_compute; reflexivity. Qed.
+  Example query_real_intermediate_type :
+    query (app "+" [Symbol "1/1"; Symbol "2/1"]) = Some (Symbol "Real").
+  Proof. vm_compute; reflexivity. Qed.
   Example query_real_object_unsupported :
-    query (app "+" [Symbol "1/1"; Symbol "2/1"]) = None.
+    object_typeof sorts funcs names 40 (app "+" [Symbol "1/1"; Symbol "2/1"]) = None.
   Proof. vm_compute; reflexivity. Qed.
   Example metadata_name_collision :
     names_wf sorts funcs (Naming [(0, "@List")] []) = false.

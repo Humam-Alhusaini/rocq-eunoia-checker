@@ -18,6 +18,16 @@
   EunoiaScopeTests.vo
   EunoiaScopedAdapterTests.vo
   EunoiaContextTests.vo
+  EunoiaMemoTests.vo
+  EunoiaModelDagTests.vo
+  EoCheckedMemoTests.vo
+  EunoiaHelperCacheTests.vo
+  EoNameIndexTests.vo
+  EunoiaProgramIndexTests.vo
+  EunoiaStagedTests.vo
+  EunoiaDirectTests.vo
+  EunoiaSpecializedTests.vo
+  EunoiaIntegerEmbeddingTests.vo
   EoArithmeticTests.vo
   EoRuntime.vo
   CpcGenerated.vo))
