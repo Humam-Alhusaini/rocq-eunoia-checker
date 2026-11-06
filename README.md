@@ -197,3 +197,11 @@ established a speedup. Standalone source timings remain distinct from tactic tim
 To time the compiled rule registry on captured source proofs, use
 `python3 tools/eunoia-runtime-profile/profile.py --interpreter specialized --output /tmp/eunoia-specialized-source`. Each fixture selects its own used-rule registry.
 This measures source replay, with no solver or tactic invocation.
+
+The indexed model encoder reuses the bundled SMTCoq atom/formula tables to
+compute Eunoia encodings once. `EunoiaModelDagCheck.checker_refinement` proves
+that the complete checker returns exactly the original result for every input;
+generated source rules, bindings, scopes and semantic gates remain checked.
+The fixed benchmark also includes scoped shared/inline examples and corruption
+controls from this checker. These small standalone fixtures validate the
+measurement path; upstream tactic improvements are reported separately.

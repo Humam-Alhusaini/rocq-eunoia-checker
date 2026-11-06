@@ -19,6 +19,7 @@
   EunoiaScopedAdapterTests.vo
   EunoiaContextTests.vo
   EunoiaMemoTests.vo
+  EunoiaModelDagTests.vo
   EoCheckedMemoTests.vo
   EunoiaHelperCacheTests.vo
   EoNameIndexTests.vo

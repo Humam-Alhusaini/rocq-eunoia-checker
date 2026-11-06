@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Benchmark fixed semantic certificates, without a solver, tactic, or search."""
+"""Benchmark fixed source/semantic certificates, without a solver, tactic, or search."""
 
 import argparse
 import hashlib
@@ -42,10 +42,10 @@ From Stdlib Require Import List String Bool Uint63 ZArith ZMicromega RingMicrome
 From SMTCoq.utils Require Import PArray.
 From SMTCoq.checker.fol Require Import State Terms.
 From SMTCoq.checker.small_checker.euf Require Import EUF.
-From SMTCoq.checker.eunoia Require Import EunoiaScopedAdapter EunoiaLia {case["module"]}.
+From SMTCoq.checker.eunoia Require Import EunoiaScopedAdapter EunoiaLia EunoiaScope EunoiaMemo {case["module"]}.
 Import Atom EunoiaLia.
 Import ListNotations.
-Import SMTCoq.checker.eunoia.{case["module"]}.{case["scope"]}.
+Import SMTCoq.checker.eunoia.{case["module"]}{"." + case["scope"] if case["scope"] else ""}.
 Local Open Scope uint63_scope.
 Local Open Scope array_scope.
 Local Open Scope string_scope.
@@ -114,7 +114,7 @@ def main():
         cases = [c for c in cases if c["example"] in args.case]
     out.mkdir(parents=True)
     env = str(args.env.resolve())
-    summary = dict(passed=False, scope="fixed semantic certificate checking; no solver/tactic/search",
+    summary = dict(passed=False, scope="fixed checker inputs; per-case source/semantic layers; no solver/tactic/search",
                    repeats=args.repeats, rounds=args.rounds, cases=cases,
                    platform=platform.platform(), cpu_count=os.cpu_count(), commands=[], results=[],
                    git_head=subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=ROOT, text=True).strip(),

@@ -3,6 +3,7 @@
 import argparse
 import importlib.util
 from pathlib import Path
+import re
 import subprocess
 import sys
 
@@ -22,6 +23,9 @@ def main():
     for index in range(0, len(flags), 3):
         command += ["--loadpath", flags[index + 1], flags[index + 2]]
     for module, theorems in {
+        "EoModelDagCache": ["run_correct", "compile_correct", "cached_correct"],
+        "EunoiaModelDag": ["body_reference", "prepare_valid", "encode_literal_cached_correct", "encoding_entries_refinement"],
+        "EunoiaModelDagCheck": ["checker_refinement", "checker_correct", "checker_b_refinement", "checker_b_correct", "checker_eq_refinement", "checker_eq_correct"],
         'EoSpecialized': ['prepare_one_correct', 'prepare_one_ext', 'find_key', 'run_using_correct', 'run_surface_correct', 'derive_context_correct'],
         'EunoiaSpecialized': ['checker_refinement', 'checker_correct', 'checker_b_refinement', 'checker_b_correct', 'checker_eq_refinement', 'checker_eq_correct'],
         'EunoiaSpecializedFlat': ['flat_step_ext', 'flat_run_ext', 'flat_checker_ext', 'checker_refinement', 'checker_correct', 'checker_b_refinement', 'checker_b_correct', 'checker_eq_refinement', 'checker_eq_correct'],
@@ -66,6 +70,11 @@ def main():
         command += ["--import", prefix]
         for theorem in theorems:
             command += ["--theorem", prefix + "." + module + "." + theorem]
+    module = "SMTCoq.checker.eunoia.EunoiaModelDagTests"
+    command += ["--import", module]
+    for theorem in re.findall(r"^\s*(?:Example|Theorem|Lemma)\s+(\w+)",
+            (ROOT / "theories/checker/eunoia/EunoiaModelDagTests.v").read_text(), re.M):
+        command += ["--theorem", module + "." + theorem]
     module = "SMTCoq.checker.eunoia.CpcSpecialized"
     command += ["--import", module]
     command += ["--theorem", module + ".CpcSpecialized.rules_correct"]

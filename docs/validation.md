@@ -232,3 +232,29 @@ timing phases and passed independent kernel checking. These checks ran after
 the upstream isolated timing window; their concurrent diagnostic timings are
 not performance claims. Upstream's adaptive index remained slower overall and
 stays optional.
+
+## Indexed model encoder (2026-11-06)
+
+The extraction adds `EoModelDagCache`, `EunoiaModelDag`,
+`EunoiaModelDagCheck` and their regression tests. The computed cache reuses
+SMTCoq's existing typed atom/formula graph. Exact fuel-aware encoder equality
+lifts to pointwise equality of the complete original checker Boolean; generated
+source evaluation, bindings, scopes and semantic certification remain checked.
+
+The install build and full regression suite passed. The expanded **181-target**
+assumption audit passed against the inherited 52-name baseline. Four fresh
+standalone benchmark cases—shared/inline scoped acceptance, bad source after
+conflict and an unused invalid semantic certificate—produced all timing phases
+and passed independent recursive kernel checking. These ran during concurrent
+validation and establish tool operation, not a comparative speedup.
+
+The first benchmark attempt omitted explicit `EunoiaScope`/`EunoiaMemo` imports
+needed by the newly measured expressions. The runner was corrected and all four
+cases then passed. Both attempts and the assumption report are retained in
+[the validation artifacts](../results/eunoia-model-encoder-2026-11-06/).
+Upstream's separate, frozen full-tactic measurements document the encoder's
+bounded performance gain; small fixtures here make no such claim.
+
+This checkpoint contains 129 proof/signature files matching upstream
+`bd154370078a287a4f394bda4905e4845f3fe90e` byte for byte, recorded in
+[provenance](../provenance/upstream.json).

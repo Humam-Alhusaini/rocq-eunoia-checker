@@ -1,12 +1,86 @@
 [
-  {"module":"EunoiaScopedAdapterTests", "scope":"EunoiaScopedAdapterTests", "example":"checked_single_scope", "layer":"complete-scoped-checker"},
-  {"module":"EunoiaScopedAdapterTests", "scope":"EunoiaScopedAdapterTests", "example":"checked_nested_scopes", "layer":"complete-scoped-checker"},
-  {"module":"EunoiaScopedAdapterTests", "scope":"EunoiaScopedAdapterTests", "example":"checked_boolean_goal", "layer":"complete-scoped-checker"},
-  {"module":"EunoiaScopedAdapterTests", "scope":"EunoiaScopedAdapterTests", "example":"checked_equality_goal", "layer":"complete-scoped-checker"},
-  {"module":"EunoiaScopedAdapterTests", "scope":"EunoiaScopedAdapterTests", "example":"low_fuel_rejects", "layer":"rejection-control"},
-  {"module":"EunoiaLiaTests", "scope":"EunoiaLiaTests", "example":"scaling_accepted", "layer":"local-LIA-certificate"},
-  {"module":"EunoiaLiaTests", "scope":"EunoiaLiaTests", "example":"missing_certificate_rejected", "layer":"rejection-control"},
-  {"module":"EunoiaLiaTests", "scope":"EunoiaLiaTests", "example":"changed_coefficient_rejected", "layer":"rejection-control"},
-  {"module":"EunoiaUf", "scope":"Regression", "example":"transitivity_clause", "layer":"local-UF-certificate"},
-  {"module":"EunoiaUf", "scope":"Regression", "example":"congruence_clause", "layer":"local-UF-certificate"}
+  {
+    "module": "EunoiaScopedAdapterTests",
+    "scope": "EunoiaScopedAdapterTests",
+    "example": "checked_single_scope",
+    "layer": "complete-scoped-checker"
+  },
+  {
+    "module": "EunoiaScopedAdapterTests",
+    "scope": "EunoiaScopedAdapterTests",
+    "example": "checked_nested_scopes",
+    "layer": "complete-scoped-checker"
+  },
+  {
+    "module": "EunoiaScopedAdapterTests",
+    "scope": "EunoiaScopedAdapterTests",
+    "example": "checked_boolean_goal",
+    "layer": "complete-scoped-checker"
+  },
+  {
+    "module": "EunoiaScopedAdapterTests",
+    "scope": "EunoiaScopedAdapterTests",
+    "example": "checked_equality_goal",
+    "layer": "complete-scoped-checker"
+  },
+  {
+    "module": "EunoiaScopedAdapterTests",
+    "scope": "EunoiaScopedAdapterTests",
+    "example": "low_fuel_rejects",
+    "layer": "rejection-control"
+  },
+  {
+    "module": "EunoiaLiaTests",
+    "scope": "EunoiaLiaTests",
+    "example": "scaling_accepted",
+    "layer": "local-LIA-certificate"
+  },
+  {
+    "module": "EunoiaLiaTests",
+    "scope": "EunoiaLiaTests",
+    "example": "missing_certificate_rejected",
+    "layer": "rejection-control"
+  },
+  {
+    "module": "EunoiaLiaTests",
+    "scope": "EunoiaLiaTests",
+    "example": "changed_coefficient_rejected",
+    "layer": "rejection-control"
+  },
+  {
+    "module": "EunoiaUf",
+    "scope": "Regression",
+    "example": "transitivity_clause",
+    "layer": "local-UF-certificate"
+  },
+  {
+    "module": "EunoiaUf",
+    "scope": "Regression",
+    "example": "congruence_clause",
+    "layer": "local-UF-certificate"
+  },
+  {
+    "module": "EunoiaModelDagTests",
+    "scope": "",
+    "example": "shared_scoped_source_accepts",
+    "layer": "complete-indexed-model-source-checker"
+  },
+  {
+    "module": "EunoiaModelDagTests",
+    "scope": "",
+    "example": "inline_source_accepts",
+    "layer": "complete-indexed-model-source-checker"
+  },
+  {
+    "module": "EunoiaModelDagTests",
+    "scope": "",
+    "example": "bad_source_after_conflict_rejected",
+    "layer": "rejection-control"
+  },
+  {
+    "module": "EunoiaModelDagTests",
+    "scope": "",
+    "example": "unused_bad_semantics_rejected",
+    "layer": "rejection-control"
+  }
 ]
