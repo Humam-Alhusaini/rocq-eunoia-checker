@@ -82,5 +82,29 @@
     "scope": "",
     "example": "unused_bad_semantics_rejected",
     "layer": "rejection-control"
+  },
+  {
+    "module": "EunoiaLocalDirectTests",
+    "scope": "EunoiaLocalDirectTests",
+    "example": "complete_generated_source_checker_accepts",
+    "layer": "complete-direct-certificate-source-checker"
+  },
+  {
+    "module": "EunoiaLocalDirectTests",
+    "scope": "EunoiaLocalDirectTests",
+    "example": "altered_conclusion_rejected",
+    "layer": "rejection-control"
+  },
+  {
+    "module": "EunoiaLocalDirectTests",
+    "scope": "EunoiaLocalDirectTests",
+    "example": "invalid_unused_command_rejected",
+    "layer": "rejection-control"
+  },
+  {
+    "module": "EunoiaLocalDirectTests",
+    "scope": "EunoiaLocalDirectTests",
+    "example": "invalid_true_fallback_rejected",
+    "layer": "rejection-control"
   }
 ]

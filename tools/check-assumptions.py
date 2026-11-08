@@ -64,17 +64,19 @@ def main():
           "boolean_eq_true", "boolean_true_eq"],
         "EunoiaScopedAdapter": ["checker_correct", "checker_b_correct", "checker_eq_correct"],
         "EunoiaLocal": ["execute_valid", "run_valid", "gate_correct"],
+        "EunoiaLocalDirect": ["gate_correct"],
         "EunoiaTactic": ["checker_correct", "checker_b_correct", "checker_eq_correct"],
     }.items():
         prefix = "SMTCoq.checker.eunoia." + module
         command += ["--import", prefix]
         for theorem in theorems:
             command += ["--theorem", prefix + "." + module + "." + theorem]
-    module = "SMTCoq.checker.eunoia.EunoiaModelDagTests"
-    command += ["--import", module]
-    for theorem in re.findall(r"^\s*(?:Example|Theorem|Lemma)\s+(\w+)",
-            (ROOT / "theories/checker/eunoia/EunoiaModelDagTests.v").read_text(), re.M):
-        command += ["--theorem", module + "." + theorem]
+    for test_module in ("EunoiaModelDagTests", "EunoiaLocalDirectTests"):
+        module = "SMTCoq.checker.eunoia." + test_module
+        command += ["--import", module]
+        for theorem in re.findall(r"^\s*(?:Example|Theorem|Lemma)\s+(\w+)",
+                (ROOT / "theories/checker/eunoia" / (test_module + ".v")).read_text(), re.M):
+            command += ["--theorem", module + (".EunoiaLocalDirectTests" if test_module == "EunoiaLocalDirectTests" else "") + "." + theorem]
     module = "SMTCoq.checker.eunoia.CpcSpecialized"
     command += ["--import", module]
     command += ["--theorem", module + ".CpcSpecialized.rules_correct"]

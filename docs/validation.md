@@ -258,3 +258,21 @@ bounded performance gain; small fixtures here make no such claim.
 This checkpoint contains 129 proof/signature files matching upstream
 `bd154370078a287a4f394bda4905e4845f3fe90e` byte for byte, recorded in
 [provenance](../provenance/upstream.json).
+
+## November 8 direct local certificates
+
+The extraction now includes `EunoiaLocalDirect`, its proved local derivation
+gate, and eleven regression examples. The main checker still validates the
+complete generated source trace, exact bindings and scopes. Both local gates
+share the immutable table guard. Candidate search remains outside this repository.
+
+The build and regression suite passed. The assumption audit passed 193 named
+targets against the inherited baseline. Four fresh component benchmark fixtures
+(one complete source-checker acceptance and three rejection controls) produced
+fresh proof objects and passed recursive kernel checking. Measured compilers
+had 30-second deadlines; the shared recursive check had its separate
+900-second deadline. No full-tactic speedup is claimed from these fixtures.
+
+[Commands, hashes and results](eunoia/direct-certificates-validation-2026-11-08.json)
+record the validation. [Upstream comparison](eunoia/direct-certificates.md)
+explains why the optional producer path remains experimental.

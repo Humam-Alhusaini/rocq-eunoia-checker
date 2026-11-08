@@ -4,11 +4,11 @@ A standalone extraction of SMTRocq's signature-generated Eunoia/CPC checker,
 with benchmarks that do not invoke an SMT solver, the SMTCoq tactic, or native
 certificate search. Extracted from [SMTRocq PR #2](https://github.com/Humam-Alhusaini/SMTRocq/pull/2)
 initially at `0613ce2b18315b811ed8d19b9a7820e206ffec0f`, now synchronized with
-core `6ccf13befa9033e69c7a6f00fbad7e6af15a4a99`.
+the checkpoint recorded in [the upstream manifest](provenance/upstream.json).
 
 The repository includes the generated rule interpreter, strict CPC reader,
 checked trace/scoping machinery, semantic certificate gates, proofs, fixtures,
-signature compiler, and required SMTCoq theory sources. All 125 current Rocq proof and Eunoia signature files match that upstream
+signature compiler, and required SMTCoq theory sources. All 131 current Rocq proof and Eunoia signature files match that upstream
 checkpoint byte for byte. Their hashes are in
 [provenance/upstream.json](provenance/upstream.json); the original extraction
 record remains in [provenance/extraction-0613ce2b.json](provenance/extraction-0613ce2b.json).
@@ -21,6 +21,12 @@ reference evaluator; it remains an experimental tactic path upstream.
 
 The generic checked-helper cache and its reference-refinement proofs are included;
 its collection and validation tests use captured CPC data, with no solver invocation.
+
+The direct local certificate gate and its correctness theorem are included.
+It derives an exact clause from exact premises using the existing SMTCoq
+operations; complete source/scoping checks still run. Upstream keeps candidate
+search experimental because a matched comparison did not establish a broad
+performance gain. [Details](docs/eunoia/direct-certificates.md).
 
 ## Build and test
 
