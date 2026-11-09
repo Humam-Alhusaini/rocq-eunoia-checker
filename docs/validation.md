@@ -276,3 +276,21 @@ had 30-second deadlines; the shared recursive check had its separate
 [Commands, hashes and results](eunoia/direct-certificates-validation-2026-11-08.json)
 record the validation. [Upstream comparison](eunoia/direct-certificates.md)
 explains why the optional producer path remains experimental.
+
+## Opaque integer-map comparison (2026-11-09)
+
+The extraction now tracks upstream `8089e667c4ad1e618d41d6e2d794ab8f82a8239c`.
+All 131 proof/signature files match the manifest exactly. The integer comparator
+retains its Boolean tests and moves its greater-than arithmetic proof to an
+opaque `Qed` lemma, avoiding repeated proof evaluation in the VM.
+
+The full install build and regression suite passed. The expanded **194-target**
+assumption audit passed, including `IntOrderedType.compare_gt`, with no new
+assumption beyond the inherited baseline. Four fresh component proofs (complete
+source-and-semantic acceptance plus three corruption rejections) passed their
+assumption checks and independent recursive kernel replay. Compiler deadlines
+were 30 seconds; the separate kernel deadline was 900 seconds.
+
+These component checks ran alongside validation and establish correctness, not
+a standalone comparative speedup. [Commands and results](eunoia/opaque-array-validation-2026-11-09.json)
+retain the exact audit and fresh proof records.

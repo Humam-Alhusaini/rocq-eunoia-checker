@@ -94,6 +94,7 @@ def main():
                 "--theorem", "SMTCoq.checker.eunoia.CpcGenerated.cpc_surface_correct"]
     command += ["--import", "SMTCoq.checker.eunoia.EoSyntax",
                 "--theorem", "SMTCoq.checker.eunoia.EoSyntax.term_eqb_refinement"]
+    command += ["--import", "SMTCoq.utils.PArray", "--theorem", "SMTCoq.utils.PArray.IntOrderedType.compare_gt"]
     subprocess.run(command, cwd=ROOT, check=True)
 
 

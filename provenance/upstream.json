@@ -1,8 +1,8 @@
 {
   "repository": "https://github.com/Humam-Alhusaini/SMTRocq",
   "pull_request": 2,
-  "commit": "3ba28fd9c973e00e3b34bebd492926dfcbab1870",
-  "extracted_at": "2026-11-08",
+  "commit": "8089e667c4ad1e618d41d6e2d794ab8f82a8239c",
+  "extracted_at": "2026-11-09",
   "logical_namespaces": "SMTCoq.* retained for compatibility; sources bundled, no installed SMTCoq dependency",
   "unchanged_proof_and_signature_sha256": {
     "theories/checker/MainChecker.v": "6da281a03bf583f5cd90af6bf8f0cd0e1aae48e35b5b25b9cf923aa7c91ea2bd",
@@ -98,7 +98,7 @@
     "theories/structures/FArray.v": "e7969f3c3a8964ed6757a2915585407be5ddf351ddaa3f65453439d2255950cc",
     "theories/utils/CompDec.v": "c2459af76e67bec80ce51135b3a04e67d1b7922335e522057acb7828fb5f285a",
     "theories/utils/Misc.v": "76d016dd29b29742c8d5d222667600e46538fd69cad8e3a096df4fe657aa0fac",
-    "theories/utils/PArray.v": "9d4e359903b9f23ca3c3641f40d2c3077add0d6ad99e8ba817e180b39559b856",
+    "theories/utils/PArray.v": "b03dd95f0988b7dc0519b12946adfa26f039959276941d032f0d129ce3861f38",
     "tools/eunoia/signatures/Constructors.eo": "09f45ac8ee79da0cca72fb585039c36d35bc8d97cf88364cb8201a97ecdab791",
     "tools/eunoia/signatures/Initial.eo": "07ab86e58fd6f169e0985bcd80a718cf54c83f7e98f24afbde73fabb62de93da",
     "tools/eunoia/signatures/cpc/Cpc.eo": "d13767eb873649c9f40482c99242c42081cf25308962f11c1981ce8e878770ad",

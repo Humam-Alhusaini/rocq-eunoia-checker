@@ -28,6 +28,11 @@ operations; complete source/scoping checks still run. Upstream keeps candidate
 search experimental because a matched comparison did not establish a broad
 performance gain. [Details](docs/eunoia/direct-certificates.md).
 
+The shared integer-map comparator now keeps its arithmetic justification opaque
+to VM evaluation. Its original Boolean tests and array representation are
+retained. The [latest validation](docs/validation.md#opaque-integer-map-comparison-2026-11-09)
+covers the new lemma and fresh complete-checker/corruption proofs.
+
 ## Build and test
 
 Requires Linux/POSIX, OCaml, Rocq **9.2 or later**, its matching standard library,
@@ -79,7 +84,7 @@ python3 -B benchmarks/report.py results/semantic/summary.json
 
 This builds first, then uses fresh Rocq compiler processes to evaluate fixed,
 preconstructed certificates: complete scoped checker calls, local UF and LIA
-certificates, and rejection controls. The default ten cases come from unchanged
+certificates, and rejection controls. The default cases come from unchanged
 upstream regressions. Each case must compute its exact expected result, finish
 `Qed`, produce a fresh `.vo`, pass its assumption audit, and pass an independent
 recursive `rocq check`. False results for corrupted inputs are labeled rejection
