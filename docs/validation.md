@@ -294,3 +294,28 @@ were 30 seconds; the separate kernel deadline was 900 seconds.
 These component checks ran alongside validation and establish correctness, not
 a standalone comparative speedup. [Commands and results](eunoia/opaque-array-validation-2026-11-09.json)
 retain the exact audit and fresh proof records.
+
+## Direct SMTCoq theory certificates (2026-11-10)
+
+All 133 proof/signature files match upstream core
+`910425da6e2f8ba059ed217c26cb9491fb3fb3ba`. All 35 CPC closure signatures
+and the two compatibility signatures retain their prior bytes. The extraction
+adds `EunoiaTheory`, its 37 proof and mutation examples, and checked sharing of
+compact theory certificates.
+
+The full install build and regressions passed. The expanded assumption audit
+passed all 238 targets against the unchanged inherited baseline. Six fresh
+component examples, including complete source checking with a shared primitive
+and invalid-entry/after-conflict controls, passed compilation, assumption checks
+and independent recursive kernel replay. The new audit wrapper enforces a
+900-second deadline for the whole audit process group. Compiler benchmarks use
+30 seconds; recursive replay uses a separate 900 seconds.
+
+These component runs used one repeat and one round for validation and ran
+alongside upstream verification. They are not comparative speed evidence. Native
+candidate search, CVC5, and the public SMTCoq tactic remain outside these inputs.
+The upstream full-tactic comparison did not establish a robust overall gain,
+so its direct theory producer remains opt-in.
+
+[Exact commands, hashes, assumptions and replay results](eunoia/theory-certificates-validation-2026-11-10.json)
+and [component commands and architecture](eunoia/theory-certificates-2026-11-10.md).

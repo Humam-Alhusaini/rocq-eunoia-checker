@@ -1,8 +1,8 @@
 {
   "repository": "https://github.com/Humam-Alhusaini/SMTRocq",
   "pull_request": 2,
-  "commit": "8089e667c4ad1e618d41d6e2d794ab8f82a8239c",
-  "extracted_at": "2026-11-09",
+  "commit": "910425da6e2f8ba059ed217c26cb9491fb3fb3ba",
+  "extracted_at": "2026-11-10",
   "logical_namespaces": "SMTCoq.* retained for compatibility; sources bundled, no installed SMTCoq dependency",
   "unchanged_proof_and_signature_sha256": {
     "theories/checker/MainChecker.v": "6da281a03bf583f5cd90af6bf8f0cd0e1aae48e35b5b25b9cf923aa7c91ea2bd",
@@ -60,11 +60,11 @@
     "theories/checker/eunoia/EunoiaLocalDirect.v": "22bb3e8dfe505826f157a21f509204ae2447233ad56160e5cfa8f52cc4e54c37",
     "theories/checker/eunoia/EunoiaLocalDirectTests.v": "ed5aa1063fbeebf3367f93cbde97bcc698c787f1d20b80ea2979a9fb45b38753",
     "theories/checker/eunoia/EunoiaLocalTests.v": "e29e8aed6e33f4f44eca9b51f4eb2799630148121dec95e3ae208d9225225eb2",
-    "theories/checker/eunoia/EunoiaMemo.v": "3c96bff8959ea539e3fd131dfbaf35cdf69a07e1348d757ad5673d275aa897a0",
-    "theories/checker/eunoia/EunoiaMemoTests.v": "efbb555bbb514e979b8b04366fcc997883d25e18ec12593639539c28c77ff589",
+    "theories/checker/eunoia/EunoiaMemo.v": "96ecdec67317033737528d8f27ed5a19d4523249f6a0cda24f4537542bba99d3",
+    "theories/checker/eunoia/EunoiaMemoTests.v": "56eb4aadd94799c1fe7f5e8b1f34f0e6fba62abe3b9d67ee88e363c15af28697",
     "theories/checker/eunoia/EunoiaModelDag.v": "931c504ce31474617d20e5b5d088e6b30558fa59c8717c0ed3721ce4a40ba55e",
     "theories/checker/eunoia/EunoiaModelDagCheck.v": "812caeccf449c58511d861fd6c854825c5805e1f0caa1fd6ab690796353ea5ff",
-    "theories/checker/eunoia/EunoiaModelDagTests.v": "c1ff633ff865cc178248183f70fd5c6b00dfd1258092bec7ce858c29cc0e21ae",
+    "theories/checker/eunoia/EunoiaModelDagTests.v": "27952045f4edcb1b3f5266b0ff6cdf3a3e7f4aa4f10e88083597759db840375d",
     "theories/checker/eunoia/EunoiaProgramIndex.v": "3d87b46af3297ad35e976ebb0c3ab83ee1bee1c2e23e16847c7137fa793ec70a",
     "theories/checker/eunoia/EunoiaProgramIndexFlat.v": "90560d596c1908750a1bd49e655da1b56f232f31488f15cf5ff4a21fb1319517",
     "theories/checker/eunoia/EunoiaProgramIndexScoped.v": "3d82a5ec745f13048801175d9e76098ed7c1892d72a7e3910651fed5eb32598f",
@@ -81,6 +81,8 @@
     "theories/checker/eunoia/EunoiaStagedTests.v": "b6be825f9a52b4bf12cae305df586fc4a2da66a3dcef130d36beed5af2f4e9c5",
     "theories/checker/eunoia/EunoiaTactic.v": "9ff9a60b4943317adaaf0372cfe531cf6613340586521c1650111a77916a6cb8",
     "theories/checker/eunoia/EunoiaTacticTests.v": "41ed1640a1c2dbdc8e1640667ad192bd35d7bcd7d305975ca657cb8ca1ae4edf",
+    "theories/checker/eunoia/EunoiaTheory.v": "f50e71a55d28f38e347644a1cc654fb4f82b85b5ee071ff7fe10b75ffa4adf82",
+    "theories/checker/eunoia/EunoiaTheoryTests.v": "1140e53b7780270a13d22f11a0577ddd1c08e6c7a3212f5bf1e916a0120ccd76",
     "theories/checker/eunoia/EunoiaUf.v": "0e8fd678976976936f533af21a337e44545736b8e67e779b764d0b1be7150bbc",
     "theories/checker/fol/State.v": "19581a114af26e2921f5561fa897a1260a2e510050fce3c2c10a8c9568200a2d",
     "theories/checker/fol/Terms.v": "fbcc61aef8f55f96ddfbf0de9fe47cf1a658826e32f1080ebfa60f1ede46a274",
@@ -137,6 +139,6 @@
     "tools/eunoia/signatures/cpc/theories/Sets.eo": "d1dd145a7e41b72e53d89733cd57378dfcc19b2e7cf61cf58a253527a686617a",
     "tools/eunoia/signatures/cpc/theories/Strings.eo": "9b92523b67acf53c4b8b6e5e3065c2032edda2f2a7b8ba625cec1986440dabb0"
   },
-  "synchronized_at": "2026-11-06",
-  "previous_checkpoint": "provenance/extraction-6ccf13b.json"
+  "synchronized_at": "2026-11-10",
+  "previous_checkpoint": "provenance/extraction-8089e667.json"
 }

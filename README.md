@@ -8,7 +8,7 @@ the checkpoint recorded in [the upstream manifest](provenance/upstream.json).
 
 The repository includes the generated rule interpreter, strict CPC reader,
 checked trace/scoping machinery, semantic certificate gates, proofs, fixtures,
-signature compiler, and required SMTCoq theory sources. All 131 current Rocq proof and Eunoia signature files match that upstream
+signature compiler, and required SMTCoq theory sources. All 133 current Rocq proof and Eunoia signature files match that upstream
 checkpoint byte for byte. Their hashes are in
 [provenance/upstream.json](provenance/upstream.json); the original extraction
 record remains in [provenance/extraction-0613ce2b.json](provenance/extraction-0613ce2b.json).
@@ -27,6 +27,14 @@ It derives an exact clause from exact premises using the existing SMTCoq
 operations; complete source/scoping checks still run. Upstream keeps candidate
 search experimental because a matched comparison did not establish a broad
 performance gain. [Details](docs/eunoia/direct-certificates.md).
+
+The direct SMTCoq theory gate now checks compact equality, congruence, and
+Micromega certificates without a temporary local proof machine. It is proved
+sound and supports checked sharing through `TheoryEntry`. The standalone
+benchmarks include direct transitivity, congruence and arithmetic, a complete
+source refutation using a shared primitive, and corruption controls. Native
+candidate search remains in the upstream tactic repository.
+[Architecture and component commands](docs/eunoia/theory-certificates-2026-11-10.md).
 
 The shared integer-map comparator now keeps its arithmetic justification opaque
 to VM evaluation. Its original Boolean tests and array representation are

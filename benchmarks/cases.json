@@ -106,5 +106,41 @@
     "scope": "EunoiaLocalDirectTests",
     "example": "invalid_true_fallback_rejected",
     "layer": "rejection-control"
+  },
+  {
+    "module": "EunoiaTheoryTests",
+    "scope": "EunoiaTheoryTests",
+    "example": "transitivity",
+    "layer": "direct-SMTCoq-theory-certificate"
+  },
+  {
+    "module": "EunoiaTheoryTests",
+    "scope": "EunoiaTheoryTests",
+    "example": "congruence",
+    "layer": "direct-SMTCoq-theory-certificate"
+  },
+  {
+    "module": "EunoiaTheoryTests",
+    "scope": "EunoiaTheoryTests",
+    "example": "linear_scaling",
+    "layer": "direct-SMTCoq-theory-certificate"
+  },
+  {
+    "module": "EunoiaTheoryTests",
+    "scope": "EunoiaTheoryTests",
+    "example": "checked_shared_primitive",
+    "layer": "complete-direct-theory-source-checker"
+  },
+  {
+    "module": "EunoiaTheoryTests",
+    "scope": "EunoiaTheoryTests",
+    "example": "unused_invalid_primitive_entry_rejected",
+    "layer": "rejection-control"
+  },
+  {
+    "module": "EunoiaTheoryTests",
+    "scope": "EunoiaTheoryTests",
+    "example": "invalid_primitive_after_conflict_rejected",
+    "layer": "rejection-control"
   }
 ]

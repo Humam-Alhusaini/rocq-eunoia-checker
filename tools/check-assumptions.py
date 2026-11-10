@@ -2,8 +2,10 @@
 """Audit the semantic correctness boundary against the inherited baseline."""
 import argparse
 import importlib.util
+import os
 from pathlib import Path
 import re
+import signal
 import subprocess
 import sys
 
@@ -16,7 +18,11 @@ spec.loader.exec_module(bench)
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--output", required=True, type=Path)
+    parser.add_argument("--timeout", type=int, default=900,
+                        help="independent audit deadline in seconds")
     args = parser.parse_args()
+    if args.timeout < 1:
+        parser.error("timeout must be positive")
     command = [sys.executable, "-B", str(ROOT / "tools/audit-eunoia-assumptions.py"),
                "--build-loadpaths", "--output-dir", str(args.output.resolve())]
     flags = bench.loadpaths()
@@ -65,18 +71,21 @@ def main():
         "EunoiaScopedAdapter": ["checker_correct", "checker_b_correct", "checker_eq_correct"],
         "EunoiaLocal": ["execute_valid", "run_valid", "gate_correct"],
         "EunoiaLocalDirect": ["gate_correct"],
+        "EunoiaTheory": ["units_exact", "units_valid", "negations_false",
+                         "implication_correct", "checked_clause_correct",
+                         "global_gate_correct", "gate_correct"],
         "EunoiaTactic": ["checker_correct", "checker_b_correct", "checker_eq_correct"],
     }.items():
         prefix = "SMTCoq.checker.eunoia." + module
         command += ["--import", prefix]
         for theorem in theorems:
             command += ["--theorem", prefix + "." + module + "." + theorem]
-    for test_module in ("EunoiaModelDagTests", "EunoiaLocalDirectTests"):
+    for test_module in ("EunoiaModelDagTests", "EunoiaLocalDirectTests", "EunoiaTheoryTests"):
         module = "SMTCoq.checker.eunoia." + test_module
         command += ["--import", module]
         for theorem in re.findall(r"^\s*(?:Example|Theorem|Lemma)\s+(\w+)",
                 (ROOT / "theories/checker/eunoia" / (test_module + ".v")).read_text(), re.M):
-            command += ["--theorem", module + (".EunoiaLocalDirectTests" if test_module == "EunoiaLocalDirectTests" else "") + "." + theorem]
+            command += ["--theorem", module + ("." + test_module if test_module in ("EunoiaLocalDirectTests", "EunoiaTheoryTests") else "") + "." + theorem]
     module = "SMTCoq.checker.eunoia.CpcSpecialized"
     command += ["--import", module]
     command += ["--theorem", module + ".CpcSpecialized.rules_correct"]
@@ -95,7 +104,18 @@ def main():
     command += ["--import", "SMTCoq.checker.eunoia.EoSyntax",
                 "--theorem", "SMTCoq.checker.eunoia.EoSyntax.term_eqb_refinement"]
     command += ["--import", "SMTCoq.utils.PArray", "--theorem", "SMTCoq.utils.PArray.IntOrderedType.compare_gt"]
-    subprocess.run(command, cwd=ROOT, check=True)
+    proc = subprocess.Popen(command, cwd=ROOT, start_new_session=True)
+    try:
+        code = proc.wait(timeout=args.timeout)
+    except BaseException:
+        try:
+            os.killpg(proc.pid, signal.SIGKILL)
+        except ProcessLookupError:
+            pass
+        proc.wait()
+        raise
+    if code:
+        raise subprocess.CalledProcessError(code, command)
 
 
 if __name__ == "__main__":
