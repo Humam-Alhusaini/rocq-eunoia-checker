@@ -48,7 +48,7 @@ From SMTCoq.utils Require Import PArray.
 From SMTCoq.checker.fol Require Import State Terms.
 From SMTCoq.checker Require Import MainChecker.
 From SMTCoq.checker.small_checker.euf Require Import EUF.
-From SMTCoq.checker.eunoia Require Import EunoiaScopedAdapter EunoiaLia EunoiaScope EunoiaMemo {case["module"]}.
+From SMTCoq.checker.eunoia Require Import EunoiaScopedAdapter EunoiaLia EunoiaScope EunoiaMemo EunoiaTheory {case["module"]}.
 Import Atom EunoiaLia.
 Import ListNotations.
 Import SMTCoq.checker.eunoia.{case["module"]}{"." + case["scope"] if case["scope"] else ""}.
