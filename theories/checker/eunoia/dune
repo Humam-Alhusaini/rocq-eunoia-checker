@@ -21,6 +21,7 @@
   EunoiaMemoTests.vo
   EunoiaLocalDirectTests.vo
   EunoiaTheoryTests.vo
+  EunoiaCertificateTests.vo
   EunoiaModelDagTests.vo
   EoCheckedMemoTests.vo
   EunoiaHelperCacheTests.vo

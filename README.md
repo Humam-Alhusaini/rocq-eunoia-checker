@@ -8,7 +8,7 @@ the checkpoint recorded in [the upstream manifest](provenance/upstream.json).
 
 The repository includes the generated rule interpreter, strict CPC reader,
 checked trace/scoping machinery, semantic certificate gates, proofs, fixtures,
-signature compiler, and required SMTCoq theory sources. All 133 current Rocq proof and Eunoia signature files match that upstream
+signature compiler, and required SMTCoq theory sources. All 135 current Rocq proof and Eunoia signature files match that upstream
 checkpoint byte for byte. Their hashes are in
 [provenance/upstream.json](provenance/upstream.json); the original extraction
 record remains in [provenance/extraction-0613ce2b.json](provenance/extraction-0613ce2b.json).
@@ -40,6 +40,13 @@ The shared integer-map comparator now keeps its arithmetic justification opaque
 to VM evaluation. Its original Boolean tests and array representation are
 retained. The [latest validation](docs/validation.md#opaque-integer-map-comparison-2026-11-09)
 covers the new lemma and fresh complete-checker/corruption proofs.
+
+The separate compiled semantic checker is now available in `EunoiaCertificate`.
+It validates the actual root vector, typed model, every submitted semantic step,
+all cache entries and scoped state; it does not certify CPC source conformance.
+Its two positive benchmark fixtures and fourteen corruption controls are labeled
+`compiled-semantic-*`, separately from the strict source checkers. No solver,
+native compiler or public tactic is required here; those remain upstream.
 
 ## Build and test
 
@@ -82,6 +89,17 @@ tools use the current PATH via `tools/rocq-env`.
 ## Benchmark independently
 
 Keep the semantic and source-computation measurement layers separate.
+
+To isolate the new semantic driver and its scope-leak control:
+
+```sh
+python3 -B benchmarks/run.py --output /tmp/eunoia-compiled \
+  --case scoped_refutation --case satisfiable_roots_cannot_import_local_conflict \
+  --repeats 100 --rounds 3
+```
+
+These fixtures check semantic certificates only. Use the source-computation
+benchmarks below to include signature-generated CPC validation.
 
 **Semantic certificate checking:**
 

@@ -60,6 +60,7 @@ def main():
         "EunoiaHelperCache": ["checker_refinement", "checker_correct", "checker_b_correct", "checker_eq_correct"],
         "EoCheckedMemo": ["key_eqb_equivalence", "evaluate_cached_refinement", "validate_entries_sound", "checked_evaluate_correct"],
         "EoRuleMemo": ["run_rule_cached_refinement", "run_surface_cached_refinement"],
+        "EunoiaCertificate": ["checker_tables", "checker_correct", "checker_b_correct", "checker_eq_correct"],
         "EunoiaMemo": ["gate_correct", "checker_correct", "checker_b_correct", "checker_eq_correct"],
         "EunoiaAdapter": ["memo_encoding_refinement", "cached_eval_with_refinement", "prepared_eval_with_refinement"],
         "EunoiaIntegerEmbedding": ["normalize_ordinary", "fraction_eq_cross", "fraction_le_cross",
@@ -80,12 +81,12 @@ def main():
         command += ["--import", prefix]
         for theorem in theorems:
             command += ["--theorem", prefix + "." + module + "." + theorem]
-    for test_module in ("EunoiaModelDagTests", "EunoiaLocalDirectTests", "EunoiaTheoryTests"):
+    for test_module in ("EunoiaModelDagTests", "EunoiaLocalDirectTests", "EunoiaTheoryTests", "EunoiaCertificateTests"):
         module = "SMTCoq.checker.eunoia." + test_module
         command += ["--import", module]
         for theorem in re.findall(r"^\s*(?:Example|Theorem|Lemma)\s+(\w+)",
                 (ROOT / "theories/checker/eunoia" / (test_module + ".v")).read_text(), re.M):
-            command += ["--theorem", module + ("." + test_module if test_module in ("EunoiaLocalDirectTests", "EunoiaTheoryTests") else "") + "." + theorem]
+            command += ["--theorem", module + ("." + test_module if test_module in ("EunoiaLocalDirectTests", "EunoiaTheoryTests", "EunoiaCertificateTests") else "") + "." + theorem]
     module = "SMTCoq.checker.eunoia.CpcSpecialized"
     command += ["--import", module]
     command += ["--theorem", module + ".CpcSpecialized.rules_correct"]
