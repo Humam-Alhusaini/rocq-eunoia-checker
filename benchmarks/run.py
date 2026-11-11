@@ -31,6 +31,11 @@ def proposition(case):
                       path.read_text(), re.M | re.S)
     if not match:
         raise ValueError(f"missing existing example: {case['example']}")
+    # New checker fixtures need not put spaces around their final Boolean
+    # equality. Retain the existing non-Boolean fixture syntax as well.
+    equality = re.fullmatch(r"(.*)\s*=\s*(true|false)\s*", match[1], re.S)
+    if equality is not None:
+        return equality[1], equality[2]
     expression, expected = match[1].rsplit(" = ", 1)
     return expression, expected
 
