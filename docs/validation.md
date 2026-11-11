@@ -319,3 +319,32 @@ so its direct theory producer remains opt-in.
 
 [Exact commands, hashes, assumptions and replay results](eunoia/theory-certificates-validation-2026-11-10.json)
 and [component commands and architecture](eunoia/theory-certificates-2026-11-10.md).
+
+## Compiled semantic certificates (2026-11-11)
+
+All 135 proof/signature files (98 Rocq files and 37 Eunoia signatures) match
+upstream formal core `3f39f64` byte for byte. The native-only UF compression
+added later upstream does not change these files. All 35 CPC closure signatures
+and both compatibility signatures retain their previous bytes.
+
+The install/regression build passed, together with all 259 assumption targets
+against the unchanged 52-name inherited baseline. Sixteen fresh component
+proofs passed compilation, assumption checks and a separate recursive kernel
+replay: two accepted semantic certificates and fourteen corruption controls.
+A seventeenth source example proves soundness of the accepted scoped refutation.
+The controls include an attempt to leak a local conflict from satisfiable roots.
+
+The standalone replay harness was fixed to parse compact Boolean equalities
+and explicitly load theory-certificate names. Checker proof files were not
+modified to accommodate the harness. The final component run used one repeat
+and one round while upstream verification was running; its timings are not
+comparative speed evidence. Compiler deadlines remain 30 seconds and independent
+audit/kernel deadlines 900 seconds. No new axiom or admitted proof is added.
+
+The strict signature-generated CPC checkers remain available. The separate
+semantic driver proves an SMT theorem without certifying CPC source conformance;
+the component layers are labeled accordingly. Native production and the public
+`smtrocq` tactic remain in the upstream repository.
+
+[Exact validation and hashes](eunoia/compiled-semantic-validation-2026-11-11.json)
+and [architecture and independent commands](eunoia/compiled-semantic-certificates-2026-11-11.md).

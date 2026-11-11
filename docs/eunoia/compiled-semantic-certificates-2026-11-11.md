@@ -34,3 +34,8 @@ python3 -B benchmarks/run.py --skip-build --output /tmp/eunoia-compiled \
 Component runs exclude the solver, tactic, preprocessing and native certificate
 search. They do not establish full-tactic performance. No new axiom or admitted
 proof is introduced; the inherited UInt63/proof-irrelevance baseline remains.
+
+The final build, 259-target audit and all sixteen fresh component/kernel replays
+passed. [Exact validation](compiled-semantic-validation-2026-11-11.json) records
+commands, hashes and assumption sets. Timings from this concurrent validation
+are not comparative measurements.
