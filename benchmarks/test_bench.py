@@ -44,7 +44,7 @@ class MeasurementTests(unittest.TestCase):
         for case in cases:
             expression, expected = bench.proposition(case)
             self.assertTrue(expression.strip())
-            if case["layer"] == "rejection-control":
+            if case["layer"].endswith("rejection-control"):
                 self.assertEqual(expected.strip(), "false")
 
 

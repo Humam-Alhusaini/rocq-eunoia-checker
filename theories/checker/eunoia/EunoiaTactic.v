@@ -8,7 +8,7 @@ From Stdlib Require Import List Bool Uint63.
 From SMTCoq.utils Require Import PArray CompDec.
 From SMTCoq.checker.fol Require Import State Terms.
 From SMTCoq.checker.eunoia Require Import
-  EoSyntax EunoiaChecker EunoiaAdapter EunoiaLocal.
+  EoSyntax EunoiaChecker EunoiaAdapter EunoiaLocal EunoiaDivision.
 
 Import ListNotations.
 Local Open Scope uint63_scope.
@@ -31,6 +31,18 @@ Proof.
     try reflexivity; exfalso; apply H; unfold goal_roots;
     constructor; [ | constructor | | constructor]; unfold C.valid, C.interp;
     simpl; rewrite ?Lit.interp_neg, Hl; reflexivity.
+Qed.
+
+(* Bind a whole ordered root vector in one checked conversion. This shares
+   the existing valuation without changing any root or its interpretation. *)
+Definition root_values (rho : Valuation.t) (roots : list C.t) : list bool :=
+  map (C.interp rho) roots.
+Lemma root_values_correct : forall rho roots values,
+  root_values rho roots = values ->
+  Forall (fun b => b = true) values -> Forall (C.valid rho) roots.
+Proof.
+  intros rho roots values H Hvalues. subst values.
+  unfold root_values in Hvalues. rewrite Forall_map in Hvalues. exact Hvalues.
 Qed.
 
 Section Tables.

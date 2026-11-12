@@ -24,7 +24,7 @@ from replay_fixtures import decode, generate
 from compile import atom, parse, seq
 
 ENV = Path(os.environ.get("EUNOIA_ENV", ROOT / "tools/rocq-env"))
-MODULES = ("EoSyntax", "EoRuntime", "EoArithmetic", "EoOrder", "CpcGenerated",
+MODULES = ("EoSyntax", "EoRuntime", "EoArithmetic", 'EoOrder', 'EoNameIndex', 'EoRename', 'CpcGenerated',
            "TraceReplay", "LiaTraceReplay")
 
 
@@ -39,10 +39,38 @@ def fixtures():
         (p, True) for p in sorted((base / "reduced-fixtures").glob("*.cpc"))]
 
 
-def source(paths, repeats):
+def source(paths, repeats, interpreter="reference"):
     parts = []
+    if interpreter == "indexed":
+        parts.append('From SMTCoq.checker.eunoia Require Import EoSyntax EoRuntime TraceReplay LiaTraceReplay CpcIndexed.\nDefinition indexed_final query roots steps goal :=\n match replay_with derive_indexed query roots steps with Some env=>lookup goal env|None=>None end.\nDefinition indexed_trace_final := trace_final_with derive_indexed derive_assuming_indexed.\n')
+    if interpreter == "staged":
+        parts.append('From Stdlib Require Import String List.\nFrom SMTCoq.checker.eunoia Require Import EoSyntax EoRuntime CpcGenerated TraceReplay LiaTraceReplay.\nFrom SMTCoq.checker.eunoia Require Import CpcStagedRules.\nDefinition staged_final query roots steps goal :=\n let table:=CpcStagedRules.prepare default_primitive 500 query in\n let compute:=fun _ _ name args premises=>CpcStagedRules.derive_prepared table default_primitive 500 query name None args premises in\n match replay_with compute query roots steps with Some env=>lookup goal env|None=>None end.\nDefinition staged_trace_final query roots commands goal :=\n let table:=CpcStagedRules.prepare default_primitive 500 query in\n let compute:=fun _ _ name args premises=>CpcStagedRules.derive_prepared table default_primitive 500 query name None args premises in\n let assuming:=fun _ _ name assumption args premises=>CpcStagedRules.derive_prepared table default_primitive 500 query name (Some assumption) args premises in\n trace_final_with compute assuming query roots commands goal.\n')
+    if interpreter == "direct":
+        parts.append('From Stdlib Require Import String List.\nFrom SMTCoq.checker.eunoia Require Import EoSyntax EoRuntime CpcGenerated TraceReplay LiaTraceReplay.\nFrom SMTCoq.checker.eunoia Require Import CpcDirectRules.\nDefinition direct_final query roots steps goal :=\n let compute:=fun _ _ name args premises=>CpcDirectRules.derive_context default_primitive 500 query name None args premises in\n match replay_with compute query roots steps with Some env=>lookup goal env|None=>None end.\nDefinition direct_trace_final query roots commands goal :=\n let compute:=fun _ _ name args premises=>CpcDirectRules.derive_context default_primitive 500 query name None args premises in\n let assuming:=fun _ _ name assumption args premises=>CpcDirectRules.derive_context default_primitive 500 query name (Some assumption) args premises in\n trace_final_with compute assuming query roots commands goal.\n')
+    if interpreter == "specialized":
+        parts.append("From Stdlib Require Import String List.\nFrom SMTCoq.checker.eunoia Require Import EoSyntax EoRuntime CpcGenerated TraceReplay LiaTraceReplay EoSpecialized CpcSpecialized.\nImport ListNotations.\n")
+        inventory = json.loads((ROOT / "tools/eunoia/cpc-specialized-manifest.json").read_text())["implementations"]
     for path, scoped in paths:
         code = generate([path], scoped=scoped)
+        if interpreter == "specialized":
+            used = set(re.findall(r":rule\s+([^\s)]+)", path.read_text()))
+            if used - inventory.keys():
+                raise ValueError("fixture uses a rule absent from the generated inventory")
+            records = "[" + ";".join("CpcSpecialized." + inventory[n] for n in sorted(used)) + "]"
+            stem = "specialized_" + re.sub(r"[^A-Za-z0-9_]", "_", path.stem)
+            parts.append(f"Definition {stem}_final query roots steps goal :=\n let compute:=fun _ _ name args premises=>EoSpecialized.derive_context {records} default_primitive 500 query name None args premises in\n match replay_with compute query roots steps with Some env=>lookup goal env|None=>None end.\n")
+            parts.append(f"Definition {stem}_trace_final query roots commands goal :=\n let compute:=fun _ _ name args premises=>EoSpecialized.derive_context {records} default_primitive 500 query name None args premises in\n let assuming:=fun _ _ name assumption args premises=>EoSpecialized.derive_context {records} default_primitive 500 query name (Some assumption) args premises in\n trace_final_with compute assuming query roots commands goal.\n")
+            code = code.replace(" : trace_final ", " : " + stem + "_trace_final ")
+            code = code.replace(" : final_term ", " : " + stem + "_final ")
+        if interpreter == "indexed":
+            code = code.replace(" : trace_final ", " : indexed_trace_final ")
+            code = code.replace(" : final_term ", " : indexed_final ")
+        if interpreter == "staged":
+            code = code.replace(" : trace_final ", " : staged_trace_final ")
+            code = code.replace(" : final_term ", " : staged_final ")
+        if interpreter == "direct":
+            code = code.replace(" : trace_final ", " : direct_trace_final ")
+            code = code.replace(" : final_term ", " : direct_final ")
         # Time repeated evaluation while the goal remains unchanged. Each VM
         # invocation computes the complete replay and compares the actual result.
         # Then separately time proof-producing reduction and kernel Qed checking.
@@ -68,7 +96,7 @@ def timings(log, repeats):
         if line.startswith("PROFILE "):
             _, name, phase = line.split()
             label = (name, phase)
-        match = re.match(r"(?:Finished|Completed)(?: (?:successfully|failing))? transaction in ([\d.]+) secs \(([\d.]+)u,([\d.]+)s\)", line)
+        match = re.match(r"Finished transaction in ([\d.]+) secs \(([\d.]+)u,([\d.]+)s\)", line)
         if match and label:
             wall, user, system = map(float, match.groups())
             rows.append(dict(fixture=label[0].removesuffix("_all_steps"), phase=label[1],
@@ -81,6 +109,7 @@ def timings(log, repeats):
 def main():
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--output", required=True, type=Path, help="new artifact directory outside the checkout")
+    ap.add_argument("--interpreter", choices=("reference", "indexed", "staged", "direct", "specialized"), default="reference")
     ap.add_argument("--runtime", type=Path, default=ROOT / "theories/checker/eunoia/EoRuntime.v")
     ap.add_argument("--repeats", type=int, default=20)
     ap.add_argument("--rounds", type=int, default=3)
@@ -101,7 +130,7 @@ def main():
         paths = [(p, s) for p, s in paths if p.stem in args.fixture]
     out.mkdir(parents=True)
     summary = dict(command=sys.argv, root=str(ROOT), runtime=str(args.runtime.resolve()),
-                   repeats=args.repeats, rounds=args.rounds, timeout_s=args.timeout,
+                   interpreter=args.interpreter, repeats=args.repeats, rounds=args.rounds, timeout_s=args.timeout,
                    git_head=subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=ROOT, text=True).strip(),
                    git_status=subprocess.check_output(["git", "status", "--short"], cwd=ROOT, text=True),
                    platform=platform.platform(), cpu_count=os.cpu_count(),
@@ -131,7 +160,20 @@ def main():
 
     try:
         run([ENV, "rocq", "--version"], "version")
-        for module in MODULES:
+        modules = MODULES if args.interpreter == "reference" else (
+            "EoSyntax", "EoRuntime", "EoArithmetic", 'EoOrder', 'EoNameIndex', 'EoRename', 'CpcGenerated',
+            "EoCheckedMemo", "EoRuleMemo", "EoIndexed", "CpcIndexed",
+            "TraceReplay", "LiaTraceReplay")
+        if args.interpreter == "staged":
+            modules = ("EoSyntax", "EoRuntime", "EoArithmetic", 'EoOrder', 'EoNameIndex', 'EoRename', 'CpcGenerated',
+                       "EoCheckedMemo", "EoRuleMemo", "CpcMemo", "EoMemoCollector",
+                       "EoStaged", "EoFuelLayers", "EoCompiledPrograms", "CpcStaged",
+                       "CpcStagedEval", "CpcStagedRules", "TraceReplay", "LiaTraceReplay")
+        if args.interpreter == "direct":
+            modules = ('EoSyntax', 'EoRuntime', 'EoArithmetic', 'EoOrder', 'EoNameIndex', 'EoRename', 'CpcGenerated', 'EoCheckedMemo', 'EoRuleMemo', 'CpcMemo', 'EoMemoCollector', 'EoDirect', 'CpcDirect', 'CpcDirectEntry', 'CpcDirectEval', 'CpcDirectRules', 'TraceReplay', 'LiaTraceReplay')
+        if args.interpreter == "specialized":
+            modules = ('EoSyntax', 'EoRuntime', 'EoArithmetic', 'EoOrder', 'EoNameIndex', 'EoRename', 'CpcGenerated', 'EoCheckedMemo', 'EoRuleMemo', 'EoMemoCollector', 'EoDirect', 'CpcDirect', 'CpcDirectEntry', 'EoSpecialized', 'CpcSpecialized', 'TraceReplay', 'LiaTraceReplay')
+        for module in modules:
             if module == "EoRuntime":
                 path = args.runtime
             elif module in ("TraceReplay", "LiaTraceReplay"):
@@ -157,13 +199,13 @@ def main():
                 raise RuntimeError("refinement lemmas are not closed under the global context")
             run([ENV, "rocq", "check", "-silent", "-Q", ".", "SMTCoq.checker.eunoia",
                  "SMTCoq.checker.eunoia.SurfaceOutRefinement"], "SurfaceOutRefinement-kernel")
-        workload = source(paths, args.repeats)
+        workload = source(paths, args.repeats, args.interpreter)
         for round_number in range(args.rounds):
             # Reverse fixture order on alternating rounds to expose order effects.
             if round_number % 2:
-                workload = source(list(reversed(paths)), args.repeats)
+                workload = source(list(reversed(paths)), args.repeats, args.interpreter)
             else:
-                workload = source(paths, args.repeats)
+                workload = source(paths, args.repeats, args.interpreter)
             module = f"Profile{round_number}"
             (out / f"{module}.v").write_text(workload)
             log = run([ENV, "rocq", "compile", "-q", "-Q", ".", "SMTCoq.checker.eunoia", f"{module}.v"], module)

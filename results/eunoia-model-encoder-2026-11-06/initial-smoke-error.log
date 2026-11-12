@@ -1,0 +1,24 @@
+File "./Bench0_2.v", line 2, characters 0-91:
+Warning: Use of “Require” inside a module is fragile. It is not recommended
+to use this functionality in finished proof scripts.
+[require-in-module,fragile,default]
+File "./Bench0_2.v", line 3, characters 0-40:
+Warning: Use of “Require” inside a module is fragile. It is not recommended
+to use this functionality in finished proof scripts.
+[require-in-module,fragile,default]
+File "./Bench0_2.v", line 4, characters 0-51:
+Warning: Use of “Require” inside a module is fragile. It is not recommended
+to use this functionality in finished proof scripts.
+[require-in-module,fragile,default]
+File "./Bench0_2.v", line 5, characters 0-57:
+Warning: Use of “Require” inside a module is fragile. It is not recommended
+to use this functionality in finished proof scripts.
+[require-in-module,fragile,default]
+File "./Bench0_2.v", line 6, characters 0-92:
+Warning: Use of “Require” inside a module is fragile. It is not recommended
+to use this functionality in finished proof scripts.
+[require-in-module,fragile,default]
+File "./Bench0_2.v", line 14, characters 2-18:
+Error: The reference EunoiaScope.Push was not found in the current
+environment.
+

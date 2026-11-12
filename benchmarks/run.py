@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Benchmark fixed semantic certificates, without a solver, tactic, or search."""
+"""Benchmark fixed source/semantic certificates, without a solver, tactic, or search."""
 
 import argparse
 import hashlib
@@ -31,6 +31,11 @@ def proposition(case):
                       path.read_text(), re.M | re.S)
     if not match:
         raise ValueError(f"missing existing example: {case['example']}")
+    # New checker fixtures need not put spaces around their final Boolean
+    # equality. Retain the existing non-Boolean fixture syntax as well.
+    equality = re.fullmatch(r"(.*)\s*=\s*(true|false)\s*", match[1], re.S)
+    if equality is not None:
+        return equality[1], equality[2]
     expression, expected = match[1].rsplit(" = ", 1)
     return expression, expected
 
@@ -41,11 +46,12 @@ def source(case, repeats, audit):
 From Stdlib Require Import List String Bool Uint63 ZArith ZMicromega RingMicromega EnvRing.
 From SMTCoq.utils Require Import PArray.
 From SMTCoq.checker.fol Require Import State Terms.
+From SMTCoq.checker Require Import MainChecker.
 From SMTCoq.checker.small_checker.euf Require Import EUF.
-From SMTCoq.checker.eunoia Require Import EunoiaScopedAdapter EunoiaLia {case["module"]}.
+From SMTCoq.checker.eunoia Require Import EunoiaScopedAdapter EunoiaLia EunoiaScope EunoiaMemo EunoiaTheory {case["module"]}.
 Import Atom EunoiaLia.
 Import ListNotations.
-Import SMTCoq.checker.eunoia.{case["module"]}.{case["scope"]}.
+Import SMTCoq.checker.eunoia.{case["module"]}{"." + case["scope"] if case["scope"] else ""}.
 Local Open Scope uint63_scope.
 Local Open Scope array_scope.
 Local Open Scope string_scope.
@@ -96,12 +102,14 @@ def main():
     parser.add_argument("--repeats", type=int, default=100)
     parser.add_argument("--rounds", type=int, default=3)
     parser.add_argument("--jobs", type=int, default=2)
-    parser.add_argument("--timeout", type=int, default=300)
+    parser.add_argument("--timeout", type=int, default=30, help="whole-compiler deadline per measured case")
+    parser.add_argument("--build-timeout", type=int, default=300)
+    parser.add_argument("--kernel-timeout", type=int, default=900, help="separate recursive kernel-check deadline")
     parser.add_argument("--case", action="append", help="existing example name; repeatable")
     parser.add_argument("--env", type=Path, default=Path(os.environ.get("EUNOIA_ENV", ROOT / "tools/rocq-env")))
     parser.add_argument("--skip-build", action="store_true")
     args = parser.parse_args()
-    if min(args.repeats, args.rounds, args.jobs, args.timeout) < 1:
+    if min(args.repeats, args.rounds, args.jobs, args.timeout, args.build_timeout, args.kernel_timeout) < 1:
         parser.error("counts and timeout must be positive")
     out = args.output.resolve()
     if out.exists() or '"' in str(out) or "\n" in str(out):
@@ -114,7 +122,7 @@ def main():
         cases = [c for c in cases if c["example"] in args.case]
     out.mkdir(parents=True)
     env = str(args.env.resolve())
-    summary = dict(passed=False, scope="fixed semantic certificate checking; no solver/tactic/search",
+    summary = dict(passed=False, scope="fixed checker inputs; per-case source/semantic layers; no solver/tactic/search",
                    repeats=args.repeats, rounds=args.rounds, cases=cases,
                    platform=platform.platform(), cpu_count=os.cpu_count(), commands=[], results=[],
                    git_head=subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=ROOT, text=True).strip(),
@@ -127,12 +135,13 @@ def main():
     def save():
         (out / "summary.json").write_text(json.dumps(summary, indent=2) + "\n")
 
-    def run(argv, stem, cwd=out):
+    def run(argv, stem, cwd=out, timeout=None):
+        timeout = args.timeout if timeout is None else timeout
         start = time.monotonic()
         with (out / (stem + ".log")).open("w") as log:
             proc = subprocess.Popen(argv, cwd=cwd, stdout=log, stderr=subprocess.STDOUT, start_new_session=True)
             try:
-                proc.wait(timeout=args.timeout)
+                proc.wait(timeout=timeout)
                 code = proc.returncode
             except subprocess.TimeoutExpired:
                 os.killpg(proc.pid, signal.SIGKILL)
@@ -143,7 +152,7 @@ def main():
                 proc.wait()
                 raise
         summary["commands"].append(dict(argv=argv, cwd=str(cwd), exit_code=code,
-                                        wall_s=time.monotonic() - start, log=stem + ".log"))
+                                        wall_s=time.monotonic() - start, timeout_s=timeout, log=stem + ".log"))
         save()
         if code:
             raise RuntimeError(f"{stem}: exit {code}; see {out / (stem + '.log')}")
@@ -152,7 +161,7 @@ def main():
     try:
         summary["version"] = run([env, "rocq", "--version"], "version").strip()
         if not args.skip_build:
-            run([env, "dune", "build", "--ignore-promoted-rules", f"-j{args.jobs}", "@install"], "build", ROOT)
+            run([env, "dune", "build", "--ignore-promoted-rules", f"-j{args.jobs}", "@install"], "build", ROOT, timeout=args.build_timeout)
         spec = importlib.util.spec_from_file_location("audit", ROOT / "tools/audit-eunoia-assumptions.py")
         audit_module = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(audit_module)
@@ -179,7 +188,7 @@ def main():
         # One independent recursive kernel process checks every measured module.
         # Its imported theory closure is checked once, rather than per case.
         run([env, "rocq", "check", "-silent", *flags, "-Q", str(out), "StandaloneBench",
-             *checked_modules], "kernel")
+             *checked_modules], "kernel", timeout=args.kernel_timeout)
         summary["kernel_checked_results"] = len(checked_modules)
         summary["medians_cpu_s"] = {
             case["example"]: {phase: statistics.median(r["timings"][phase]["cpu_s_per_evaluation"]
