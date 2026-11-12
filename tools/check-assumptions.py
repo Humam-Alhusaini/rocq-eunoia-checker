@@ -65,12 +65,15 @@ def main():
         "EunoiaAdapter": ["memo_encoding_refinement", "cached_eval_with_refinement", "prepared_eval_with_refinement"],
         "EunoiaIntegerEmbedding": ["normalize_ordinary", "fraction_eq_cross", "fraction_le_cross",
           "fraction_lt_cross", "floor_integer", "fraction_add", "fraction_mul", "fraction_neg"],
+        "EunoiaIntegerFacts": ["abs_laws", "min_laws", "max_laws", "sign_laws",
+          "symbolic_positive_modulo", "symbolic_negative_modulo", "symbolic_zero_division",
+          "known_quotient_divisor", "known_remainder_divisor"],
         "EunoiaDivision": ["positive_laws", "negative_laws", "zero_laws", "positive_division_shift",
           "positive_modulo_shift", "negative_division_shift", "negative_modulo_shift", "nested_positive_positive",
           "nested_negative_positive", "eqb_swap", "quotient_value", "remainder_value",
           "boolean_eq_true", "boolean_true_eq"],
         "EunoiaScopedAdapter": ["checker_correct", "checker_b_correct", "checker_eq_correct"],
-        "EunoiaLocal": ["execute_valid", "run_valid", "gate_correct"],
+        "EunoiaLocal": ["execute_valid", "run_valid", "gate_correct", "array_clause_valid", "execute_array_binding"],
         "EunoiaLocalDirect": ["gate_correct"],
         "EunoiaTheory": ["units_exact", "units_valid", "negations_false",
                          "implication_correct", "checked_clause_correct",
@@ -81,12 +84,12 @@ def main():
         command += ["--import", prefix]
         for theorem in theorems:
             command += ["--theorem", prefix + "." + module + "." + theorem]
-    for test_module in ("EunoiaModelDagTests", "EunoiaLocalDirectTests", "EunoiaTheoryTests", "EunoiaCertificateTests"):
+    for test_module in ("EunoiaArrayTests", "EunoiaModelDagTests", "EunoiaLocalDirectTests", "EunoiaTheoryTests", "EunoiaCertificateTests"):
         module = "SMTCoq.checker.eunoia." + test_module
         command += ["--import", module]
         for theorem in re.findall(r"^\s*(?:Example|Theorem|Lemma)\s+(\w+)",
                 (ROOT / "theories/checker/eunoia" / (test_module + ".v")).read_text(), re.M):
-            command += ["--theorem", module + ("." + test_module if test_module in ("EunoiaLocalDirectTests", "EunoiaTheoryTests", "EunoiaCertificateTests") else "") + "." + theorem]
+            command += ["--theorem", module + ("." + test_module if test_module in ("EunoiaArrayTests", "EunoiaLocalDirectTests", "EunoiaTheoryTests", "EunoiaCertificateTests") else "") + "." + theorem]
     module = "SMTCoq.checker.eunoia.CpcSpecialized"
     command += ["--import", module]
     command += ["--theorem", module + ".CpcSpecialized.rules_correct"]

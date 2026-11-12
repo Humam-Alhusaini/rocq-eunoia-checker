@@ -238,5 +238,71 @@
     "scope": "EunoiaCertificateTests",
     "example": "satisfiable_roots_cannot_import_local_conflict",
     "layer": "compiled-semantic-rejection-control"
+  },
+  {
+    "module": "EunoiaArrayTests",
+    "scope": "EunoiaArrayTests",
+    "example": "array_same",
+    "layer": "array-semantic-certificate"
+  },
+  {
+    "module": "EunoiaArrayTests",
+    "scope": "EunoiaArrayTests",
+    "example": "array_other",
+    "layer": "array-semantic-certificate"
+  },
+  {
+    "module": "EunoiaArrayTests",
+    "scope": "EunoiaArrayTests",
+    "example": "array_extensionality",
+    "layer": "array-semantic-certificate"
+  },
+  {
+    "module": "EunoiaArrayTests",
+    "scope": "EunoiaArrayTests",
+    "example": "missing_index_disequality",
+    "layer": "array-semantic-rejection-control"
+  },
+  {
+    "module": "EunoiaArrayTests",
+    "scope": "EunoiaArrayTests",
+    "example": "wrong_array_polarity",
+    "layer": "array-semantic-rejection-control"
+  },
+  {
+    "module": "EunoiaArrayTests",
+    "scope": "EunoiaArrayTests",
+    "example": "wrong_row_order",
+    "layer": "array-semantic-rejection-control"
+  },
+  {
+    "module": "EunoiaArrayTests",
+    "scope": "EunoiaArrayTests",
+    "example": "unsupported_array_shape",
+    "layer": "array-semantic-rejection-control"
+  },
+  {
+    "module": "EunoiaArrayTests",
+    "scope": "EunoiaArrayTests",
+    "example": "array_input_out_of_bounds",
+    "layer": "array-semantic-rejection-control"
+  },
+  {
+    "module": "EunoiaArrayTests",
+    "scope": "EunoiaArrayTests",
+    "example": "array_destination_reused",
+    "layer": "array-semantic-rejection-control"
+  },
+  {
+    "module": "EunoiaArrayTests",
+    "scope": "EunoiaArrayTests",
+    "example": "invalid_array_after_conflict",
+    "layer": "array-semantic-rejection-control"
+  },
+  {
+    "module": "EunoiaArrayTests",
+    "scope": "EunoiaArrayTests",
+    "example": "wrong_difference_witness",
+    "layer": "array-semantic-rejection-control"
   }
 ]

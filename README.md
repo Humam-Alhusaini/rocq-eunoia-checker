@@ -8,7 +8,7 @@ the checkpoint recorded in [the upstream manifest](provenance/upstream.json).
 
 The repository includes the generated rule interpreter, strict CPC reader,
 checked trace/scoping machinery, semantic certificate gates, proofs, fixtures,
-signature compiler, and required SMTCoq theory sources. All 135 current Rocq proof and Eunoia signature files match that upstream
+signature compiler, and required SMTCoq theory sources. All 137 current Rocq proof and Eunoia signature files match that upstream
 checkpoint byte for byte. Their hashes are in
 [provenance/upstream.json](provenance/upstream.json); the original extraction
 record remains in [provenance/extraction-0613ce2b.json](provenance/extraction-0613ce2b.json).
@@ -47,6 +47,15 @@ all cache entries and scoped state; it does not certify CPC source conformance.
 Its two positive benchmark fixtures and fourteen corruption controls are labeled
 `compiled-semantic-*`, separately from the strict source checkers. No solver,
 native compiler or public tactic is required here; those remain upstream.
+
+Verified semantic array certificates are also available independently of any
+solver: read-after-write, read at a different index, and extensionality use
+SMTCoq's existing array checkers. The fixed fixtures include corrupt index,
+polarity, difference-witness, bounds, freshness, and after-conflict controls.
+Their benchmark layers are explicitly labeled `array-semantic-*`; they measure
+semantic gates and do not claim validation of CPC array derivations. The nine
+proved integer-operation facts are included with the shared proof sources;
+native fact collection and branch search remain upstream.
 
 ## Build and test
 
