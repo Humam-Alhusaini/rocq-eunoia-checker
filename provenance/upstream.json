@@ -1,7 +1,7 @@
 {
   "repository": "https://github.com/Humam-Alhusaini/SMTRocq",
   "pull_request": 2,
-  "commit": "3f39f64149fce240f1528128b3712359f43b740f",
+  "commit": "9ede32da7975ace8ed46448dc257eaf75d9c893f",
   "extracted_at": "2026-11-11",
   "logical_namespaces": "SMTCoq.* retained for compatibility; sources bundled, no installed SMTCoq dependency",
   "unchanged_proof_and_signature_sha256": {
@@ -141,6 +141,6 @@
     "tools/eunoia/signatures/cpc/theories/Sets.eo": "d1dd145a7e41b72e53d89733cd57378dfcc19b2e7cf61cf58a253527a686617a",
     "tools/eunoia/signatures/cpc/theories/Strings.eo": "9b92523b67acf53c4b8b6e5e3065c2032edda2f2a7b8ba625cec1986440dabb0"
   },
-  "synchronized_at": "2026-11-11",
-  "previous_checkpoint": "provenance/extraction-910425da.json"
+  "synchronized_at": "2026-11-12",
+  "previous_checkpoint": "provenance/extraction-3f39f64.json"
 }

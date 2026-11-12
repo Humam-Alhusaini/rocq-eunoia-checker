@@ -1,5 +1,13 @@
 # Rocq Eunoia Checker
 
+This repository is maintained separately from
+[SMTRocq](https://github.com/Humam-Alhusaini/SMTRocq), which builds on SMTCoq to
+provide the CVC5-backed Rocq tactic. SMTRocq consumes this checker at a pinned
+Git submodule revision; it no longer maintains a second copy of the checker
+implementation or signature compiler. Checker changes and standalone benchmark
+work belong here; native CVC5 integration and end-to-end tactic benchmarks
+belong in SMTRocq. Both projects retain SMTCoq attribution and the CeCILL-C license.
+
 A standalone extraction of SMTRocq's signature-generated Eunoia/CPC checker,
 with benchmarks that do not invoke an SMT solver, the SMTCoq tactic, or native
 certificate search. Extracted from [SMTRocq PR #2](https://github.com/Humam-Alhusaini/SMTRocq/pull/2)
@@ -8,8 +16,8 @@ the checkpoint recorded in [the upstream manifest](provenance/upstream.json).
 
 The repository includes the generated rule interpreter, strict CPC reader,
 checked trace/scoping machinery, semantic certificate gates, proofs, fixtures,
-signature compiler, and required SMTCoq theory sources. All 135 current Rocq proof and Eunoia signature files match that upstream
-checkpoint byte for byte. Their hashes are in
+signature compiler, and required SMTCoq theory sources. All 135 current Rocq proof and Eunoia signature files match the merged
+SMTRocq checkpoint byte for byte. Their hashes are in
 [provenance/upstream.json](provenance/upstream.json); the original extraction
 record remains in [provenance/extraction-0613ce2b.json](provenance/extraction-0613ce2b.json).
 The initial 115 relevant commits
