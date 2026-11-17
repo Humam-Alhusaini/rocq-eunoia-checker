@@ -130,7 +130,8 @@ Proof.
 Qed.
 
 (* No proof-valued constructors exist in this witness language. The raw core
-   array/BV shapes remain rejected by decode. Array rules below have their own
+   array shapes remain rejected by decode. Bit-blasting rules enumerate every
+   premise through the existing verified checker. Array rules have their own
    canonicalizing path through the existing verified array small checkers.
    Every accepted operation explicitly enumerates ALL its local clause reads. *)
 Inductive array_rule :=
@@ -231,6 +232,16 @@ Section Context.
       Some (Plan [id] pos [l] (@Euf_Checker.SplArith _ _ _ _ pos id l proof))
     | Checker_Ext.SplDistinctElim pos id l =>
       Some (Plan [id] pos [l] (@Euf_Checker.SplDistinctElim _ _ _ _ pos id l))
+    | Checker_Ext.BBVar pos l =>
+      Some (Plan [] pos [l] (@Euf_Checker.BBVar _ _ _ _ pos l))
+    | Checker_Ext.BBConst pos l =>
+      Some (Plan [] pos [l] (@Euf_Checker.BBConst _ _ _ _ pos l))
+    | Checker_Ext.BBNot pos id l =>
+      Some (Plan [id] pos [l] (@Euf_Checker.BBNot _ _ _ _ pos id l))
+    | Checker_Ext.BBOp pos id1 id2 l =>
+      Some (Plan [id1; id2] pos [l] (@Euf_Checker.BBOp _ _ _ _ pos id1 id2 l))
+    | Checker_Ext.BBEq pos id1 id2 l =>
+      Some (Plan [id1; id2] pos [l] (@Euf_Checker.BBEq _ _ _ _ pos id1 id2 l))
     | _ => None
     end.
 
