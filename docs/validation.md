@@ -1,5 +1,32 @@
 # Extraction validation (2026-11-04)
 
+## Signature compilation checkpoint (2026-11-05)
+
+The current extraction contains 125 proof/signature files matching SMTRocq
+`6ccf13befa9033e69c7a6f00fbad7e6af15a4a99` byte for byte. It includes all 59
+compiled helpers with split case proofs and 87 independently proved rule
+implementations for proof-specific registries. The proof-only aggregate
+`CpcSpecialized.rules_correct` contains all 87 correspondence proofs.
+
+The install build and full regression suite passed at the executable checkpoint
+`358d37d`; the only subsequent generated declaration was the aggregate theorem.
+The updated install build and 157-declaration assumption audit passed after that
+proof-only addition. No assumptions beyond the existing 52-name baseline were
+introduced. Source replays and checker tests retain separate semantic gates.
+
+The source profiler's `specialized` mode was smoke-tested on captured UF and LIA
+proofs, selecting each fixture's actual used-rule registry. All eight timing
+phases and independent kernel checking passed. These diagnostics ran alongside
+validation and establish tool operation, not a comparative performance result.
+The initial smoke attempt failed because its replay-module loadpath was absent;
+the corrected attempt and the failure are both retained under ignored `results/`.
+
+Upstream's complete-helper tactic comparison was slower and the new rule
+registry also has slower focused profiles. These remain experimental execution
+paths; this checkpoint makes no new tactic-performance claim.
+
+## Original extraction
+
 Upstream: SMTRocq `0613ce2b18315b811ed8d19b9a7820e206ffec0f`.
 All 80 retained proof/signature files match the upstream bytes in
 `provenance/upstream.json`. No checker proof or semantic definition was edited.
@@ -47,3 +74,277 @@ individual proof-phase measurements imprecise; use more rounds for comparisons.
 | changed_coefficient_rejected | rejection-control | 0.000810 |
 | transitivity_clause | local-UF-certificate | 0.000570 |
 | congruence_clause | local-UF-certificate | 0.000590 |
+
+## Helper-cache synchronization, 2026-11-04
+
+The current synchronization tracks upstream `46c954b8c07dcc71c8bdacf6516656c104aeeda6`.
+All 93 proof/signature files in the provenance manifest match that revision
+byte for byte. The generic cache proves exact reference-computation refinement;
+all hint entries are validated, including unused ones. The source producer is
+checked against 32 captured CPC fixtures without invoking a solver.
+
+The new standalone helper benchmark runner passed a complete smoke run with
+fresh closed proofs and independent kernel checking. Its concurrent smoke
+timings are validation diagnostics and are not published as performance data.
+The older semantic/source samples above retain their original checkpoint and
+should not be attributed to this synchronization.
+
+The synchronized standalone snapshot passed `make build`, `make test`, and its
+51-target assumption audit. A separate idle-machine component run at
+`f9a50f3` passed all three alternating-order rounds, with four fresh closed
+proofs and an independent kernel check per round. Median VM times for 3,000
+full source-rule calls were 3.516 s for reference evaluation and 2.312 s for
+validated sharing; corresponding `Qed` medians were 3.663 s and 2.286 s.
+Candidate collection is outside those component timers. These values are not
+full-trace, tactic, solver or cross-prover comparisons. The main tactic's
+matched experiment found helper mining slower overall and left it optional.
+
+[Exact component timings and source hashes](helper-cache-component-2026-11-04.json)
+retain this sample separately from the older semantic/source measurements.
+
+## Indexed evaluator synchronization
+
+The next synchronized snapshot tracks upstream
+`f8f7b360f1cf1e44f7e04ca0b3cd765c05cab145`: all 99 proof/signature files
+match their recorded upstream hashes. It adds the optional, proved program-name
+trie and exact indexed-evaluator refinements. `make build`, `make test`, and the
+64-target assumption audit passed, including all 32 indexed CPC captures.
+The isolated profiler additionally compiled fresh `uf1` and `lia1` replays
+with `--interpreter indexed --repeats 1 --rounds 1` and independently checked
+their kernels. These concurrent smoke timings are not performance claims.
+
+The main tactic's matched indexed experiment found a slowdown and kept this
+option disabled. This synchronization provides a separately measurable checker
+implementation; it does not assert an end-to-end improvement. The older helper
+component report above remains tied to its own `f9a50f3` checkpoint.
+
+## Signature-specialized evaluator synchronization
+
+The snapshot synchronized from upstream
+`f1ef28e1fd1a0faa88fe712307fea66db228c43b` contains 107 proof/signature files
+matching their recorded hashes exactly. It adds expression specialization,
+structural fuel layers, generated helper compilation, and surface/full-checker
+refinements. The generic proofs are closed; the inherited SMTCoq assumption
+baseline is unchanged.
+
+`make build`, `make test`, and the expanded 79-target assumption audit passed.
+All 32 captured CPC traces are replayed through the specialized source evaluator.
+The isolated profiler supports `--interpreter staged`; a fresh `uf1`/`lia1`
+smoke run with one repeat and one round passed all eight timing phases and its
+independent kernel check. These concurrent validation timings are not published
+as performance evidence. Full-tactic comparisons remain a separate upstream
+experiment; the specialized path is optional.
+
+```sh
+python3 tools/eunoia-runtime-profile/profile.py --interpreter staged \
+  --fixture uf1 --fixture lia1 --repeats 1 --rounds 1 \
+  --output /tmp/eunoia-staged-smoke
+```
+
+The upstream matched tactic experiment at `f1ef28e` preserved all successes and
+rejections but was slower overall: 39.226 s specialized versus 33.420 s
+reference over two seven-case rounds per path. The specialization remains off
+by default upstream. The independent profiler exposes it for measurement; its
+helper-loop gains are not a full-tactic speedup.
+
+## Direct helper compilation synchronization
+
+This snapshot tracks upstream `67cc9a31a069f1ad8a0b8cb3a4cd70e031fe3c75`.
+All 116 proof/signature files match their recorded upstream hashes. The
+signature compiler emits 58 guarded helpers plus one proved reference fallback
+under its case-count resource policy, with flat, scoped and shared checker
+adapters. Rule coverage remains 87 selected rules and 59 helpers.
+
+The build and regression suite passed. The complete assumption audit explicitly
+includes the 31 new direct-runtime targets and passed all **110 targets**. An
+initial 79-target report omitted that new selection and is not used as complete
+validation of this snapshot. All 32 captured source traces replay through the
+direct evaluator, and fresh `uf1`/`lia1` profiler proofs passed independent
+kernel checking with `--interpreter direct --repeats 1 --rounds 1`.
+
+The repeated-rule runner is separate from both captured-source and complete
+semantic-checker benchmarks. It includes typing, surface conversion, evaluation,
+and separately reported `Qed`; it invokes no solver or native certificate
+search. Concurrent smoke measurements are validation diagnostics only, not
+published performance comparisons.
+
+Both new entry points passed their smoke checks with fresh artifacts: the
+actual-trace profiler produced eight timing rows and passed its kernel check;
+the complete repeated-rule runner produced all eight VM/`Qed` rows for one
+round, four closed proofs, and an independent kernel check. These checks ran
+alongside other validation, so their timings are retained only as diagnostics.
+
+A separate frozen run at `b961527` passed all three alternating-order rounds:
+four fresh closed proofs and an independent kernel check per round, yielding
+24 VM/`Qed` timing rows. For 3,000 complete rule calls, median VM times were
+3.630 s reference and 3.383 s direct; `Qed` medians were 3.731 s and 3.301 s.
+These VM/`Qed` figures measure source-rule computation, not the complete tactic.
+A Python compiler check ran between measured rounds during kernel verification;
+independent-check wall times are not presented as performance comparisons.
+Upstream's full tactic remained slower with direct compilation enabled.
+
+[Exact component rows and source hashes](direct-helper-component-2026-11-04.json)
+retain the sample independently of later canonicalization experiments.
+
+## Indexed signature aliases (2026-11-05)
+
+This snapshot tracks upstream `14c2dd8beb03005ad0fdda3e31c879df7887d9e3`.
+All 117 bundled proof and signature files match that commit byte for byte; the
+previous extraction manifest is archived as `provenance/extraction-67cc9a3.json`.
+`EoRename.refinement` and the two generated pointwise correctness lemmas prove
+that precomputed alias indexes preserve the original renaming computation.
+Every source evaluator uses the same generated conversion functions.
+
+`make build`, `make test`, and the expanded **113-target** assumption audit
+passed, including all 48 compiler tests and the generated source replay suite.
+The new renaming proofs are closed; semantic theorem assumptions remain within
+the inherited baseline. No new theory support is claimed by this optimization.
+
+A fresh reference-interpreter `uf1`/`lia1` smoke run produced all eight expected
+timing phases and passed its independent kernel check. It ran concurrently
+with other validation, so these timings are diagnostics, not performance data.
+
+## Definitionally equal term comparison (2026-11-05)
+
+This snapshot tracks upstream `983c85a` across the same 117 proof and
+signature files. Application equality branches on its function comparison,
+avoiding the argument comparison after a mismatch. The new pointwise refinement
+theorem is proved by `reflexivity` against the original recursive definition.
+Existing equality-specification proofs retain their statements and use an
+explicit conjunction view during rewriting.
+
+`make build`, `make test`, and the complete **114-target** assumption audit
+passed. The new equality refinement is closed. A fresh reference `uf1`/`lia1`
+source smoke run produced all eight expected timing phases and passed its
+independent kernel check. These validation runs overlapped with main-repository
+validation; their timings are diagnostics and do not establish a speedup.
+
+## Indexed representation adapters (2026-11-05)
+
+This snapshot includes 119 proof/signature files matching upstream `313f127`
+byte for byte. The additional flat and scoped program-index adapters transport
+acceptance to the existing semantic checkers using the indexed-source
+refinement theorem. No generated rule or semantic assumption changes.
+
+`make build`, `make test`, and the expanded **129-target** assumption audit
+passed. Fresh indexed `uf1`/`lia1` source proofs produced all eight expected
+timing phases and passed independent kernel checking. These checks ran after
+the upstream isolated timing window; their concurrent diagnostic timings are
+not performance claims. Upstream's adaptive index remained slower overall and
+stays optional.
+
+## Indexed model encoder (2026-11-06)
+
+The extraction adds `EoModelDagCache`, `EunoiaModelDag`,
+`EunoiaModelDagCheck` and their regression tests. The computed cache reuses
+SMTCoq's existing typed atom/formula graph. Exact fuel-aware encoder equality
+lifts to pointwise equality of the complete original checker Boolean; generated
+source evaluation, bindings, scopes and semantic certification remain checked.
+
+The install build and full regression suite passed. The expanded **181-target**
+assumption audit passed against the inherited 52-name baseline. Four fresh
+standalone benchmark cases—shared/inline scoped acceptance, bad source after
+conflict and an unused invalid semantic certificate—produced all timing phases
+and passed independent recursive kernel checking. These ran during concurrent
+validation and establish tool operation, not a comparative speedup.
+
+The first benchmark attempt omitted explicit `EunoiaScope`/`EunoiaMemo` imports
+needed by the newly measured expressions. The runner was corrected and all four
+cases then passed. Both attempts and the assumption report are retained in
+[the validation artifacts](../results/eunoia-model-encoder-2026-11-06/).
+Upstream's separate, frozen full-tactic measurements document the encoder's
+bounded performance gain; small fixtures here make no such claim.
+
+This checkpoint contains 129 proof/signature files matching upstream
+`bd154370078a287a4f394bda4905e4845f3fe90e` byte for byte, recorded in
+[provenance](../provenance/upstream.json).
+
+## November 8 direct local certificates
+
+The extraction now includes `EunoiaLocalDirect`, its proved local derivation
+gate, and eleven regression examples. The main checker still validates the
+complete generated source trace, exact bindings and scopes. Both local gates
+share the immutable table guard. Candidate search remains outside this repository.
+
+The build and regression suite passed. The assumption audit passed 193 named
+targets against the inherited baseline. Four fresh component benchmark fixtures
+(one complete source-checker acceptance and three rejection controls) produced
+fresh proof objects and passed recursive kernel checking. Measured compilers
+had 30-second deadlines; the shared recursive check had its separate
+900-second deadline. No full-tactic speedup is claimed from these fixtures.
+
+[Commands, hashes and results](eunoia/direct-certificates-validation-2026-11-08.json)
+record the validation. [Upstream comparison](eunoia/direct-certificates.md)
+explains why the optional producer path remains experimental.
+
+## Opaque integer-map comparison (2026-11-09)
+
+The extraction now tracks upstream `8089e667c4ad1e618d41d6e2d794ab8f82a8239c`.
+All 131 proof/signature files match the manifest exactly. The integer comparator
+retains its Boolean tests and moves its greater-than arithmetic proof to an
+opaque `Qed` lemma, avoiding repeated proof evaluation in the VM.
+
+The full install build and regression suite passed. The expanded **194-target**
+assumption audit passed, including `IntOrderedType.compare_gt`, with no new
+assumption beyond the inherited baseline. Four fresh component proofs (complete
+source-and-semantic acceptance plus three corruption rejections) passed their
+assumption checks and independent recursive kernel replay. Compiler deadlines
+were 30 seconds; the separate kernel deadline was 900 seconds.
+
+These component checks ran alongside validation and establish correctness, not
+a standalone comparative speedup. [Commands and results](eunoia/opaque-array-validation-2026-11-09.json)
+retain the exact audit and fresh proof records.
+
+## Direct SMTCoq theory certificates (2026-11-10)
+
+All 133 proof/signature files match upstream core
+`910425da6e2f8ba059ed217c26cb9491fb3fb3ba`. All 35 CPC closure signatures
+and the two compatibility signatures retain their prior bytes. The extraction
+adds `EunoiaTheory`, its 37 proof and mutation examples, and checked sharing of
+compact theory certificates.
+
+The full install build and regressions passed. The expanded assumption audit
+passed all 238 targets against the unchanged inherited baseline. Six fresh
+component examples, including complete source checking with a shared primitive
+and invalid-entry/after-conflict controls, passed compilation, assumption checks
+and independent recursive kernel replay. The new audit wrapper enforces a
+900-second deadline for the whole audit process group. Compiler benchmarks use
+30 seconds; recursive replay uses a separate 900 seconds.
+
+These component runs used one repeat and one round for validation and ran
+alongside upstream verification. They are not comparative speed evidence. Native
+candidate search, CVC5, and the public SMTCoq tactic remain outside these inputs.
+The upstream full-tactic comparison did not establish a robust overall gain,
+so its direct theory producer remains opt-in.
+
+[Exact commands, hashes, assumptions and replay results](eunoia/theory-certificates-validation-2026-11-10.json)
+and [component commands and architecture](eunoia/theory-certificates-2026-11-10.md).
+
+## Compiled semantic certificates (2026-11-11)
+
+All 135 proof/signature files (98 Rocq files and 37 Eunoia signatures) match
+upstream formal core `3f39f64` byte for byte. The native-only UF compression
+added later upstream does not change these files. All 35 CPC closure signatures
+and both compatibility signatures retain their previous bytes.
+
+The install/regression build passed, together with all 259 assumption targets
+against the unchanged 52-name inherited baseline. Sixteen fresh component
+proofs passed compilation, assumption checks and a separate recursive kernel
+replay: two accepted semantic certificates and fourteen corruption controls.
+A seventeenth source example proves soundness of the accepted scoped refutation.
+The controls include an attempt to leak a local conflict from satisfiable roots.
+
+The standalone replay harness was fixed to parse compact Boolean equalities
+and explicitly load theory-certificate names. Checker proof files were not
+modified to accommodate the harness. The final component run used one repeat
+and one round while upstream verification was running; its timings are not
+comparative speed evidence. Compiler deadlines remain 30 seconds and independent
+audit/kernel deadlines 900 seconds. No new axiom or admitted proof is added.
+
+The strict signature-generated CPC checkers remain available. The separate
+semantic driver proves an SMT theorem without certifying CPC source conformance;
+the component layers are labeled accordingly. Native production and the public
+`smtrocq` tactic remain in the upstream repository.
+
+[Exact validation and hashes](eunoia/compiled-semantic-validation-2026-11-11.json)
+and [architecture and independent commands](eunoia/compiled-semantic-certificates-2026-11-11.md).

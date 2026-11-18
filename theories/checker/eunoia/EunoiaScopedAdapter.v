@@ -45,11 +45,31 @@ Section Tables.
       (CpcGenerated.derive_with extra).
   Definition eval := eval_with CpcGenerated.default_primitive.
 
+  (* Source syntax is retained across lowering (including purification).
+     It must bind to the actual pushed literal before generated discharge. *)
+  Definition scope_assumption fuel (p : EunoiaAdapter.rule_payload) a :=
+    match EunoiaAdapter.source_assumption p with
+    | Some raw => if binds fuel [a] raw then Some raw else None
+    | None => encode_literal fuel a
+    end.
+
+  Lemma scope_assumption_binding : forall fuel p a raw,
+    scope_assumption fuel p a = Some raw ->
+    (EunoiaAdapter.source_assumption p = Some raw /\ binds fuel [a] raw = true) \/
+    (EunoiaAdapter.source_assumption p = None /\ encode_literal fuel a = Some raw).
+  Proof.
+    intros fuel p a raw H; unfold scope_assumption in H.
+    destruct (EunoiaAdapter.source_assumption p) as [source|] eqn:Hs.
+    - destruct (binds fuel [a] source) eqn:Hb; try discriminate.
+      inversion H; subst; left; auto.
+    - right; auto.
+  Qed.
+
   Definition scope_eval_with (extra : EoRuntime.primitive_hook) (fuel : nat) :=
     let tables_ready := tables_wf in
     fun (p : EunoiaAdapter.rule_payload) (a : _lit) (c : C.t) =>
     if tables_ready && bind_terms fuel [c] (EunoiaAdapter.premise_terms p) then
-      match encode_literal fuel a with
+      match scope_assumption fuel p a with
       | None => None
       | Some pushed =>
         match CpcGenerated.derive_assuming_with extra fuel (typeof fuel)
@@ -63,6 +83,50 @@ Section Tables.
         end
       end
     else None.
+  Definition prepared_scope_eval_with entries (ready names_ready : bool) (extra : EoRuntime.primitive_hook) fuel
+      (p : EunoiaAdapter.rule_payload) (a : _lit) (c : C.t) :=
+    if ready && EunoiaAdapter.cached_bind_terms t_i t_func t_atom t_form names
+        entries fuel [c] (EunoiaAdapter.premise_terms p) then
+      match scope_assumption fuel p a with
+      | None => None
+      | Some pushed =>
+        match CpcGenerated.derive_assuming_with extra fuel
+          (EunoiaAdapter.typeof_with_ready t_i t_func names names_ready fuel)
+          (EunoiaAdapter.rule_name p) pushed (EunoiaAdapter.arguments p)
+          (EunoiaAdapter.premise_terms p) with
+        | None => None
+        | Some result =>
+          if term_eqb result (EunoiaAdapter.result_term p) &&
+             EunoiaAdapter.cached_binds t_i t_func t_atom t_form names entries fuel
+               (EunoiaAdapter.result_clause p) result
+          then Some (EunoiaAdapter.result_clause p) else None
+        end
+      end
+    else None.
+  Definition cached_scope_eval_with entries extra fuel :=
+    prepared_scope_eval_with entries tables_wf
+      (EunoiaAdapter.names_wf t_i t_func names) extra fuel.
+  Lemma prepared_scope_eval_with_refinement : forall entries extra fuel p a c,
+    prepared_scope_eval_with entries tables_wf (EunoiaAdapter.names_wf t_i t_func names)
+      extra fuel p a c = cached_scope_eval_with entries extra fuel p a c.
+  Proof. reflexivity. Qed.
+
+  Lemma cached_scope_eval_with_refinement : forall extra fuel keys p a c,
+    cached_scope_eval_with (EunoiaAdapter.encoding_entries t_i t_func t_atom t_form names fuel keys)
+      extra fuel p a c = scope_eval_with extra fuel p a c.
+  Proof.
+    intros; unfold cached_scope_eval_with, prepared_scope_eval_with, scope_eval_with.
+    fold (typeof fuel).
+    rewrite EunoiaAdapter.cached_bind_terms_refinement.
+    destruct (tables_wf && bind_terms fuel [c] (EunoiaAdapter.premise_terms p));
+      [ | reflexivity].
+    destruct (scope_assumption fuel p a); [ | reflexivity].
+    destruct (CpcGenerated.derive_assuming_with extra fuel (typeof fuel)
+      (EunoiaAdapter.rule_name p) t (EunoiaAdapter.arguments p)
+      (EunoiaAdapter.premise_terms p)); [ | reflexivity].
+    now rewrite EunoiaAdapter.cached_binds_refinement.
+  Qed.
+
   Definition scope_eval := scope_eval_with CpcGenerated.default_primitive.
 
   Lemma scope_eval_with_binding : forall extra fuel p a c result,
@@ -70,7 +134,7 @@ Section Tables.
     tables_wf = true /\
     bind_terms fuel [c] (EunoiaAdapter.premise_terms p) = true /\
     exists pushed,
-      encode_literal fuel a = Some pushed /\
+      scope_assumption fuel p a = Some pushed /\
       CpcGenerated.derive_assuming_with extra fuel (typeof fuel)
         (EunoiaAdapter.rule_name p) pushed (EunoiaAdapter.arguments p)
         (EunoiaAdapter.premise_terms p) = Some (EunoiaAdapter.result_term p) /\
@@ -80,7 +144,7 @@ Section Tables.
     intros extra fuel p a c result H; unfold scope_eval_with in H.
     destruct (tables_wf && bind_terms fuel [c] (EunoiaAdapter.premise_terms p))
       eqn:Hg; try discriminate.
-    destruct (encode_literal fuel a) as [pushed|] eqn:Ha; try discriminate.
+    destruct (scope_assumption fuel p a) as [pushed|] eqn:Ha; try discriminate.
     destruct (CpcGenerated.derive_assuming_with extra fuel (typeof fuel)
       (EunoiaAdapter.rule_name p) pushed (EunoiaAdapter.arguments p)
       (EunoiaAdapter.premise_terms p)) as [generated|] eqn:Hd; try discriminate.
@@ -106,7 +170,7 @@ Section Tables.
       parent local a d = Some next ->
     exists c pushed,
       EunoiaChecker.fetch local [EunoiaScope.endpoint d] = Some [c] /\
-      encode_literal fuel a = Some pushed /\
+      scope_assumption fuel (EunoiaScope.scope_payload d) a = Some pushed /\
       bind_terms fuel [c]
         (EunoiaAdapter.premise_terms (EunoiaScope.scope_payload d)) = true /\
       CpcGenerated.derive_assuming_with extra fuel (typeof fuel)
@@ -133,8 +197,15 @@ Section Tables.
   Qed.
 
   Definition checker_with extra fuel capacity roots root_terms claims (t : trace) goal :=
-    tables_wf && bind_terms fuel roots root_terms &&
-    EunoiaScope.checker (eval_with extra fuel) (scope_eval_with extra fuel)
+    let ready := tables_wf in
+    let names_ready := EunoiaAdapter.names_wf t_i t_func names in
+    let entries := EunoiaAdapter.encoding_entries t_i t_func t_atom t_form names fuel
+      (List.concat roots ++ EunoiaScope.literals t)%list in
+    ready && bind_terms fuel roots root_terms &&
+    EunoiaScope.checker
+      (EunoiaAdapter.prepared_eval_with t_i t_func t_atom t_form names entries ready names_ready
+        (CpcGenerated.derive_with extra) fuel)
+      (prepared_scope_eval_with entries ready names_ready extra fuel)
       (@EunoiaLocal.gate t_i t_func t_atom t_form) (PArray.length t_form)
       capacity roots claims t goal.
   Definition checker := checker_with CpcGenerated.default_primitive.
@@ -229,6 +300,7 @@ Section Tables.
 End Tables.
 
 Print Assumptions scope_eval_with_binding.
+Print Assumptions scope_assumption_binding.
 Print Assumptions close_with_binding.
 Print Assumptions checker_with_binding.
 Print Assumptions checker_with_correct.

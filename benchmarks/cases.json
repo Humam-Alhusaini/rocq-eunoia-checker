@@ -1,12 +1,242 @@
 [
-  {"module":"EunoiaScopedAdapterTests", "scope":"EunoiaScopedAdapterTests", "example":"checked_single_scope", "layer":"complete-scoped-checker"},
-  {"module":"EunoiaScopedAdapterTests", "scope":"EunoiaScopedAdapterTests", "example":"checked_nested_scopes", "layer":"complete-scoped-checker"},
-  {"module":"EunoiaScopedAdapterTests", "scope":"EunoiaScopedAdapterTests", "example":"checked_boolean_goal", "layer":"complete-scoped-checker"},
-  {"module":"EunoiaScopedAdapterTests", "scope":"EunoiaScopedAdapterTests", "example":"checked_equality_goal", "layer":"complete-scoped-checker"},
-  {"module":"EunoiaScopedAdapterTests", "scope":"EunoiaScopedAdapterTests", "example":"low_fuel_rejects", "layer":"rejection-control"},
-  {"module":"EunoiaLiaTests", "scope":"EunoiaLiaTests", "example":"scaling_accepted", "layer":"local-LIA-certificate"},
-  {"module":"EunoiaLiaTests", "scope":"EunoiaLiaTests", "example":"missing_certificate_rejected", "layer":"rejection-control"},
-  {"module":"EunoiaLiaTests", "scope":"EunoiaLiaTests", "example":"changed_coefficient_rejected", "layer":"rejection-control"},
-  {"module":"EunoiaUf", "scope":"Regression", "example":"transitivity_clause", "layer":"local-UF-certificate"},
-  {"module":"EunoiaUf", "scope":"Regression", "example":"congruence_clause", "layer":"local-UF-certificate"}
+  {
+    "module": "EunoiaScopedAdapterTests",
+    "scope": "EunoiaScopedAdapterTests",
+    "example": "checked_single_scope",
+    "layer": "complete-scoped-checker"
+  },
+  {
+    "module": "EunoiaScopedAdapterTests",
+    "scope": "EunoiaScopedAdapterTests",
+    "example": "checked_nested_scopes",
+    "layer": "complete-scoped-checker"
+  },
+  {
+    "module": "EunoiaScopedAdapterTests",
+    "scope": "EunoiaScopedAdapterTests",
+    "example": "checked_boolean_goal",
+    "layer": "complete-scoped-checker"
+  },
+  {
+    "module": "EunoiaScopedAdapterTests",
+    "scope": "EunoiaScopedAdapterTests",
+    "example": "checked_equality_goal",
+    "layer": "complete-scoped-checker"
+  },
+  {
+    "module": "EunoiaScopedAdapterTests",
+    "scope": "EunoiaScopedAdapterTests",
+    "example": "low_fuel_rejects",
+    "layer": "rejection-control"
+  },
+  {
+    "module": "EunoiaLiaTests",
+    "scope": "EunoiaLiaTests",
+    "example": "scaling_accepted",
+    "layer": "local-LIA-certificate"
+  },
+  {
+    "module": "EunoiaLiaTests",
+    "scope": "EunoiaLiaTests",
+    "example": "missing_certificate_rejected",
+    "layer": "rejection-control"
+  },
+  {
+    "module": "EunoiaLiaTests",
+    "scope": "EunoiaLiaTests",
+    "example": "changed_coefficient_rejected",
+    "layer": "rejection-control"
+  },
+  {
+    "module": "EunoiaUf",
+    "scope": "Regression",
+    "example": "transitivity_clause",
+    "layer": "local-UF-certificate"
+  },
+  {
+    "module": "EunoiaUf",
+    "scope": "Regression",
+    "example": "congruence_clause",
+    "layer": "local-UF-certificate"
+  },
+  {
+    "module": "EunoiaModelDagTests",
+    "scope": "",
+    "example": "shared_scoped_source_accepts",
+    "layer": "complete-indexed-model-source-checker"
+  },
+  {
+    "module": "EunoiaModelDagTests",
+    "scope": "",
+    "example": "inline_source_accepts",
+    "layer": "complete-indexed-model-source-checker"
+  },
+  {
+    "module": "EunoiaModelDagTests",
+    "scope": "",
+    "example": "bad_source_after_conflict_rejected",
+    "layer": "rejection-control"
+  },
+  {
+    "module": "EunoiaModelDagTests",
+    "scope": "",
+    "example": "unused_bad_semantics_rejected",
+    "layer": "rejection-control"
+  },
+  {
+    "module": "EunoiaLocalDirectTests",
+    "scope": "EunoiaLocalDirectTests",
+    "example": "complete_generated_source_checker_accepts",
+    "layer": "complete-direct-certificate-source-checker"
+  },
+  {
+    "module": "EunoiaLocalDirectTests",
+    "scope": "EunoiaLocalDirectTests",
+    "example": "altered_conclusion_rejected",
+    "layer": "rejection-control"
+  },
+  {
+    "module": "EunoiaLocalDirectTests",
+    "scope": "EunoiaLocalDirectTests",
+    "example": "invalid_unused_command_rejected",
+    "layer": "rejection-control"
+  },
+  {
+    "module": "EunoiaLocalDirectTests",
+    "scope": "EunoiaLocalDirectTests",
+    "example": "invalid_true_fallback_rejected",
+    "layer": "rejection-control"
+  },
+  {
+    "module": "EunoiaTheoryTests",
+    "scope": "EunoiaTheoryTests",
+    "example": "transitivity",
+    "layer": "direct-SMTCoq-theory-certificate"
+  },
+  {
+    "module": "EunoiaTheoryTests",
+    "scope": "EunoiaTheoryTests",
+    "example": "congruence",
+    "layer": "direct-SMTCoq-theory-certificate"
+  },
+  {
+    "module": "EunoiaTheoryTests",
+    "scope": "EunoiaTheoryTests",
+    "example": "linear_scaling",
+    "layer": "direct-SMTCoq-theory-certificate"
+  },
+  {
+    "module": "EunoiaTheoryTests",
+    "scope": "EunoiaTheoryTests",
+    "example": "checked_shared_primitive",
+    "layer": "complete-direct-theory-source-checker"
+  },
+  {
+    "module": "EunoiaTheoryTests",
+    "scope": "EunoiaTheoryTests",
+    "example": "unused_invalid_primitive_entry_rejected",
+    "layer": "rejection-control"
+  },
+  {
+    "module": "EunoiaTheoryTests",
+    "scope": "EunoiaTheoryTests",
+    "example": "invalid_primitive_after_conflict_rejected",
+    "layer": "rejection-control"
+  },
+  {
+    "module": "EunoiaCertificateTests",
+    "scope": "EunoiaCertificateTests",
+    "example": "scoped_refutation",
+    "layer": "compiled-semantic-checker"
+  },
+  {
+    "module": "EunoiaCertificateTests",
+    "scope": "EunoiaCertificateTests",
+    "example": "wrong_roots",
+    "layer": "compiled-semantic-rejection-control"
+  },
+  {
+    "module": "EunoiaCertificateTests",
+    "scope": "EunoiaCertificateTests",
+    "example": "injected_root_claim",
+    "layer": "compiled-semantic-rejection-control"
+  },
+  {
+    "module": "EunoiaCertificateTests",
+    "scope": "EunoiaCertificateTests",
+    "example": "wrong_final_clause",
+    "layer": "compiled-semantic-rejection-control"
+  },
+  {
+    "module": "EunoiaCertificateTests",
+    "scope": "EunoiaCertificateTests",
+    "example": "invalid_unused_entry",
+    "layer": "compiled-semantic-rejection-control"
+  },
+  {
+    "module": "EunoiaCertificateTests",
+    "scope": "EunoiaCertificateTests",
+    "example": "checked_primitive_after_conflict",
+    "layer": "compiled-semantic-checker"
+  },
+  {
+    "module": "EunoiaCertificateTests",
+    "scope": "EunoiaCertificateTests",
+    "example": "invalid_primitive_after_conflict",
+    "layer": "compiled-semantic-rejection-control"
+  },
+  {
+    "module": "EunoiaCertificateTests",
+    "scope": "EunoiaCertificateTests",
+    "example": "invalid_inline_after_conflict",
+    "layer": "compiled-semantic-rejection-control"
+  },
+  {
+    "module": "EunoiaCertificateTests",
+    "scope": "EunoiaCertificateTests",
+    "example": "dead_scope_read",
+    "layer": "compiled-semantic-rejection-control"
+  },
+  {
+    "module": "EunoiaCertificateTests",
+    "scope": "EunoiaCertificateTests",
+    "example": "reused_destination",
+    "layer": "compiled-semantic-rejection-control"
+  },
+  {
+    "module": "EunoiaCertificateTests",
+    "scope": "EunoiaCertificateTests",
+    "example": "out_of_bounds_clause",
+    "layer": "compiled-semantic-rejection-control"
+  },
+  {
+    "module": "EunoiaCertificateTests",
+    "scope": "EunoiaCertificateTests",
+    "example": "noncanonical_clause",
+    "layer": "compiled-semantic-rejection-control"
+  },
+  {
+    "module": "EunoiaCertificateTests",
+    "scope": "EunoiaCertificateTests",
+    "example": "missing_certificate",
+    "layer": "compiled-semantic-rejection-control"
+  },
+  {
+    "module": "EunoiaCertificateTests",
+    "scope": "EunoiaCertificateTests",
+    "example": "invalid_unused_theory",
+    "layer": "compiled-semantic-rejection-control"
+  },
+  {
+    "module": "EunoiaCertificateTests",
+    "scope": "EunoiaCertificateTests",
+    "example": "invalid_model",
+    "layer": "compiled-semantic-rejection-control"
+  },
+  {
+    "module": "EunoiaCertificateTests",
+    "scope": "EunoiaCertificateTests",
+    "example": "satisfiable_roots_cannot_import_local_conflict",
+    "layer": "compiled-semantic-rejection-control"
+  }
 ]

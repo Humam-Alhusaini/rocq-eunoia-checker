@@ -11,3 +11,7 @@ benchmark:
 
 benchmark-source:
 	python3 -B tools/eunoia-runtime-profile/profile.py --output /tmp/eunoia-source-$$(date -u +%Y%m%dT%H%M%SZ)
+
+.PHONY: benchmark-helpers
+benchmark-helpers:
+	python3 -B benchmarks/helper_cache.py --output /tmp/eunoia-helpers-$$(date -u +%Y%m%dT%H%M%SZ)

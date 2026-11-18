@@ -1,0 +1,183 @@
+{
+  "implementation_commit": "b96152773432632b27d9111fa2b4d8e024e61202",
+  "layer": "complete source-rule component; no solver or certificate search",
+  "median_seconds": {
+    "direct_1000_qed": 1.139,
+    "direct_1000_vm": 1.119,
+    "direct_3000_qed": 3.301,
+    "direct_3000_vm": 3.383,
+    "reference_1000_qed": 1.323,
+    "reference_1000_vm": 1.293,
+    "reference_3000_qed": 3.731,
+    "reference_3000_vm": 3.63
+  },
+  "passed": true,
+  "rounds": 3,
+  "runner_sha256": "b46952459a6a9f0d20b5003a80b47cede3a1bea76e4e8e3872ac814b4fb8f5de",
+  "scope": "Complete repeated source-rule calls; no solver, tactic or certificate search. VM and Qed medians are component measurements, not full tactic speedups.",
+  "source_sha256": {
+    "CpcDirect": "48e1884153829d68a7e4dbf317c70ffa2a1cb3de8138c856c2f7cab1fd73938a",
+    "CpcDirectEntry": "c545a912a1033f87f46fa9319a1a4ff1150e1b4b4a71d2e8e6f1bf9403c4590a",
+    "CpcDirectEval": "0e4e05dc80f51b1f771c61b1b54db416b07e7dc16b034fe2c768ec585802a994",
+    "CpcDirectRules": "c22c7869826c9a33b5da9566f0ed8909a0d1c25e87a0d9a85ccdbac6db78a435",
+    "CpcGenerated": "f8a1ccbb18d94f841d90625636185811622a13565ece78398b4c1bb56978fc70",
+    "CpcMemo": "53a0d09ea62d1353391d305a4b8fbcea8442aca332da87a0c77fb741dce38e1d",
+    "EoArithmetic": "c6d5a1a2b8c737da219a20b23cf6a415fe6d6a8660c458df2b521df9f4695017",
+    "EoCheckedMemo": "2c134f82962a9bb95a5280297451d04d2b91b9c78227a1e0d1b6268f1a50b71e",
+    "EoDirect": "a03d358de517bd5970e269326556ecc09632acbeb0b70142417346a848273170",
+    "EoMemoCollector": "e1a7cb2cf4969fb8c4a5fe9fd2aca02f0f07d334fa9e609349a4381ed242c802",
+    "EoOrder": "3da2c8f89b6a3249294c43351db6487744efc5cc2eaae8f0e28b215106ec6423",
+    "EoRuleMemo": "09db4e12a400fe9cbf76f25e0e761db8bc449b906616c1412f8d7517cbfca27e",
+    "EoRuntime": "09a893b95d1fecf0fafa211072117ae6c704933fc1e50e3c6db8429ba59d44f6",
+    "EoSyntax": "f30674318987d354dd4f450382d7861a3b03df13bd6c3d63c53643cb67c8dfd8",
+    "LiaTraceReplay": "53efb20abbce53990bbfc9e528834d62faa268e36d7285f277d5ba07071f50ab",
+    "TraceReplay": "79cca400a288f9df7dadd6168d7e26c44d3dba0e34a004bf20065ff0023ed0ba"
+  },
+  "summary_sha256": "76db3046742c9d622c50e03e598510ca13c36ed9faadbc227951d94c2ca56f3b",
+  "timing_rows": [
+    {
+      "case": "reference_1000",
+      "phase": "vm",
+      "round": 0,
+      "wall_s": 1.311
+    },
+    {
+      "case": "reference_1000",
+      "phase": "qed",
+      "round": 0,
+      "wall_s": 1.323
+    },
+    {
+      "case": "direct_1000",
+      "phase": "vm",
+      "round": 0,
+      "wall_s": 1.119
+    },
+    {
+      "case": "direct_1000",
+      "phase": "qed",
+      "round": 0,
+      "wall_s": 1.099
+    },
+    {
+      "case": "reference_3000",
+      "phase": "vm",
+      "round": 0,
+      "wall_s": 3.668
+    },
+    {
+      "case": "reference_3000",
+      "phase": "qed",
+      "round": 0,
+      "wall_s": 3.731
+    },
+    {
+      "case": "direct_3000",
+      "phase": "vm",
+      "round": 0,
+      "wall_s": 3.383
+    },
+    {
+      "case": "direct_3000",
+      "phase": "qed",
+      "round": 0,
+      "wall_s": 3.368
+    },
+    {
+      "case": "direct_3000",
+      "phase": "vm",
+      "round": 1,
+      "wall_s": 3.419
+    },
+    {
+      "case": "direct_3000",
+      "phase": "qed",
+      "round": 1,
+      "wall_s": 3.299
+    },
+    {
+      "case": "reference_3000",
+      "phase": "vm",
+      "round": 1,
+      "wall_s": 3.61
+    },
+    {
+      "case": "reference_3000",
+      "phase": "qed",
+      "round": 1,
+      "wall_s": 3.758
+    },
+    {
+      "case": "direct_1000",
+      "phase": "vm",
+      "round": 1,
+      "wall_s": 1.108
+    },
+    {
+      "case": "direct_1000",
+      "phase": "qed",
+      "round": 1,
+      "wall_s": 1.154
+    },
+    {
+      "case": "reference_1000",
+      "phase": "vm",
+      "round": 1,
+      "wall_s": 1.2
+    },
+    {
+      "case": "reference_1000",
+      "phase": "qed",
+      "round": 1,
+      "wall_s": 1.223
+    },
+    {
+      "case": "reference_1000",
+      "phase": "vm",
+      "round": 2,
+      "wall_s": 1.293
+    },
+    {
+      "case": "reference_1000",
+      "phase": "qed",
+      "round": 2,
+      "wall_s": 1.357
+    },
+    {
+      "case": "direct_1000",
+      "phase": "vm",
+      "round": 2,
+      "wall_s": 1.12
+    },
+    {
+      "case": "direct_1000",
+      "phase": "qed",
+      "round": 2,
+      "wall_s": 1.139
+    },
+    {
+      "case": "reference_3000",
+      "phase": "vm",
+      "round": 2,
+      "wall_s": 3.63
+    },
+    {
+      "case": "reference_3000",
+      "phase": "qed",
+      "round": 2,
+      "wall_s": 3.706
+    },
+    {
+      "case": "direct_3000",
+      "phase": "vm",
+      "round": 2,
+      "wall_s": 3.356
+    },
+    {
+      "case": "direct_3000",
+      "phase": "qed",
+      "round": 2,
+      "wall_s": 3.301
+    }
+  ]
+}

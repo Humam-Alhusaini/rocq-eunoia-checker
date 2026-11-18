@@ -1,0 +1,2692 @@
+{
+  "date": "2026-11-10",
+  "upstream_commit": "910425da6e2f8ba059ed217c26cb9491fb3fb3ba",
+  "proof_signature_files_verified": 133,
+  "cpc_signature_files_unchanged": 35,
+  "total_eunoia_signature_files_unchanged": 37,
+  "compiler_benchmark_timeout_s": 30,
+  "independent_audit_and_kernel_timeout_s": 900,
+  "theory_examples": 37,
+  "component_scope": "fresh fixed inputs, no solver or tactic; validation ran concurrently with separate upstream verification, not comparative performance evidence",
+  "validation": {
+    "passed": true,
+    "commands": [
+      {
+        "name": "build",
+        "command": [
+          "dune",
+          "build",
+          "--ignore-promoted-rules",
+          "-j2",
+          "@install",
+          "@runtest"
+        ],
+        "exit_code": 0,
+        "process_wall_s": 152.98761157295667,
+        "log_sha256": "b240893f938d6073d86bd5b3103a507e83576e4a470a7e8fcb72f19bee810e07"
+      },
+      {
+        "name": "assumptions",
+        "command": [
+          "python3",
+          "-B",
+          "tools/check-assumptions.py",
+          "--output",
+          "/tmp/eunoia-theory-standalone-2026-11-10/assumptions"
+        ],
+        "exit_code": 0,
+        "process_wall_s": 352.88042133895215,
+        "log_sha256": "7002a5e1e2bd1704c97adc6ae00456dfaf308c996fcb2ace91255d47be5b3dc8"
+      },
+      {
+        "name": "components",
+        "command": [
+          "python3",
+          "-B",
+          "benchmarks/run.py",
+          "--skip-build",
+          "--output",
+          "/tmp/eunoia-theory-standalone-2026-11-10/components",
+          "--repeats",
+          "1",
+          "--rounds",
+          "1",
+          "--timeout",
+          "30",
+          "--kernel-timeout",
+          "900",
+          "--case",
+          "transitivity",
+          "--case",
+          "congruence",
+          "--case",
+          "linear_scaling",
+          "--case",
+          "checked_shared_primitive",
+          "--case",
+          "unused_invalid_primitive_entry_rejected",
+          "--case",
+          "invalid_primitive_after_conflict_rejected"
+        ],
+        "exit_code": 0,
+        "process_wall_s": 88.55238809296861,
+        "log_sha256": "96d198401bcedbb39d8a3f29fc18e8210557ece96a51e660b4d773734451ee42"
+      }
+    ]
+  },
+  "assumption_sets": {
+    "fa34cd843b8bf4f25560a06864626b6bdb0e278a6fd5b1de8dd2293b38e7fdf4": [
+      "PrimInt63.eqb",
+      "PrimInt63.int",
+      "PrimInt63.land",
+      "PrimInt63.lor",
+      "PrimInt63.lsl",
+      "PrimInt63.lsr",
+      "PrimInt63.ltb",
+      "PrimInt63.sub",
+      "Uint63Axioms.eqb_correct",
+      "Uint63Axioms.eqb_refl",
+      "Uint63Axioms.ltb_spec",
+      "Uint63Axioms.of_to_Z"
+    ],
+    "7909a93e866a57ba4f9b45452b2750c2e2d3ae7e308caf128e0f30e6079970f7": [
+      "PrimInt63.add",
+      "PrimInt63.eqb",
+      "PrimInt63.int",
+      "PrimInt63.land",
+      "PrimInt63.leb",
+      "PrimInt63.lor",
+      "PrimInt63.lsl",
+      "PrimInt63.lsr",
+      "PrimInt63.ltb",
+      "PrimInt63.sub",
+      "ProofIrrelevance.proof_irrelevance",
+      "Uint63Axioms.eqb_correct",
+      "Uint63Axioms.eqb_refl",
+      "Uint63Axioms.ltb_spec",
+      "Uint63Axioms.of_to_Z"
+    ],
+    "b7b1ec588d25fc14a22fee9aa4ad3d332b1939388a5280e387c6ff5120e8c293": [
+      "PrimInt63.add",
+      "PrimInt63.addc",
+      "PrimInt63.addcarryc",
+      "PrimInt63.addmuldiv",
+      "PrimInt63.compare",
+      "PrimInt63.div",
+      "PrimInt63.diveucl",
+      "PrimInt63.diveucl_21",
+      "PrimInt63.eqb",
+      "PrimInt63.head0",
+      "PrimInt63.int",
+      "PrimInt63.land",
+      "PrimInt63.leb",
+      "PrimInt63.lor",
+      "PrimInt63.lsl",
+      "PrimInt63.lsr",
+      "PrimInt63.ltb",
+      "PrimInt63.lxor",
+      "PrimInt63.mod",
+      "PrimInt63.mul",
+      "PrimInt63.mulc",
+      "PrimInt63.sub",
+      "PrimInt63.subc",
+      "PrimInt63.subcarryc",
+      "PrimInt63.tail0",
+      "ProofIrrelevance.proof_irrelevance",
+      "Uint63Axioms.add_spec",
+      "Uint63Axioms.addc_def_spec",
+      "Uint63Axioms.addcarryc_def_spec",
+      "Uint63Axioms.addmuldiv_def_spec",
+      "Uint63Axioms.compare_def_spec",
+      "Uint63Axioms.div_spec",
+      "Uint63Axioms.diveucl_21_spec",
+      "Uint63Axioms.diveucl_def_spec",
+      "Uint63Axioms.eqb_correct",
+      "Uint63Axioms.eqb_refl",
+      "Uint63Axioms.head0_spec",
+      "Uint63Axioms.land_spec",
+      "Uint63Axioms.leb_spec",
+      "Uint63Axioms.lor_spec",
+      "Uint63Axioms.lsl_spec",
+      "Uint63Axioms.lsr_spec",
+      "Uint63Axioms.ltb_spec",
+      "Uint63Axioms.lxor_spec",
+      "Uint63Axioms.mod_spec",
+      "Uint63Axioms.mul_spec",
+      "Uint63Axioms.mulc_spec",
+      "Uint63Axioms.of_to_Z",
+      "Uint63Axioms.sub_spec",
+      "Uint63Axioms.subc_def_spec",
+      "Uint63Axioms.subcarryc_def_spec",
+      "Uint63Axioms.tail0_spec"
+    ],
+    "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945": [],
+    "46289c12ce14951d8a6ec5054724e843108eaf56aa225089c3e8e08398fadebc": [
+      "PrimInt63.add",
+      "PrimInt63.compare",
+      "PrimInt63.eqb",
+      "PrimInt63.int",
+      "PrimInt63.land",
+      "PrimInt63.leb",
+      "PrimInt63.lor",
+      "PrimInt63.lsl",
+      "PrimInt63.lsr",
+      "PrimInt63.ltb",
+      "PrimInt63.lxor",
+      "PrimInt63.sub",
+      "ProofIrrelevance.proof_irrelevance",
+      "Uint63Axioms.eqb_correct",
+      "Uint63Axioms.eqb_refl",
+      "Uint63Axioms.ltb_spec",
+      "Uint63Axioms.of_to_Z"
+    ],
+    "9b057eb8d362c0c83eec9944ebfda728a4d8e03eab4fa6ea9347705952e24605": [
+      "PrimInt63.compare",
+      "PrimInt63.eqb",
+      "PrimInt63.int",
+      "PrimInt63.land",
+      "PrimInt63.leb",
+      "PrimInt63.lor",
+      "PrimInt63.lsl",
+      "PrimInt63.lsr",
+      "PrimInt63.ltb",
+      "PrimInt63.sub",
+      "Uint63Axioms.eqb_correct",
+      "Uint63Axioms.eqb_refl",
+      "Uint63Axioms.ltb_spec",
+      "Uint63Axioms.of_to_Z"
+    ],
+    "3030ffb7f5d75bb4fd41686c85d1ee8c1cb9f3b0c48f951038167e25d365b885": [
+      "PrimInt63.add",
+      "PrimInt63.compare",
+      "PrimInt63.eqb",
+      "PrimInt63.int",
+      "PrimInt63.land",
+      "PrimInt63.leb",
+      "PrimInt63.lor",
+      "PrimInt63.lsl",
+      "PrimInt63.lsr",
+      "PrimInt63.ltb",
+      "PrimInt63.sub",
+      "ProofIrrelevance.proof_irrelevance",
+      "Uint63Axioms.eqb_correct",
+      "Uint63Axioms.eqb_refl",
+      "Uint63Axioms.ltb_spec",
+      "Uint63Axioms.of_to_Z"
+    ],
+    "99a5d643a4b1cda5f959f69d062f92d40bbf9edbb999af81f0ad8c820a8be532": [
+      "PrimInt63.int"
+    ],
+    "0223cf526d67ed88a4221b9b75b506b828eb1c2ac18ccc96ed63c90545cb9923": [
+      "PrimInt63.eqb",
+      "PrimInt63.int",
+      "PrimInt63.land",
+      "PrimInt63.lsr"
+    ],
+    "20a50cfc48be720a891ea4576a4ffbaf3d1da4f9039a74502fe07f50e01dced7": [
+      "PrimInt63.add",
+      "PrimInt63.eqb",
+      "PrimInt63.int",
+      "PrimInt63.land",
+      "PrimInt63.leb",
+      "PrimInt63.lor",
+      "PrimInt63.lsl",
+      "PrimInt63.lsr",
+      "PrimInt63.ltb",
+      "PrimInt63.lxor",
+      "PrimInt63.sub",
+      "Uint63Axioms.add_spec",
+      "Uint63Axioms.eqb_correct",
+      "Uint63Axioms.eqb_refl",
+      "Uint63Axioms.land_spec",
+      "Uint63Axioms.leb_spec",
+      "Uint63Axioms.lsl_spec",
+      "Uint63Axioms.lsr_spec",
+      "Uint63Axioms.ltb_spec",
+      "Uint63Axioms.lxor_spec",
+      "Uint63Axioms.of_to_Z"
+    ],
+    "4c0f5af70ca240066553604f6ac59248a1f2d4442ee8fb5818807acb1d7c5907": [
+      "PrimInt63.add",
+      "PrimInt63.compare",
+      "PrimInt63.eqb",
+      "PrimInt63.int",
+      "PrimInt63.land",
+      "PrimInt63.leb",
+      "PrimInt63.lor",
+      "PrimInt63.lsl",
+      "PrimInt63.lsr",
+      "PrimInt63.ltb",
+      "PrimInt63.lxor",
+      "PrimInt63.sub",
+      "Uint63Axioms.add_spec",
+      "Uint63Axioms.compare_def_spec",
+      "Uint63Axioms.eqb_correct",
+      "Uint63Axioms.eqb_refl",
+      "Uint63Axioms.land_spec",
+      "Uint63Axioms.leb_spec",
+      "Uint63Axioms.lsl_spec",
+      "Uint63Axioms.lsr_spec",
+      "Uint63Axioms.ltb_spec",
+      "Uint63Axioms.lxor_spec",
+      "Uint63Axioms.of_to_Z"
+    ],
+    "7f00f99bc6ec641395dba9458e0122718621be4b8e80940bbcb998d777de162d": [
+      "PrimInt63.add",
+      "PrimInt63.eqb",
+      "PrimInt63.int",
+      "PrimInt63.land",
+      "PrimInt63.leb",
+      "PrimInt63.lor",
+      "PrimInt63.lsl",
+      "PrimInt63.lsr",
+      "PrimInt63.ltb",
+      "PrimInt63.lxor",
+      "PrimInt63.sub",
+      "ProofIrrelevance.proof_irrelevance",
+      "Uint63Axioms.eqb_correct",
+      "Uint63Axioms.eqb_refl",
+      "Uint63Axioms.ltb_spec",
+      "Uint63Axioms.of_to_Z"
+    ],
+    "177c2a2cb2df37e749f6b170651a0646d6e5b933b7e2a47dbe2658d41dd76163": [
+      "PrimInt63.add",
+      "PrimInt63.compare",
+      "PrimInt63.eqb",
+      "PrimInt63.int",
+      "PrimInt63.land",
+      "PrimInt63.leb",
+      "PrimInt63.lor",
+      "PrimInt63.lsl",
+      "PrimInt63.lsr",
+      "PrimInt63.ltb",
+      "PrimInt63.lxor",
+      "PrimInt63.sub",
+      "Uint63Axioms.eqb_correct",
+      "Uint63Axioms.eqb_refl",
+      "Uint63Axioms.ltb_spec",
+      "Uint63Axioms.of_to_Z"
+    ]
+  },
+  "assumption_audit": {
+    "command": [
+      "/workspace/rocq-eunoia-checker/tools/rocq-env",
+      "rocq",
+      "c",
+      "-I",
+      "/workspace/rocq-eunoia-checker/_build/install/default/lib",
+      "-Q",
+      "/workspace/rocq-eunoia-checker/_build/default/theories/checker",
+      "SMTCoq.checker",
+      "-Q",
+      "/workspace/rocq-eunoia-checker/_build/default/theories/checker/eunoia",
+      "SMTCoq.checker.eunoia",
+      "-Q",
+      "/workspace/rocq-eunoia-checker/_build/default/theories/checker/fol",
+      "SMTCoq.checker.fol",
+      "-Q",
+      "/workspace/rocq-eunoia-checker/_build/default/theories/checker/small-checkers/array",
+      "SMTCoq.checker.small_checker.array",
+      "-Q",
+      "/workspace/rocq-eunoia-checker/_build/default/theories/checker/small-checkers/bva",
+      "SMTCoq.checker.small_checker.bva",
+      "-Q",
+      "/workspace/rocq-eunoia-checker/_build/default/theories/checker/small-checkers/cnf",
+      "SMTCoq.checker.small_checker.cnf",
+      "-Q",
+      "/workspace/rocq-eunoia-checker/_build/default/theories/checker/small-checkers/euf",
+      "SMTCoq.checker.small_checker.euf",
+      "-Q",
+      "/workspace/rocq-eunoia-checker/_build/default/theories/checker/small-checkers/lia",
+      "SMTCoq.checker.small_checker.lia",
+      "-Q",
+      "/workspace/rocq-eunoia-checker/_build/default/theories/checker/small-checkers/spl",
+      "SMTCoq.checker.small_checker.spl",
+      "-Q",
+      "/workspace/rocq-eunoia-checker/_build/default/theories/structures",
+      "SMTCoq.structures",
+      "-Q",
+      "/workspace/rocq-eunoia-checker/_build/default/theories/utils",
+      "SMTCoq.utils",
+      "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/AssumptionAudit.v"
+    ],
+    "compiler_exit_code": 0,
+    "baseline": "/workspace/rocq-eunoia-checker/docs/eunoia/baseline-assumptions.txt",
+    "theorems": [
+      {
+        "theorem": "SMTCoq.checker.eunoia.EoModelDagCache.EoModelDagCache.run_correct",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-0.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "fa34cd843b8bf4f25560a06864626b6bdb0e278a6fd5b1de8dd2293b38e7fdf4"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EoModelDagCache.EoModelDagCache.compile_correct",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-1.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "fa34cd843b8bf4f25560a06864626b6bdb0e278a6fd5b1de8dd2293b38e7fdf4"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EoModelDagCache.EoModelDagCache.cached_correct",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-2.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "fa34cd843b8bf4f25560a06864626b6bdb0e278a6fd5b1de8dd2293b38e7fdf4"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaModelDag.EunoiaModelDag.body_reference",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-3.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "7909a93e866a57ba4f9b45452b2750c2e2d3ae7e308caf128e0f30e6079970f7"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaModelDag.EunoiaModelDag.prepare_valid",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-4.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "b7b1ec588d25fc14a22fee9aa4ad3d332b1939388a5280e387c6ff5120e8c293"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaModelDag.EunoiaModelDag.encode_literal_cached_correct",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-5.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "b7b1ec588d25fc14a22fee9aa4ad3d332b1939388a5280e387c6ff5120e8c293"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaModelDag.EunoiaModelDag.encoding_entries_refinement",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-6.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "b7b1ec588d25fc14a22fee9aa4ad3d332b1939388a5280e387c6ff5120e8c293"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaModelDagCheck.EunoiaModelDagCheck.checker_refinement",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-7.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "b7b1ec588d25fc14a22fee9aa4ad3d332b1939388a5280e387c6ff5120e8c293"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaModelDagCheck.EunoiaModelDagCheck.checker_correct",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-8.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "b7b1ec588d25fc14a22fee9aa4ad3d332b1939388a5280e387c6ff5120e8c293"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaModelDagCheck.EunoiaModelDagCheck.checker_b_refinement",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-9.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "b7b1ec588d25fc14a22fee9aa4ad3d332b1939388a5280e387c6ff5120e8c293"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaModelDagCheck.EunoiaModelDagCheck.checker_b_correct",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-10.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "b7b1ec588d25fc14a22fee9aa4ad3d332b1939388a5280e387c6ff5120e8c293"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaModelDagCheck.EunoiaModelDagCheck.checker_eq_refinement",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-11.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "b7b1ec588d25fc14a22fee9aa4ad3d332b1939388a5280e387c6ff5120e8c293"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaModelDagCheck.EunoiaModelDagCheck.checker_eq_correct",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-12.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "b7b1ec588d25fc14a22fee9aa4ad3d332b1939388a5280e387c6ff5120e8c293"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EoSpecialized.EoSpecialized.prepare_one_correct",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-13.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EoSpecialized.EoSpecialized.prepare_one_ext",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-14.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EoSpecialized.EoSpecialized.find_key",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-15.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EoSpecialized.EoSpecialized.run_using_correct",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-16.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EoSpecialized.EoSpecialized.run_surface_correct",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-17.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EoSpecialized.EoSpecialized.derive_context_correct",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-18.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaSpecialized.EunoiaSpecialized.checker_refinement",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-19.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "46289c12ce14951d8a6ec5054724e843108eaf56aa225089c3e8e08398fadebc"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaSpecialized.EunoiaSpecialized.checker_correct",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-20.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "b7b1ec588d25fc14a22fee9aa4ad3d332b1939388a5280e387c6ff5120e8c293"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaSpecialized.EunoiaSpecialized.checker_b_refinement",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-21.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "46289c12ce14951d8a6ec5054724e843108eaf56aa225089c3e8e08398fadebc"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaSpecialized.EunoiaSpecialized.checker_b_correct",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-22.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "b7b1ec588d25fc14a22fee9aa4ad3d332b1939388a5280e387c6ff5120e8c293"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaSpecialized.EunoiaSpecialized.checker_eq_refinement",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-23.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "46289c12ce14951d8a6ec5054724e843108eaf56aa225089c3e8e08398fadebc"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaSpecialized.EunoiaSpecialized.checker_eq_correct",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-24.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "b7b1ec588d25fc14a22fee9aa4ad3d332b1939388a5280e387c6ff5120e8c293"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaSpecializedFlat.EunoiaSpecializedFlat.flat_step_ext",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-25.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "9b057eb8d362c0c83eec9944ebfda728a4d8e03eab4fa6ea9347705952e24605"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaSpecializedFlat.EunoiaSpecializedFlat.flat_run_ext",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-26.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "9b057eb8d362c0c83eec9944ebfda728a4d8e03eab4fa6ea9347705952e24605"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaSpecializedFlat.EunoiaSpecializedFlat.flat_checker_ext",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-27.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "9b057eb8d362c0c83eec9944ebfda728a4d8e03eab4fa6ea9347705952e24605"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaSpecializedFlat.EunoiaSpecializedFlat.checker_refinement",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-28.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "46289c12ce14951d8a6ec5054724e843108eaf56aa225089c3e8e08398fadebc"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaSpecializedFlat.EunoiaSpecializedFlat.checker_correct",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-29.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "b7b1ec588d25fc14a22fee9aa4ad3d332b1939388a5280e387c6ff5120e8c293"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaSpecializedFlat.EunoiaSpecializedFlat.checker_b_refinement",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-30.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "46289c12ce14951d8a6ec5054724e843108eaf56aa225089c3e8e08398fadebc"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaSpecializedFlat.EunoiaSpecializedFlat.checker_b_correct",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-31.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "b7b1ec588d25fc14a22fee9aa4ad3d332b1939388a5280e387c6ff5120e8c293"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaSpecializedFlat.EunoiaSpecializedFlat.checker_eq_refinement",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-32.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "46289c12ce14951d8a6ec5054724e843108eaf56aa225089c3e8e08398fadebc"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaSpecializedFlat.EunoiaSpecializedFlat.checker_eq_correct",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-33.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "b7b1ec588d25fc14a22fee9aa4ad3d332b1939388a5280e387c6ff5120e8c293"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaSpecializedScoped.EunoiaSpecializedScoped.checker_refinement",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-34.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "46289c12ce14951d8a6ec5054724e843108eaf56aa225089c3e8e08398fadebc"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaSpecializedScoped.EunoiaSpecializedScoped.checker_correct",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-35.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "b7b1ec588d25fc14a22fee9aa4ad3d332b1939388a5280e387c6ff5120e8c293"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaSpecializedScoped.EunoiaSpecializedScoped.checker_b_refinement",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-36.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "46289c12ce14951d8a6ec5054724e843108eaf56aa225089c3e8e08398fadebc"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaSpecializedScoped.EunoiaSpecializedScoped.checker_b_correct",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-37.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "b7b1ec588d25fc14a22fee9aa4ad3d332b1939388a5280e387c6ff5120e8c293"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaSpecializedScoped.EunoiaSpecializedScoped.checker_eq_refinement",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-38.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "46289c12ce14951d8a6ec5054724e843108eaf56aa225089c3e8e08398fadebc"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaSpecializedScoped.EunoiaSpecializedScoped.checker_eq_correct",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-39.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "b7b1ec588d25fc14a22fee9aa4ad3d332b1939388a5280e387c6ff5120e8c293"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaProgramIndexFlat.EunoiaProgramIndexFlat.flat_step_ext",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-40.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "9b057eb8d362c0c83eec9944ebfda728a4d8e03eab4fa6ea9347705952e24605"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaProgramIndexFlat.EunoiaProgramIndexFlat.flat_run_ext",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-41.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "9b057eb8d362c0c83eec9944ebfda728a4d8e03eab4fa6ea9347705952e24605"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaProgramIndexFlat.EunoiaProgramIndexFlat.flat_checker_ext",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-42.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "9b057eb8d362c0c83eec9944ebfda728a4d8e03eab4fa6ea9347705952e24605"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaProgramIndexFlat.EunoiaProgramIndexFlat.checker_refinement",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-43.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "46289c12ce14951d8a6ec5054724e843108eaf56aa225089c3e8e08398fadebc"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaProgramIndexFlat.EunoiaProgramIndexFlat.checker_correct",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-44.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "b7b1ec588d25fc14a22fee9aa4ad3d332b1939388a5280e387c6ff5120e8c293"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaProgramIndexFlat.EunoiaProgramIndexFlat.checker_b_refinement",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-45.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "46289c12ce14951d8a6ec5054724e843108eaf56aa225089c3e8e08398fadebc"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaProgramIndexFlat.EunoiaProgramIndexFlat.checker_b_correct",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-46.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "b7b1ec588d25fc14a22fee9aa4ad3d332b1939388a5280e387c6ff5120e8c293"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaProgramIndexFlat.EunoiaProgramIndexFlat.checker_eq_refinement",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-47.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "46289c12ce14951d8a6ec5054724e843108eaf56aa225089c3e8e08398fadebc"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaProgramIndexFlat.EunoiaProgramIndexFlat.checker_eq_correct",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-48.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "b7b1ec588d25fc14a22fee9aa4ad3d332b1939388a5280e387c6ff5120e8c293"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaProgramIndexScoped.EunoiaProgramIndexScoped.checker_refinement",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-49.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "46289c12ce14951d8a6ec5054724e843108eaf56aa225089c3e8e08398fadebc"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaProgramIndexScoped.EunoiaProgramIndexScoped.checker_correct",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-50.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "b7b1ec588d25fc14a22fee9aa4ad3d332b1939388a5280e387c6ff5120e8c293"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaProgramIndexScoped.EunoiaProgramIndexScoped.checker_b_refinement",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-51.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "46289c12ce14951d8a6ec5054724e843108eaf56aa225089c3e8e08398fadebc"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaProgramIndexScoped.EunoiaProgramIndexScoped.checker_b_correct",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-52.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "b7b1ec588d25fc14a22fee9aa4ad3d332b1939388a5280e387c6ff5120e8c293"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaProgramIndexScoped.EunoiaProgramIndexScoped.checker_eq_refinement",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-53.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "46289c12ce14951d8a6ec5054724e843108eaf56aa225089c3e8e08398fadebc"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaProgramIndexScoped.EunoiaProgramIndexScoped.checker_eq_correct",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-54.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "b7b1ec588d25fc14a22fee9aa4ad3d332b1939388a5280e387c6ff5120e8c293"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EoRename.EoRename.refinement",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-55.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EoDirect.EoDirect.compile_refinement",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-56.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EoDirect.EoDirect.run_program_correct",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-57.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EoDirect.EoDirect.call_compiled_correct",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-58.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.CpcDirect.CpcDirect.dispatch_correct",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-59.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.CpcDirectEntry.CpcDirectEntry.choose_correct",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-60.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.CpcDirectEntry.CpcDirectEntry.dispatch_correct",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-61.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.CpcDirectEval.CpcDirectEval.evaluate_correct",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-62.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.CpcDirectRules.CpcDirectRules.run_rule_correct",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-63.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.CpcDirectRules.CpcDirectRules.run_surface_correct",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-64.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.CpcDirectRules.CpcDirectRules.derive_context_correct",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-65.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaDirect.EunoiaDirect.checker_refinement",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-66.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "46289c12ce14951d8a6ec5054724e843108eaf56aa225089c3e8e08398fadebc"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaDirect.EunoiaDirect.checker_correct",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-67.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "b7b1ec588d25fc14a22fee9aa4ad3d332b1939388a5280e387c6ff5120e8c293"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaDirect.EunoiaDirect.checker_b_refinement",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-68.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "46289c12ce14951d8a6ec5054724e843108eaf56aa225089c3e8e08398fadebc"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaDirect.EunoiaDirect.checker_b_correct",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-69.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "b7b1ec588d25fc14a22fee9aa4ad3d332b1939388a5280e387c6ff5120e8c293"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaDirect.EunoiaDirect.checker_eq_refinement",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-70.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "46289c12ce14951d8a6ec5054724e843108eaf56aa225089c3e8e08398fadebc"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaDirect.EunoiaDirect.checker_eq_correct",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-71.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "b7b1ec588d25fc14a22fee9aa4ad3d332b1939388a5280e387c6ff5120e8c293"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaDirectFlat.EunoiaDirectFlat.flat_step_ext",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-72.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "9b057eb8d362c0c83eec9944ebfda728a4d8e03eab4fa6ea9347705952e24605"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaDirectFlat.EunoiaDirectFlat.flat_run_ext",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-73.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "9b057eb8d362c0c83eec9944ebfda728a4d8e03eab4fa6ea9347705952e24605"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaDirectFlat.EunoiaDirectFlat.flat_checker_ext",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-74.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "9b057eb8d362c0c83eec9944ebfda728a4d8e03eab4fa6ea9347705952e24605"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaDirectFlat.EunoiaDirectFlat.checker_refinement",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-75.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "46289c12ce14951d8a6ec5054724e843108eaf56aa225089c3e8e08398fadebc"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaDirectFlat.EunoiaDirectFlat.checker_correct",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-76.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "b7b1ec588d25fc14a22fee9aa4ad3d332b1939388a5280e387c6ff5120e8c293"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaDirectFlat.EunoiaDirectFlat.checker_b_refinement",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-77.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "46289c12ce14951d8a6ec5054724e843108eaf56aa225089c3e8e08398fadebc"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaDirectFlat.EunoiaDirectFlat.checker_b_correct",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-78.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "b7b1ec588d25fc14a22fee9aa4ad3d332b1939388a5280e387c6ff5120e8c293"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaDirectFlat.EunoiaDirectFlat.checker_eq_refinement",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-79.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "46289c12ce14951d8a6ec5054724e843108eaf56aa225089c3e8e08398fadebc"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaDirectFlat.EunoiaDirectFlat.checker_eq_correct",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-80.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "b7b1ec588d25fc14a22fee9aa4ad3d332b1939388a5280e387c6ff5120e8c293"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaDirectScoped.EunoiaDirectScoped.checker_refinement",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-81.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "46289c12ce14951d8a6ec5054724e843108eaf56aa225089c3e8e08398fadebc"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaDirectScoped.EunoiaDirectScoped.checker_correct",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-82.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "b7b1ec588d25fc14a22fee9aa4ad3d332b1939388a5280e387c6ff5120e8c293"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaDirectScoped.EunoiaDirectScoped.checker_b_refinement",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-83.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "46289c12ce14951d8a6ec5054724e843108eaf56aa225089c3e8e08398fadebc"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaDirectScoped.EunoiaDirectScoped.checker_b_correct",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-84.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "b7b1ec588d25fc14a22fee9aa4ad3d332b1939388a5280e387c6ff5120e8c293"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaDirectScoped.EunoiaDirectScoped.checker_eq_refinement",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-85.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "46289c12ce14951d8a6ec5054724e843108eaf56aa225089c3e8e08398fadebc"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaDirectScoped.EunoiaDirectScoped.checker_eq_correct",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-86.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "b7b1ec588d25fc14a22fee9aa4ad3d332b1939388a5280e387c6ff5120e8c293"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EoStaged.EoStaged.compile_refinement",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-87.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EoFuelLayers.EoFuelLayers.fetch_make",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-88.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EoFuelLayers.EoFuelLayers.make_correct",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-89.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EoCompiledPrograms.EoCompiledPrograms.execute_correct",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-90.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.CpcStaged.CpcStaged.execute_correct",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-91.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.CpcStagedEval.CpcStagedEval.evaluate_correct",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-92.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.CpcStagedRules.CpcStagedRules.run_rule_correct",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-93.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.CpcStagedRules.CpcStagedRules.run_surface_correct",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-94.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.CpcStagedRules.CpcStagedRules.derive_prepared_correct",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-95.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaStaged.EunoiaStaged.checker_refinement",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-96.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "46289c12ce14951d8a6ec5054724e843108eaf56aa225089c3e8e08398fadebc"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaStaged.EunoiaStaged.checker_correct",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-97.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "b7b1ec588d25fc14a22fee9aa4ad3d332b1939388a5280e387c6ff5120e8c293"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaStaged.EunoiaStaged.checker_b_refinement",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-98.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "46289c12ce14951d8a6ec5054724e843108eaf56aa225089c3e8e08398fadebc"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaStaged.EunoiaStaged.checker_b_correct",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-99.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "b7b1ec588d25fc14a22fee9aa4ad3d332b1939388a5280e387c6ff5120e8c293"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaStaged.EunoiaStaged.checker_eq_refinement",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-100.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "46289c12ce14951d8a6ec5054724e843108eaf56aa225089c3e8e08398fadebc"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaStaged.EunoiaStaged.checker_eq_correct",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-101.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "b7b1ec588d25fc14a22fee9aa4ad3d332b1939388a5280e387c6ff5120e8c293"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaProgramIndex.EunoiaProgramIndex.checker_refinement",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-102.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "46289c12ce14951d8a6ec5054724e843108eaf56aa225089c3e8e08398fadebc"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaProgramIndex.EunoiaProgramIndex.checker_correct",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-103.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "b7b1ec588d25fc14a22fee9aa4ad3d332b1939388a5280e387c6ff5120e8c293"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaProgramIndex.EunoiaProgramIndex.checker_b_correct",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-104.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "b7b1ec588d25fc14a22fee9aa4ad3d332b1939388a5280e387c6ff5120e8c293"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaProgramIndex.EunoiaProgramIndex.checker_eq_correct",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-105.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "b7b1ec588d25fc14a22fee9aa4ad3d332b1939388a5280e387c6ff5120e8c293"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EoNameIndex.EoNameIndex.lookup_insert",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-106.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EoNameIndex.EoNameIndex.lookup_from_list",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-107.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EoIndexed.EoIndexed.evaluate_indexed_refinement",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-108.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EoIndexed.EoIndexed.run_rule_refinement",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-109.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EoIndexed.EoIndexed.run_surface_refinement",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-110.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaHelperCache.EunoiaHelperCache.checker_refinement",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-111.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "46289c12ce14951d8a6ec5054724e843108eaf56aa225089c3e8e08398fadebc"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaHelperCache.EunoiaHelperCache.checker_correct",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-112.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "b7b1ec588d25fc14a22fee9aa4ad3d332b1939388a5280e387c6ff5120e8c293"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaHelperCache.EunoiaHelperCache.checker_b_correct",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-113.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "b7b1ec588d25fc14a22fee9aa4ad3d332b1939388a5280e387c6ff5120e8c293"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaHelperCache.EunoiaHelperCache.checker_eq_correct",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-114.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "b7b1ec588d25fc14a22fee9aa4ad3d332b1939388a5280e387c6ff5120e8c293"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EoCheckedMemo.EoCheckedMemo.key_eqb_equivalence",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-115.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EoCheckedMemo.EoCheckedMemo.evaluate_cached_refinement",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-116.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EoCheckedMemo.EoCheckedMemo.validate_entries_sound",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-117.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EoCheckedMemo.EoCheckedMemo.checked_evaluate_correct",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-118.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EoRuleMemo.EoRuleMemo.run_rule_cached_refinement",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-119.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EoRuleMemo.EoRuleMemo.run_surface_cached_refinement",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-120.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaMemo.EunoiaMemo.gate_correct",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-121.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "b7b1ec588d25fc14a22fee9aa4ad3d332b1939388a5280e387c6ff5120e8c293"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaMemo.EunoiaMemo.checker_correct",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-122.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "b7b1ec588d25fc14a22fee9aa4ad3d332b1939388a5280e387c6ff5120e8c293"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaMemo.EunoiaMemo.checker_b_correct",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-123.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "b7b1ec588d25fc14a22fee9aa4ad3d332b1939388a5280e387c6ff5120e8c293"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaMemo.EunoiaMemo.checker_eq_correct",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-124.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "b7b1ec588d25fc14a22fee9aa4ad3d332b1939388a5280e387c6ff5120e8c293"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaAdapter.EunoiaAdapter.memo_encoding_refinement",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-125.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "7909a93e866a57ba4f9b45452b2750c2e2d3ae7e308caf128e0f30e6079970f7"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaAdapter.EunoiaAdapter.cached_eval_with_refinement",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-126.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "3030ffb7f5d75bb4fd41686c85d1ee8c1cb9f3b0c48f951038167e25d365b885"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaAdapter.EunoiaAdapter.prepared_eval_with_refinement",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-127.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "3030ffb7f5d75bb4fd41686c85d1ee8c1cb9f3b0c48f951038167e25d365b885"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaIntegerEmbedding.EunoiaIntegerEmbedding.normalize_ordinary",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-128.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaIntegerEmbedding.EunoiaIntegerEmbedding.fraction_eq_cross",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-129.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaIntegerEmbedding.EunoiaIntegerEmbedding.fraction_le_cross",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-130.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaIntegerEmbedding.EunoiaIntegerEmbedding.fraction_lt_cross",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-131.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaIntegerEmbedding.EunoiaIntegerEmbedding.floor_integer",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-132.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaIntegerEmbedding.EunoiaIntegerEmbedding.fraction_add",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-133.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaIntegerEmbedding.EunoiaIntegerEmbedding.fraction_mul",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-134.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaIntegerEmbedding.EunoiaIntegerEmbedding.fraction_neg",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-135.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaDivision.EunoiaDivision.positive_laws",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-136.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaDivision.EunoiaDivision.negative_laws",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-137.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaDivision.EunoiaDivision.zero_laws",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-138.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaDivision.EunoiaDivision.positive_division_shift",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-139.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaDivision.EunoiaDivision.positive_modulo_shift",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-140.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaDivision.EunoiaDivision.negative_division_shift",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-141.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaDivision.EunoiaDivision.negative_modulo_shift",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-142.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaDivision.EunoiaDivision.nested_positive_positive",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-143.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaDivision.EunoiaDivision.nested_negative_positive",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-144.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaDivision.EunoiaDivision.eqb_swap",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-145.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaDivision.EunoiaDivision.quotient_value",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-146.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaDivision.EunoiaDivision.remainder_value",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-147.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaDivision.EunoiaDivision.boolean_eq_true",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-148.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaDivision.EunoiaDivision.boolean_true_eq",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-149.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaScopedAdapter.EunoiaScopedAdapter.checker_correct",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-150.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "b7b1ec588d25fc14a22fee9aa4ad3d332b1939388a5280e387c6ff5120e8c293"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaScopedAdapter.EunoiaScopedAdapter.checker_b_correct",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-151.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "b7b1ec588d25fc14a22fee9aa4ad3d332b1939388a5280e387c6ff5120e8c293"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaScopedAdapter.EunoiaScopedAdapter.checker_eq_correct",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-152.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "b7b1ec588d25fc14a22fee9aa4ad3d332b1939388a5280e387c6ff5120e8c293"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaLocal.EunoiaLocal.execute_valid",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-153.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "b7b1ec588d25fc14a22fee9aa4ad3d332b1939388a5280e387c6ff5120e8c293"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaLocal.EunoiaLocal.run_valid",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-154.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "b7b1ec588d25fc14a22fee9aa4ad3d332b1939388a5280e387c6ff5120e8c293"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaLocal.EunoiaLocal.gate_correct",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-155.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "b7b1ec588d25fc14a22fee9aa4ad3d332b1939388a5280e387c6ff5120e8c293"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaLocalDirect.EunoiaLocalDirect.gate_correct",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-156.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "b7b1ec588d25fc14a22fee9aa4ad3d332b1939388a5280e387c6ff5120e8c293"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaTheory.EunoiaTheory.units_exact",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-157.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "99a5d643a4b1cda5f959f69d062f92d40bbf9edbb999af81f0ad8c820a8be532"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaTheory.EunoiaTheory.units_valid",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-158.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "0223cf526d67ed88a4221b9b75b506b828eb1c2ac18ccc96ed63c90545cb9923"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaTheory.EunoiaTheory.negations_false",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-159.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "20a50cfc48be720a891ea4576a4ffbaf3d1da4f9039a74502fe07f50e01dced7"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaTheory.EunoiaTheory.implication_correct",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-160.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "4c0f5af70ca240066553604f6ac59248a1f2d4442ee8fb5818807acb1d7c5907"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaTheory.EunoiaTheory.checked_clause_correct",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-161.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "b7b1ec588d25fc14a22fee9aa4ad3d332b1939388a5280e387c6ff5120e8c293"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaTheory.EunoiaTheory.global_gate_correct",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-162.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "b7b1ec588d25fc14a22fee9aa4ad3d332b1939388a5280e387c6ff5120e8c293"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaTheory.EunoiaTheory.gate_correct",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-163.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "b7b1ec588d25fc14a22fee9aa4ad3d332b1939388a5280e387c6ff5120e8c293"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaTactic.EunoiaTactic.checker_correct",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-164.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "b7b1ec588d25fc14a22fee9aa4ad3d332b1939388a5280e387c6ff5120e8c293"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaTactic.EunoiaTactic.checker_b_correct",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-165.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "b7b1ec588d25fc14a22fee9aa4ad3d332b1939388a5280e387c6ff5120e8c293"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaTactic.EunoiaTactic.checker_eq_correct",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-166.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "b7b1ec588d25fc14a22fee9aa4ad3d332b1939388a5280e387c6ff5120e8c293"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaModelDagTests.shared_scoped_source_accepts",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-167.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "46289c12ce14951d8a6ec5054724e843108eaf56aa225089c3e8e08398fadebc"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaModelDagTests.inline_source_accepts",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-168.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "46289c12ce14951d8a6ec5054724e843108eaf56aa225089c3e8e08398fadebc"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaModelDagTests.wrong_root_order_rejected",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-169.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "46289c12ce14951d8a6ec5054724e843108eaf56aa225089c3e8e08398fadebc"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaModelDagTests.unused_bad_semantics_rejected",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-170.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "46289c12ce14951d8a6ec5054724e843108eaf56aa225089c3e8e08398fadebc"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaModelDagTests.bad_source_after_conflict_rejected",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-171.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "46289c12ce14951d8a6ec5054724e843108eaf56aa225089c3e8e08398fadebc"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaModelDagTests.bad_inline_semantics_rejected",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-172.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "46289c12ce14951d8a6ec5054724e843108eaf56aa225089c3e8e08398fadebc"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaModelDagTests.low_fuel_retains_failure",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-173.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "46289c12ce14951d8a6ec5054724e843108eaf56aa225089c3e8e08398fadebc"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaModelDagTests.indexed_model_low_fuel",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-174.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "7f00f99bc6ec641395dba9458e0122718621be4b8e80940bbcb998d777de162d"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaModelDagTests.indexed_model_out_of_bounds",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-175.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "7f00f99bc6ec641395dba9458e0122718621be4b8e80940bbcb998d777de162d"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaModelDagTests.unsupported_cache_node_falls_back",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-176.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "7f00f99bc6ec641395dba9458e0122718621be4b8e80940bbcb998d777de162d"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaModelDagTests.acceptance_is_original_acceptance",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-177.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "b7b1ec588d25fc14a22fee9aa4ad3d332b1939388a5280e387c6ff5120e8c293"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaLocalDirectTests.EunoiaLocalDirectTests.exact_premise_derives_itself",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-178.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "46289c12ce14951d8a6ec5054724e843108eaf56aa225089c3e8e08398fadebc"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaLocalDirectTests.EunoiaLocalDirectTests.altered_conclusion_rejected",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-179.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "46289c12ce14951d8a6ec5054724e843108eaf56aa225089c3e8e08398fadebc"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaLocalDirectTests.EunoiaLocalDirectTests.missing_premise_rejected",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-180.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "46289c12ce14951d8a6ec5054724e843108eaf56aa225089c3e8e08398fadebc"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaLocalDirectTests.EunoiaLocalDirectTests.extra_premise_must_be_claimed",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-181.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "46289c12ce14951d8a6ec5054724e843108eaf56aa225089c3e8e08398fadebc"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaLocalDirectTests.EunoiaLocalDirectTests.explicit_truth_derivation",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-182.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "46289c12ce14951d8a6ec5054724e843108eaf56aa225089c3e8e08398fadebc"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaLocalDirectTests.EunoiaLocalDirectTests.invalid_unused_command_rejected",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-183.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "46289c12ce14951d8a6ec5054724e843108eaf56aa225089c3e8e08398fadebc"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaLocalDirectTests.EunoiaLocalDirectTests.invalid_true_fallback_rejected",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-184.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "46289c12ce14951d8a6ec5054724e843108eaf56aa225089c3e8e08398fadebc"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaLocalDirectTests.EunoiaLocalDirectTests.out_of_bounds_result_rejected",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-185.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "46289c12ce14951d8a6ec5054724e843108eaf56aa225089c3e8e08398fadebc"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaLocalDirectTests.EunoiaLocalDirectTests.complete_generated_source_checker_accepts",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-186.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "46289c12ce14951d8a6ec5054724e843108eaf56aa225089c3e8e08398fadebc"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaLocalDirectTests.EunoiaLocalDirectTests.bad_source_after_conflict_rejected",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-187.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "46289c12ce14951d8a6ec5054724e843108eaf56aa225089c3e8e08398fadebc"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaLocalDirectTests.EunoiaLocalDirectTests.direct_refutation_is_sound",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-188.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "b7b1ec588d25fc14a22fee9aa4ad3d332b1939388a5280e387c6ff5120e8c293"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaTheoryTests.EunoiaTheoryTests.checked_tables",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-189.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "7909a93e866a57ba4f9b45452b2750c2e2d3ae7e308caf128e0f30e6079970f7"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaTheoryTests.EunoiaTheoryTests.reflexivity",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-190.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "46289c12ce14951d8a6ec5054724e843108eaf56aa225089c3e8e08398fadebc"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaTheoryTests.EunoiaTheoryTests.transitivity",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-191.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "46289c12ce14951d8a6ec5054724e843108eaf56aa225089c3e8e08398fadebc"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaTheoryTests.EunoiaTheoryTests.symmetry",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-192.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "46289c12ce14951d8a6ec5054724e843108eaf56aa225089c3e8e08398fadebc"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaTheoryTests.EunoiaTheoryTests.wrong_endpoint",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-193.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "46289c12ce14951d8a6ec5054724e843108eaf56aa225089c3e8e08398fadebc"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaTheoryTests.EunoiaTheoryTests.missing_link",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-194.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "46289c12ce14951d8a6ec5054724e843108eaf56aa225089c3e8e08398fadebc"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaTheoryTests.EunoiaTheoryTests.negative_premise_rejected",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-195.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "46289c12ce14951d8a6ec5054724e843108eaf56aa225089c3e8e08398fadebc"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaTheoryTests.EunoiaTheoryTests.nonunit_premise_uses_fallback",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-196.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "46289c12ce14951d8a6ec5054724e843108eaf56aa225089c3e8e08398fadebc"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaTheoryTests.EunoiaTheoryTests.trans_true_fallback_rejected",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-197.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "46289c12ce14951d8a6ec5054724e843108eaf56aa225089c3e8e08398fadebc"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaTheoryTests.EunoiaTheoryTests.explicit_truth",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-198.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "46289c12ce14951d8a6ec5054724e843108eaf56aa225089c3e8e08398fadebc"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaTheoryTests.EunoiaTheoryTests.truth_wrong_conclusion",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-199.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "46289c12ce14951d8a6ec5054724e843108eaf56aa225089c3e8e08398fadebc"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaTheoryTests.EunoiaTheoryTests.identity",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-200.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "46289c12ce14951d8a6ec5054724e843108eaf56aa225089c3e8e08398fadebc"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaTheoryTests.EunoiaTheoryTests.identity_missing",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-201.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "46289c12ce14951d8a6ec5054724e843108eaf56aa225089c3e8e08398fadebc"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaTheoryTests.EunoiaTheoryTests.invalid_unused_premise_rejected",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-202.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "46289c12ce14951d8a6ec5054724e843108eaf56aa225089c3e8e08398fadebc"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaTheoryTests.EunoiaTheoryTests.out_of_bounds_conclusion",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-203.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "46289c12ce14951d8a6ec5054724e843108eaf56aa225089c3e8e08398fadebc"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaTheoryTests.EunoiaTheoryTests.unchecked_table_rejected",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-204.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "177c2a2cb2df37e749f6b170651a0646d6e5b933b7e2a47dbe2658d41dd76163"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaTheoryTests.EunoiaTheoryTests.congruence",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-205.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "46289c12ce14951d8a6ec5054724e843108eaf56aa225089c3e8e08398fadebc"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaTheoryTests.EunoiaTheoryTests.congruence_missing_equality",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-206.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "46289c12ce14951d8a6ec5054724e843108eaf56aa225089c3e8e08398fadebc"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaTheoryTests.EunoiaTheoryTests.congruence_wrong_arity",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-207.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "46289c12ce14951d8a6ec5054724e843108eaf56aa225089c3e8e08398fadebc"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaTheoryTests.EunoiaTheoryTests.congruence_wrong_function",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-208.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "46289c12ce14951d8a6ec5054724e843108eaf56aa225089c3e8e08398fadebc"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaTheoryTests.EunoiaTheoryTests.checked_transitivity_is_sound",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-209.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "b7b1ec588d25fc14a22fee9aa4ad3d332b1939388a5280e387c6ff5120e8c293"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaTheoryTests.EunoiaTheoryTests.linear_reflexivity",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-210.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "177c2a2cb2df37e749f6b170651a0646d6e5b933b7e2a47dbe2658d41dd76163"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaTheoryTests.EunoiaTheoryTests.linear_rejects_false",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-211.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "177c2a2cb2df37e749f6b170651a0646d6e5b933b7e2a47dbe2658d41dd76163"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaTheoryTests.EunoiaTheoryTests.linear_scaling",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-212.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "177c2a2cb2df37e749f6b170651a0646d6e5b933b7e2a47dbe2658d41dd76163"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaTheoryTests.EunoiaTheoryTests.linear_missing_proof",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-213.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "177c2a2cb2df37e749f6b170651a0646d6e5b933b7e2a47dbe2658d41dd76163"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaTheoryTests.EunoiaTheoryTests.linear_changed_coefficient",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-214.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "177c2a2cb2df37e749f6b170651a0646d6e5b933b7e2a47dbe2658d41dd76163"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaTheoryTests.EunoiaTheoryTests.linear_missing_premise",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-215.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "177c2a2cb2df37e749f6b170651a0646d6e5b933b7e2a47dbe2658d41dd76163"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaTheoryTests.EunoiaTheoryTests.linear_changed_premise",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-216.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "177c2a2cb2df37e749f6b170651a0646d6e5b933b7e2a47dbe2658d41dd76163"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaTheoryTests.EunoiaTheoryTests.complete_source_and_semantics",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-217.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "46289c12ce14951d8a6ec5054724e843108eaf56aa225089c3e8e08398fadebc"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaTheoryTests.EunoiaTheoryTests.unsupported_after_conflict_rejected",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-218.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "46289c12ce14951d8a6ec5054724e843108eaf56aa225089c3e8e08398fadebc"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaTheoryTests.EunoiaTheoryTests.wrong_source_binding_rejected",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-219.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "46289c12ce14951d8a6ec5054724e843108eaf56aa225089c3e8e08398fadebc"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaTheoryTests.EunoiaTheoryTests.invalid_primitive_after_conflict_rejected",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-220.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "46289c12ce14951d8a6ec5054724e843108eaf56aa225089c3e8e08398fadebc"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaTheoryTests.EunoiaTheoryTests.checked_shared_primitive",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-221.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "46289c12ce14951d8a6ec5054724e843108eaf56aa225089c3e8e08398fadebc"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaTheoryTests.EunoiaTheoryTests.unused_invalid_primitive_entry_rejected",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-222.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "46289c12ce14951d8a6ec5054724e843108eaf56aa225089c3e8e08398fadebc"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaTheoryTests.EunoiaTheoryTests.invalid_referenced_primitive_entry_rejected",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-223.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "46289c12ce14951d8a6ec5054724e843108eaf56aa225089c3e8e08398fadebc"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaTheoryTests.EunoiaTheoryTests.ordered_shared_primitive_premises",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-224.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "46289c12ce14951d8a6ec5054724e843108eaf56aa225089c3e8e08398fadebc"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EunoiaTheoryTests.EunoiaTheoryTests.full_refutation_sound",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-225.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "b7b1ec588d25fc14a22fee9aa4ad3d332b1939388a5280e387c6ff5120e8c293"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.CpcSpecialized.CpcSpecialized.rules_correct",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-226.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.CpcMemo.validate_context_sound",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-227.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.CpcMemo.derive_context_cached_refinement",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-228.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.CpcMemo.derive_checked_correct",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-229.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.CpcIndexed.program_lookup_correct",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-230.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.CpcIndexed.derive_context_with_index_refinement",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-231.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.CpcIndexed.derive_indexed_refinement",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-232.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.CpcIndexed.derive_assuming_indexed_refinement",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-233.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.CpcGenerated.cpc_canonicalize_correct",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-234.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.CpcGenerated.cpc_surface_correct",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-235.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      {
+        "theorem": "SMTCoq.checker.eunoia.EoSyntax.term_eqb_refinement",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-236.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      {
+        "theorem": "SMTCoq.utils.PArray.IntOrderedType.compare_gt",
+        "output": "/tmp/eunoia-theory-standalone-2026-11-10/assumptions/assumptions-237.out",
+        "new_assumptions": [],
+        "assumption_set_sha256": "fa34cd843b8bf4f25560a06864626b6bdb0e278a6fd5b1de8dd2293b38e7fdf4"
+      }
+    ],
+    "passed": true
+  },
+  "components": {
+    "passed": true,
+    "scope": "fixed checker inputs; per-case source/semantic layers; no solver/tactic/search",
+    "repeats": 1,
+    "rounds": 1,
+    "cases": [
+      {
+        "module": "EunoiaTheoryTests",
+        "scope": "EunoiaTheoryTests",
+        "example": "transitivity",
+        "layer": "direct-SMTCoq-theory-certificate"
+      },
+      {
+        "module": "EunoiaTheoryTests",
+        "scope": "EunoiaTheoryTests",
+        "example": "congruence",
+        "layer": "direct-SMTCoq-theory-certificate"
+      },
+      {
+        "module": "EunoiaTheoryTests",
+        "scope": "EunoiaTheoryTests",
+        "example": "linear_scaling",
+        "layer": "direct-SMTCoq-theory-certificate"
+      },
+      {
+        "module": "EunoiaTheoryTests",
+        "scope": "EunoiaTheoryTests",
+        "example": "checked_shared_primitive",
+        "layer": "complete-direct-theory-source-checker"
+      },
+      {
+        "module": "EunoiaTheoryTests",
+        "scope": "EunoiaTheoryTests",
+        "example": "unused_invalid_primitive_entry_rejected",
+        "layer": "rejection-control"
+      },
+      {
+        "module": "EunoiaTheoryTests",
+        "scope": "EunoiaTheoryTests",
+        "example": "invalid_primitive_after_conflict_rejected",
+        "layer": "rejection-control"
+      }
+    ],
+    "platform": "Linux-6.18.57-x86_64-with-glibc2.36",
+    "cpu_count": 5,
+    "commands": [
+      {
+        "argv": [
+          "/workspace/rocq-eunoia-checker/tools/rocq-env",
+          "rocq",
+          "--version"
+        ],
+        "cwd": "/tmp/eunoia-theory-standalone-2026-11-10/components",
+        "exit_code": 0,
+        "wall_s": 0.03201213001739234,
+        "timeout_s": 30,
+        "log": "version.log"
+      },
+      {
+        "argv": [
+          "/workspace/rocq-eunoia-checker/tools/rocq-env",
+          "rocq",
+          "compile",
+          "-q",
+          "-Q",
+          "/workspace/rocq-eunoia-checker/_build/default/theories/checker",
+          "SMTCoq.checker",
+          "-Q",
+          "/workspace/rocq-eunoia-checker/_build/default/theories/checker/eunoia",
+          "SMTCoq.checker.eunoia",
+          "-Q",
+          "/workspace/rocq-eunoia-checker/_build/default/theories/checker/fol",
+          "SMTCoq.checker.fol",
+          "-Q",
+          "/workspace/rocq-eunoia-checker/_build/default/theories/checker/small-checkers/array",
+          "SMTCoq.checker.small_checker.array",
+          "-Q",
+          "/workspace/rocq-eunoia-checker/_build/default/theories/checker/small-checkers/bva",
+          "SMTCoq.checker.small_checker.bva",
+          "-Q",
+          "/workspace/rocq-eunoia-checker/_build/default/theories/checker/small-checkers/cnf",
+          "SMTCoq.checker.small_checker.cnf",
+          "-Q",
+          "/workspace/rocq-eunoia-checker/_build/default/theories/checker/small-checkers/euf",
+          "SMTCoq.checker.small_checker.euf",
+          "-Q",
+          "/workspace/rocq-eunoia-checker/_build/default/theories/checker/small-checkers/lia",
+          "SMTCoq.checker.small_checker.lia",
+          "-Q",
+          "/workspace/rocq-eunoia-checker/_build/default/theories/checker/small-checkers/spl",
+          "SMTCoq.checker.small_checker.spl",
+          "-Q",
+          "/workspace/rocq-eunoia-checker/_build/default/theories/structures",
+          "SMTCoq.structures",
+          "-Q",
+          "/workspace/rocq-eunoia-checker/_build/default/theories/utils",
+          "SMTCoq.utils",
+          "-Q",
+          "/tmp/eunoia-theory-standalone-2026-11-10/components",
+          "StandaloneBench",
+          "Bench0_0.v"
+        ],
+        "cwd": "/tmp/eunoia-theory-standalone-2026-11-10/components",
+        "exit_code": 0,
+        "wall_s": 2.3261450569843873,
+        "timeout_s": 30,
+        "log": "Bench0_0.log"
+      },
+      {
+        "argv": [
+          "/workspace/rocq-eunoia-checker/tools/rocq-env",
+          "rocq",
+          "compile",
+          "-q",
+          "-Q",
+          "/workspace/rocq-eunoia-checker/_build/default/theories/checker",
+          "SMTCoq.checker",
+          "-Q",
+          "/workspace/rocq-eunoia-checker/_build/default/theories/checker/eunoia",
+          "SMTCoq.checker.eunoia",
+          "-Q",
+          "/workspace/rocq-eunoia-checker/_build/default/theories/checker/fol",
+          "SMTCoq.checker.fol",
+          "-Q",
+          "/workspace/rocq-eunoia-checker/_build/default/theories/checker/small-checkers/array",
+          "SMTCoq.checker.small_checker.array",
+          "-Q",
+          "/workspace/rocq-eunoia-checker/_build/default/theories/checker/small-checkers/bva",
+          "SMTCoq.checker.small_checker.bva",
+          "-Q",
+          "/workspace/rocq-eunoia-checker/_build/default/theories/checker/small-checkers/cnf",
+          "SMTCoq.checker.small_checker.cnf",
+          "-Q",
+          "/workspace/rocq-eunoia-checker/_build/default/theories/checker/small-checkers/euf",
+          "SMTCoq.checker.small_checker.euf",
+          "-Q",
+          "/workspace/rocq-eunoia-checker/_build/default/theories/checker/small-checkers/lia",
+          "SMTCoq.checker.small_checker.lia",
+          "-Q",
+          "/workspace/rocq-eunoia-checker/_build/default/theories/checker/small-checkers/spl",
+          "SMTCoq.checker.small_checker.spl",
+          "-Q",
+          "/workspace/rocq-eunoia-checker/_build/default/theories/structures",
+          "SMTCoq.structures",
+          "-Q",
+          "/workspace/rocq-eunoia-checker/_build/default/theories/utils",
+          "SMTCoq.utils",
+          "-Q",
+          "/tmp/eunoia-theory-standalone-2026-11-10/components",
+          "StandaloneBench",
+          "Bench0_1.v"
+        ],
+        "cwd": "/tmp/eunoia-theory-standalone-2026-11-10/components",
+        "exit_code": 0,
+        "wall_s": 1.419265224947594,
+        "timeout_s": 30,
+        "log": "Bench0_1.log"
+      },
+      {
+        "argv": [
+          "/workspace/rocq-eunoia-checker/tools/rocq-env",
+          "rocq",
+          "compile",
+          "-q",
+          "-Q",
+          "/workspace/rocq-eunoia-checker/_build/default/theories/checker",
+          "SMTCoq.checker",
+          "-Q",
+          "/workspace/rocq-eunoia-checker/_build/default/theories/checker/eunoia",
+          "SMTCoq.checker.eunoia",
+          "-Q",
+          "/workspace/rocq-eunoia-checker/_build/default/theories/checker/fol",
+          "SMTCoq.checker.fol",
+          "-Q",
+          "/workspace/rocq-eunoia-checker/_build/default/theories/checker/small-checkers/array",
+          "SMTCoq.checker.small_checker.array",
+          "-Q",
+          "/workspace/rocq-eunoia-checker/_build/default/theories/checker/small-checkers/bva",
+          "SMTCoq.checker.small_checker.bva",
+          "-Q",
+          "/workspace/rocq-eunoia-checker/_build/default/theories/checker/small-checkers/cnf",
+          "SMTCoq.checker.small_checker.cnf",
+          "-Q",
+          "/workspace/rocq-eunoia-checker/_build/default/theories/checker/small-checkers/euf",
+          "SMTCoq.checker.small_checker.euf",
+          "-Q",
+          "/workspace/rocq-eunoia-checker/_build/default/theories/checker/small-checkers/lia",
+          "SMTCoq.checker.small_checker.lia",
+          "-Q",
+          "/workspace/rocq-eunoia-checker/_build/default/theories/checker/small-checkers/spl",
+          "SMTCoq.checker.small_checker.spl",
+          "-Q",
+          "/workspace/rocq-eunoia-checker/_build/default/theories/structures",
+          "SMTCoq.structures",
+          "-Q",
+          "/workspace/rocq-eunoia-checker/_build/default/theories/utils",
+          "SMTCoq.utils",
+          "-Q",
+          "/tmp/eunoia-theory-standalone-2026-11-10/components",
+          "StandaloneBench",
+          "Bench0_2.v"
+        ],
+        "cwd": "/tmp/eunoia-theory-standalone-2026-11-10/components",
+        "exit_code": 0,
+        "wall_s": 1.8269065989879891,
+        "timeout_s": 30,
+        "log": "Bench0_2.log"
+      },
+      {
+        "argv": [
+          "/workspace/rocq-eunoia-checker/tools/rocq-env",
+          "rocq",
+          "compile",
+          "-q",
+          "-Q",
+          "/workspace/rocq-eunoia-checker/_build/default/theories/checker",
+          "SMTCoq.checker",
+          "-Q",
+          "/workspace/rocq-eunoia-checker/_build/default/theories/checker/eunoia",
+          "SMTCoq.checker.eunoia",
+          "-Q",
+          "/workspace/rocq-eunoia-checker/_build/default/theories/checker/fol",
+          "SMTCoq.checker.fol",
+          "-Q",
+          "/workspace/rocq-eunoia-checker/_build/default/theories/checker/small-checkers/array",
+          "SMTCoq.checker.small_checker.array",
+          "-Q",
+          "/workspace/rocq-eunoia-checker/_build/default/theories/checker/small-checkers/bva",
+          "SMTCoq.checker.small_checker.bva",
+          "-Q",
+          "/workspace/rocq-eunoia-checker/_build/default/theories/checker/small-checkers/cnf",
+          "SMTCoq.checker.small_checker.cnf",
+          "-Q",
+          "/workspace/rocq-eunoia-checker/_build/default/theories/checker/small-checkers/euf",
+          "SMTCoq.checker.small_checker.euf",
+          "-Q",
+          "/workspace/rocq-eunoia-checker/_build/default/theories/checker/small-checkers/lia",
+          "SMTCoq.checker.small_checker.lia",
+          "-Q",
+          "/workspace/rocq-eunoia-checker/_build/default/theories/checker/small-checkers/spl",
+          "SMTCoq.checker.small_checker.spl",
+          "-Q",
+          "/workspace/rocq-eunoia-checker/_build/default/theories/structures",
+          "SMTCoq.structures",
+          "-Q",
+          "/workspace/rocq-eunoia-checker/_build/default/theories/utils",
+          "SMTCoq.utils",
+          "-Q",
+          "/tmp/eunoia-theory-standalone-2026-11-10/components",
+          "StandaloneBench",
+          "Bench0_3.v"
+        ],
+        "cwd": "/tmp/eunoia-theory-standalone-2026-11-10/components",
+        "exit_code": 0,
+        "wall_s": 1.6751089999452233,
+        "timeout_s": 30,
+        "log": "Bench0_3.log"
+      },
+      {
+        "argv": [
+          "/workspace/rocq-eunoia-checker/tools/rocq-env",
+          "rocq",
+          "compile",
+          "-q",
+          "-Q",
+          "/workspace/rocq-eunoia-checker/_build/default/theories/checker",
+          "SMTCoq.checker",
+          "-Q",
+          "/workspace/rocq-eunoia-checker/_build/default/theories/checker/eunoia",
+          "SMTCoq.checker.eunoia",
+          "-Q",
+          "/workspace/rocq-eunoia-checker/_build/default/theories/checker/fol",
+          "SMTCoq.checker.fol",
+          "-Q",
+          "/workspace/rocq-eunoia-checker/_build/default/theories/checker/small-checkers/array",
+          "SMTCoq.checker.small_checker.array",
+          "-Q",
+          "/workspace/rocq-eunoia-checker/_build/default/theories/checker/small-checkers/bva",
+          "SMTCoq.checker.small_checker.bva",
+          "-Q",
+          "/workspace/rocq-eunoia-checker/_build/default/theories/checker/small-checkers/cnf",
+          "SMTCoq.checker.small_checker.cnf",
+          "-Q",
+          "/workspace/rocq-eunoia-checker/_build/default/theories/checker/small-checkers/euf",
+          "SMTCoq.checker.small_checker.euf",
+          "-Q",
+          "/workspace/rocq-eunoia-checker/_build/default/theories/checker/small-checkers/lia",
+          "SMTCoq.checker.small_checker.lia",
+          "-Q",
+          "/workspace/rocq-eunoia-checker/_build/default/theories/checker/small-checkers/spl",
+          "SMTCoq.checker.small_checker.spl",
+          "-Q",
+          "/workspace/rocq-eunoia-checker/_build/default/theories/structures",
+          "SMTCoq.structures",
+          "-Q",
+          "/workspace/rocq-eunoia-checker/_build/default/theories/utils",
+          "SMTCoq.utils",
+          "-Q",
+          "/tmp/eunoia-theory-standalone-2026-11-10/components",
+          "StandaloneBench",
+          "Bench0_4.v"
+        ],
+        "cwd": "/tmp/eunoia-theory-standalone-2026-11-10/components",
+        "exit_code": 0,
+        "wall_s": 3.377184864017181,
+        "timeout_s": 30,
+        "log": "Bench0_4.log"
+      },
+      {
+        "argv": [
+          "/workspace/rocq-eunoia-checker/tools/rocq-env",
+          "rocq",
+          "compile",
+          "-q",
+          "-Q",
+          "/workspace/rocq-eunoia-checker/_build/default/theories/checker",
+          "SMTCoq.checker",
+          "-Q",
+          "/workspace/rocq-eunoia-checker/_build/default/theories/checker/eunoia",
+          "SMTCoq.checker.eunoia",
+          "-Q",
+          "/workspace/rocq-eunoia-checker/_build/default/theories/checker/fol",
+          "SMTCoq.checker.fol",
+          "-Q",
+          "/workspace/rocq-eunoia-checker/_build/default/theories/checker/small-checkers/array",
+          "SMTCoq.checker.small_checker.array",
+          "-Q",
+          "/workspace/rocq-eunoia-checker/_build/default/theories/checker/small-checkers/bva",
+          "SMTCoq.checker.small_checker.bva",
+          "-Q",
+          "/workspace/rocq-eunoia-checker/_build/default/theories/checker/small-checkers/cnf",
+          "SMTCoq.checker.small_checker.cnf",
+          "-Q",
+          "/workspace/rocq-eunoia-checker/_build/default/theories/checker/small-checkers/euf",
+          "SMTCoq.checker.small_checker.euf",
+          "-Q",
+          "/workspace/rocq-eunoia-checker/_build/default/theories/checker/small-checkers/lia",
+          "SMTCoq.checker.small_checker.lia",
+          "-Q",
+          "/workspace/rocq-eunoia-checker/_build/default/theories/checker/small-checkers/spl",
+          "SMTCoq.checker.small_checker.spl",
+          "-Q",
+          "/workspace/rocq-eunoia-checker/_build/default/theories/structures",
+          "SMTCoq.structures",
+          "-Q",
+          "/workspace/rocq-eunoia-checker/_build/default/theories/utils",
+          "SMTCoq.utils",
+          "-Q",
+          "/tmp/eunoia-theory-standalone-2026-11-10/components",
+          "StandaloneBench",
+          "Bench0_5.v"
+        ],
+        "cwd": "/tmp/eunoia-theory-standalone-2026-11-10/components",
+        "exit_code": 0,
+        "wall_s": 1.5195314059965312,
+        "timeout_s": 30,
+        "log": "Bench0_5.log"
+      },
+      {
+        "argv": [
+          "/workspace/rocq-eunoia-checker/tools/rocq-env",
+          "rocq",
+          "check",
+          "-silent",
+          "-Q",
+          "/workspace/rocq-eunoia-checker/_build/default/theories/checker",
+          "SMTCoq.checker",
+          "-Q",
+          "/workspace/rocq-eunoia-checker/_build/default/theories/checker/eunoia",
+          "SMTCoq.checker.eunoia",
+          "-Q",
+          "/workspace/rocq-eunoia-checker/_build/default/theories/checker/fol",
+          "SMTCoq.checker.fol",
+          "-Q",
+          "/workspace/rocq-eunoia-checker/_build/default/theories/checker/small-checkers/array",
+          "SMTCoq.checker.small_checker.array",
+          "-Q",
+          "/workspace/rocq-eunoia-checker/_build/default/theories/checker/small-checkers/bva",
+          "SMTCoq.checker.small_checker.bva",
+          "-Q",
+          "/workspace/rocq-eunoia-checker/_build/default/theories/checker/small-checkers/cnf",
+          "SMTCoq.checker.small_checker.cnf",
+          "-Q",
+          "/workspace/rocq-eunoia-checker/_build/default/theories/checker/small-checkers/euf",
+          "SMTCoq.checker.small_checker.euf",
+          "-Q",
+          "/workspace/rocq-eunoia-checker/_build/default/theories/checker/small-checkers/lia",
+          "SMTCoq.checker.small_checker.lia",
+          "-Q",
+          "/workspace/rocq-eunoia-checker/_build/default/theories/checker/small-checkers/spl",
+          "SMTCoq.checker.small_checker.spl",
+          "-Q",
+          "/workspace/rocq-eunoia-checker/_build/default/theories/structures",
+          "SMTCoq.structures",
+          "-Q",
+          "/workspace/rocq-eunoia-checker/_build/default/theories/utils",
+          "SMTCoq.utils",
+          "-Q",
+          "/tmp/eunoia-theory-standalone-2026-11-10/components",
+          "StandaloneBench",
+          "StandaloneBench.Bench0_0",
+          "StandaloneBench.Bench0_1",
+          "StandaloneBench.Bench0_2",
+          "StandaloneBench.Bench0_3",
+          "StandaloneBench.Bench0_4",
+          "StandaloneBench.Bench0_5"
+        ],
+        "cwd": "/tmp/eunoia-theory-standalone-2026-11-10/components",
+        "exit_code": 0,
+        "wall_s": 76.20670751703437,
+        "timeout_s": 900,
+        "log": "kernel.log"
+      }
+    ],
+    "results": [
+      {
+        "case": "transitivity",
+        "layer": "direct-SMTCoq-theory-certificate",
+        "round": 0,
+        "timings": {
+          "repeated_vm": {
+            "wall_s": 0.009,
+            "user_s": 0.008,
+            "system_s": 0.0,
+            "evaluations": 1,
+            "cpu_s_per_evaluation": 0.008
+          },
+          "proof_vm": {
+            "wall_s": 0.0,
+            "user_s": 0.0,
+            "system_s": 0.0,
+            "evaluations": 1,
+            "cpu_s_per_evaluation": 0.0
+          },
+          "reflexivity": {
+            "wall_s": 0.0,
+            "user_s": 0.0,
+            "system_s": 0.0,
+            "evaluations": 1,
+            "cpu_s_per_evaluation": 0.0
+          },
+          "qed": {
+            "wall_s": 0.001,
+            "user_s": 0.001,
+            "system_s": 0.0,
+            "evaluations": 1,
+            "cpu_s_per_evaluation": 0.001
+          }
+        },
+        "assumptions": [
+          "PrimInt63.add",
+          "PrimInt63.compare",
+          "PrimInt63.eqb",
+          "PrimInt63.int",
+          "PrimInt63.land",
+          "PrimInt63.leb",
+          "PrimInt63.lor",
+          "PrimInt63.lsl",
+          "PrimInt63.lsr",
+          "PrimInt63.ltb",
+          "PrimInt63.lxor",
+          "PrimInt63.sub",
+          "ProofIrrelevance.proof_irrelevance",
+          "Uint63Axioms.eqb_correct",
+          "Uint63Axioms.eqb_refl",
+          "Uint63Axioms.ltb_spec",
+          "Uint63Axioms.of_to_Z"
+        ],
+        "source_sha256": "9d1a8d0a494d1f5831631cdbe8ac4e557a421b89ed73a7c9955c9916e9443615",
+        "vo_sha256": "d9691649e0105898c64702ac559786149cb16c8aa1c919c3090fd8389d503a21"
+      },
+      {
+        "case": "congruence",
+        "layer": "direct-SMTCoq-theory-certificate",
+        "round": 0,
+        "timings": {
+          "repeated_vm": {
+            "wall_s": 0.003,
+            "user_s": 0.003,
+            "system_s": 0.0,
+            "evaluations": 1,
+            "cpu_s_per_evaluation": 0.003
+          },
+          "proof_vm": {
+            "wall_s": 0.0,
+            "user_s": 0.0,
+            "system_s": 0.0,
+            "evaluations": 1,
+            "cpu_s_per_evaluation": 0.0
+          },
+          "reflexivity": {
+            "wall_s": 0.0,
+            "user_s": 0.0,
+            "system_s": 0.0,
+            "evaluations": 1,
+            "cpu_s_per_evaluation": 0.0
+          },
+          "qed": {
+            "wall_s": 0.0,
+            "user_s": 0.0,
+            "system_s": 0.0,
+            "evaluations": 1,
+            "cpu_s_per_evaluation": 0.0
+          }
+        },
+        "assumptions": [
+          "PrimInt63.add",
+          "PrimInt63.compare",
+          "PrimInt63.eqb",
+          "PrimInt63.int",
+          "PrimInt63.land",
+          "PrimInt63.leb",
+          "PrimInt63.lor",
+          "PrimInt63.lsl",
+          "PrimInt63.lsr",
+          "PrimInt63.ltb",
+          "PrimInt63.lxor",
+          "PrimInt63.sub",
+          "ProofIrrelevance.proof_irrelevance",
+          "Uint63Axioms.eqb_correct",
+          "Uint63Axioms.eqb_refl",
+          "Uint63Axioms.ltb_spec",
+          "Uint63Axioms.of_to_Z"
+        ],
+        "source_sha256": "6b6d9c4aa538b078fa67eb7ebac639b2fae5a531ecdeb6eccdbc8fa68ad7f560",
+        "vo_sha256": "cecf7ab13aebfb6eba8f35524f2d26a28895ea2f706743f921332e0f74081b05"
+      },
+      {
+        "case": "linear_scaling",
+        "layer": "direct-SMTCoq-theory-certificate",
+        "round": 0,
+        "timings": {
+          "repeated_vm": {
+            "wall_s": 0.006,
+            "user_s": 0.002,
+            "system_s": 0.004,
+            "evaluations": 1,
+            "cpu_s_per_evaluation": 0.006
+          },
+          "proof_vm": {
+            "wall_s": 0.0,
+            "user_s": 0.0,
+            "system_s": 0.0,
+            "evaluations": 1,
+            "cpu_s_per_evaluation": 0.0
+          },
+          "reflexivity": {
+            "wall_s": 0.0,
+            "user_s": 0.0,
+            "system_s": 0.0,
+            "evaluations": 1,
+            "cpu_s_per_evaluation": 0.0
+          },
+          "qed": {
+            "wall_s": 0.001,
+            "user_s": 0.001,
+            "system_s": 0.0,
+            "evaluations": 1,
+            "cpu_s_per_evaluation": 0.001
+          }
+        },
+        "assumptions": [
+          "PrimInt63.add",
+          "PrimInt63.compare",
+          "PrimInt63.eqb",
+          "PrimInt63.int",
+          "PrimInt63.land",
+          "PrimInt63.leb",
+          "PrimInt63.lor",
+          "PrimInt63.lsl",
+          "PrimInt63.lsr",
+          "PrimInt63.ltb",
+          "PrimInt63.lxor",
+          "PrimInt63.sub",
+          "Uint63Axioms.eqb_correct",
+          "Uint63Axioms.eqb_refl",
+          "Uint63Axioms.ltb_spec",
+          "Uint63Axioms.of_to_Z"
+        ],
+        "source_sha256": "699ebc2faea63a63fef8f59575dce4779c4f63dafbd1389ecd7f39c04f94c204",
+        "vo_sha256": "06d5524b69a67b8878e013dda690a23eea2986db771f4d93c0ef7e3e2cccb38e"
+      },
+      {
+        "case": "checked_shared_primitive",
+        "layer": "complete-direct-theory-source-checker",
+        "round": 0,
+        "timings": {
+          "repeated_vm": {
+            "wall_s": 0.016,
+            "user_s": 0.014,
+            "system_s": 0.002,
+            "evaluations": 1,
+            "cpu_s_per_evaluation": 0.016
+          },
+          "proof_vm": {
+            "wall_s": 0.002,
+            "user_s": 0.002,
+            "system_s": 0.0,
+            "evaluations": 1,
+            "cpu_s_per_evaluation": 0.002
+          },
+          "reflexivity": {
+            "wall_s": 0.0,
+            "user_s": 0.0,
+            "system_s": 0.0,
+            "evaluations": 1,
+            "cpu_s_per_evaluation": 0.0
+          },
+          "qed": {
+            "wall_s": 0.003,
+            "user_s": 0.003,
+            "system_s": 0.0,
+            "evaluations": 1,
+            "cpu_s_per_evaluation": 0.003
+          }
+        },
+        "assumptions": [
+          "PrimInt63.add",
+          "PrimInt63.compare",
+          "PrimInt63.eqb",
+          "PrimInt63.int",
+          "PrimInt63.land",
+          "PrimInt63.leb",
+          "PrimInt63.lor",
+          "PrimInt63.lsl",
+          "PrimInt63.lsr",
+          "PrimInt63.ltb",
+          "PrimInt63.lxor",
+          "PrimInt63.sub",
+          "ProofIrrelevance.proof_irrelevance",
+          "Uint63Axioms.eqb_correct",
+          "Uint63Axioms.eqb_refl",
+          "Uint63Axioms.ltb_spec",
+          "Uint63Axioms.of_to_Z"
+        ],
+        "source_sha256": "e6753a4bbf56bbb27146825e44103d5dcbb5e151bf55e01644b9ea5cf349da63",
+        "vo_sha256": "fa129ef0824c32606697c72ea1b6cfad2d8724364a0469e8d439ea3f09911b03"
+      },
+      {
+        "case": "unused_invalid_primitive_entry_rejected",
+        "layer": "rejection-control",
+        "round": 0,
+        "timings": {
+          "repeated_vm": {
+            "wall_s": 0.051,
+            "user_s": 0.043,
+            "system_s": 0.008,
+            "evaluations": 1,
+            "cpu_s_per_evaluation": 0.051
+          },
+          "proof_vm": {
+            "wall_s": 0.004,
+            "user_s": 0.004,
+            "system_s": 0.0,
+            "evaluations": 1,
+            "cpu_s_per_evaluation": 0.004
+          },
+          "reflexivity": {
+            "wall_s": 0.0,
+            "user_s": 0.0,
+            "system_s": 0.0,
+            "evaluations": 1,
+            "cpu_s_per_evaluation": 0.0
+          },
+          "qed": {
+            "wall_s": 0.005,
+            "user_s": 0.005,
+            "system_s": 0.0,
+            "evaluations": 1,
+            "cpu_s_per_evaluation": 0.005
+          }
+        },
+        "assumptions": [
+          "PrimInt63.add",
+          "PrimInt63.compare",
+          "PrimInt63.eqb",
+          "PrimInt63.int",
+          "PrimInt63.land",
+          "PrimInt63.leb",
+          "PrimInt63.lor",
+          "PrimInt63.lsl",
+          "PrimInt63.lsr",
+          "PrimInt63.ltb",
+          "PrimInt63.lxor",
+          "PrimInt63.sub",
+          "ProofIrrelevance.proof_irrelevance",
+          "Uint63Axioms.eqb_correct",
+          "Uint63Axioms.eqb_refl",
+          "Uint63Axioms.ltb_spec",
+          "Uint63Axioms.of_to_Z"
+        ],
+        "source_sha256": "40fefce21ce062b4a295bdc641228abafbc54bf023f88ac9ec8d8b3c22e834e2",
+        "vo_sha256": "d670f8f628ee21cf1308c72e2d12fc22f6f7c1dc1ed3e5eeb9d0cd6221951939"
+      },
+      {
+        "case": "invalid_primitive_after_conflict_rejected",
+        "layer": "rejection-control",
+        "round": 0,
+        "timings": {
+          "repeated_vm": {
+            "wall_s": 0.02,
+            "user_s": 0.011,
+            "system_s": 0.008,
+            "evaluations": 1,
+            "cpu_s_per_evaluation": 0.019
+          },
+          "proof_vm": {
+            "wall_s": 0.002,
+            "user_s": 0.002,
+            "system_s": 0.0,
+            "evaluations": 1,
+            "cpu_s_per_evaluation": 0.002
+          },
+          "reflexivity": {
+            "wall_s": 0.0,
+            "user_s": 0.0,
+            "system_s": 0.0,
+            "evaluations": 1,
+            "cpu_s_per_evaluation": 0.0
+          },
+          "qed": {
+            "wall_s": 0.005,
+            "user_s": 0.002,
+            "system_s": 0.003,
+            "evaluations": 1,
+            "cpu_s_per_evaluation": 0.005
+          }
+        },
+        "assumptions": [
+          "PrimInt63.add",
+          "PrimInt63.compare",
+          "PrimInt63.eqb",
+          "PrimInt63.int",
+          "PrimInt63.land",
+          "PrimInt63.leb",
+          "PrimInt63.lor",
+          "PrimInt63.lsl",
+          "PrimInt63.lsr",
+          "PrimInt63.ltb",
+          "PrimInt63.lxor",
+          "PrimInt63.sub",
+          "ProofIrrelevance.proof_irrelevance",
+          "Uint63Axioms.eqb_correct",
+          "Uint63Axioms.eqb_refl",
+          "Uint63Axioms.ltb_spec",
+          "Uint63Axioms.of_to_Z"
+        ],
+        "source_sha256": "026985fb48d15c18f3eee9c8a267c18928bbe5e9d999c43ad85c8b97e535a3d9",
+        "vo_sha256": "f56f893eb3c53994e82bcda227834ef27e86eb158113b1129d1fd9aec9180ec6"
+      }
+    ],
+    "git_head": "7431aa439374f15ac02e38fc63be57458a5574c8",
+    "git_status": " M README.md\n M benchmarks/cases.json\n M provenance/upstream.json\n M theories/checker/eunoia/EunoiaMemo.v\n M theories/checker/eunoia/EunoiaMemoTests.v\n M theories/checker/eunoia/EunoiaModelDagTests.v\n M theories/checker/eunoia/dune\n M tools/check-assumptions.py\n?? docs/eunoia/theory-certificates-2026-11-10.md\n?? provenance/extraction-8089e667.json\n?? theories/checker/eunoia/EunoiaTheory.v\n?? theories/checker/eunoia/EunoiaTheoryTests.v\n",
+    "source_hashes": {
+      "theories/checker/MainChecker.v": "6da281a03bf583f5cd90af6bf8f0cd0e1aae48e35b5b25b9cf923aa7c91ea2bd",
+      "theories/checker/fol/Terms.v": "fbcc61aef8f55f96ddfbf0de9fe47cf1a658826e32f1080ebfa60f1ede46a274",
+      "theories/checker/fol/State.v": "19581a114af26e2921f5561fa897a1260a2e510050fce3c2c10a8c9568200a2d",
+      "theories/checker/small-checkers/lia/LIA.v": "0434a02c89ccf8e0d9d07a59673813396688064f92ad636f4375a87524cd7e34",
+      "theories/checker/small-checkers/bva/BVA.v": "675c432f5ac25e07d6c9e55c2c7fa758a69f8a566f14ab6137d81f9b855cdc0d",
+      "theories/checker/small-checkers/cnf/CNF.v": "0033febf177dac938b06b4b8771a6d6fa8a605a8e4db0aff4fb079e8a65621ca",
+      "theories/checker/small-checkers/array/Array.v": "70f9dfdd35711c8dbd7aeddaa5fd3a3a969953f047e528cd93fadeaa910048a0",
+      "theories/checker/small-checkers/euf/EUF.v": "7ed86a83507649d19a3d8eab7ca3acc459e7111498eb3552264a2e94e9492691",
+      "theories/checker/small-checkers/spl/Operators.v": "ed83a127eeed5b4ea59ad61f9f3006be7fddd686e08b3258f224412201279f71",
+      "theories/checker/small-checkers/spl/Arithmetic.v": "5d61a503f228aae0697f00eb3c2e89bd8ba07e21897be2b4f50eb73d5f678a43",
+      "theories/checker/small-checkers/spl/Syntactic.v": "4e4cee6e86220c5836d50db72b801b28bd24e49ffa89254fd9f77530f57f186e",
+      "theories/checker/small-checkers/spl/Assumptions.v": "cc320030ef4b255dd4de30fb3be3c26922e9bfd77fc4d3dfc21dafb47a28d214",
+      "theories/checker/eunoia/EoSyntax.v": "222923b200e1675a127dc71d691510ed096b4e972d4eb2e8d739b5bfe4a7e645",
+      "theories/checker/eunoia/EunoiaSpecializedScoped.v": "bf3c7d3a44f4439096a96e64a3dd6b5594f2a6445694e16949500f179d484af8",
+      "theories/checker/eunoia/EoRuleMemo.v": "09db4e12a400fe9cbf76f25e0e761db8bc449b906616c1412f8d7517cbfca27e",
+      "theories/checker/eunoia/EunoiaBool.v": "9db3174db5e1857e4d19f2b7dc2277ad76e1930beda1abd5fe6e959f4f8cda6b",
+      "theories/checker/eunoia/EunoiaStagedTests.v": "b6be825f9a52b4bf12cae305df586fc4a2da66a3dcef130d36beed5af2f4e9c5",
+      "theories/checker/eunoia/EoDirect.v": "a03d358de517bd5970e269326556ecc09632acbeb0b70142417346a848273170",
+      "theories/checker/eunoia/EoRename.v": "97f7660d3ac7d8f713deb1c42611631a08e035f35e8ab7a9b10ca7827578551a",
+      "theories/checker/eunoia/EunoiaProgramIndexFlat.v": "90560d596c1908750a1bd49e655da1b56f232f31488f15cf5ff4a21fb1319517",
+      "theories/checker/eunoia/EoCheckedMemoTests.v": "25db1bfe36017ef8481ecc52addabca590920f0c054e05b988251c49e995cee1",
+      "theories/checker/eunoia/EunoiaLocalTests.v": "e29e8aed6e33f4f44eca9b51f4eb2799630148121dec95e3ae208d9225225eb2",
+      "theories/checker/eunoia/EunoiaDirect.v": "72fec501f6ef4aafae8d32a80b488c9d2ac642f7b5ef44eae19da0f7c3d473a5",
+      "theories/checker/eunoia/EunoiaBridge.v": "c8cdc011fc4913daa9337e6ab6b590071f27d8f33734dda2e14fd4112d050747",
+      "theories/checker/eunoia/EunoiaStaged.v": "836b68a3568bfa4477330932f3a2aa6869c23e8d6906198fa6cda784d214bd37",
+      "theories/checker/eunoia/EunoiaLia.v": "313ea9f577373ded352ab6523a6a46354af0b8d25335229e44649a5c41224148",
+      "theories/checker/eunoia/EunoiaScopedAdapterTests.v": "5d4041c2b95cc294f1605d93a00598d8942ba80bb86912d0396e5e624f2956d5",
+      "theories/checker/eunoia/EunoiaCheckerTests.v": "7ccf1f08798fba786980802f46d05bf4e34b90065479b2417cbab0afd126cfa3",
+      "theories/checker/eunoia/EunoiaProgramIndexTests.v": "7d50ed7e1aa8eb4a4c08b7705f8bd52de18496cc11cbab4bdbdae72b00d4ac47",
+      "theories/checker/eunoia/CpcDirect.v": "a8159bf9f72f417f85c60a4ce4a8a5b52b6ac5a234ae4f7abd79216bff7c4c40",
+      "theories/checker/eunoia/EunoiaScopedAdapter.v": "79999c5ef222d90b63d1020c12d2871dd359626f4c311c2d128b10b7eec1892f",
+      "theories/checker/eunoia/EoNameIndex.v": "70044f519e048922d78c18382735803dc606093a2b6fe59d58ac97810c4fcaf3",
+      "theories/checker/eunoia/EunoiaScope.v": "f46a777c5a7e022db59839032c33b9e3afa9637b9b8088538132e91061737fb5",
+      "theories/checker/eunoia/EunoiaDivision.v": "a7b9cd954c74a575ad70969aa6bab497b2772e124a29c66cf30e2c86e5a8bf35",
+      "theories/checker/eunoia/EunoiaModelDag.v": "931c504ce31474617d20e5b5d088e6b30558fa59c8717c0ed3721ce4a40ba55e",
+      "theories/checker/eunoia/EunoiaHelperCache.v": "765d79d4fa58a1f972b9eec2d0d4a2262b81a57a9e4d47d731cedc9fdb6f6b5a",
+      "theories/checker/eunoia/EunoiaLocalDirectTests.v": "ed5aa1063fbeebf3367f93cbde97bcc698c787f1d20b80ea2979a9fb45b38753",
+      "theories/checker/eunoia/CpcGenerated.v": "cdac09a8bf7415132dccabe9e18ac4dc06bd9661a34c0212cf6a69d9db86d780",
+      "theories/checker/eunoia/EunoiaModelDagCheck.v": "812caeccf449c58511d861fd6c854825c5805e1f0caa1fd6ab690796353ea5ff",
+      "theories/checker/eunoia/EunoiaLocalDirect.v": "22bb3e8dfe505826f157a21f509204ae2447233ad56160e5cfa8f52cc4e54c37",
+      "theories/checker/eunoia/EunoiaSpecializedTests.v": "fa8454e2664abd67793f6d9e9e180591b14678af1537bb4fe7c9a6157427d985",
+      "theories/checker/eunoia/EunoiaSpecializedFlat.v": "d743e7c908ae126a158c22da955ebeecc0be2dc1b7081f027e09dd2c83cee020",
+      "theories/checker/eunoia/EunoiaTheory.v": "f50e71a55d28f38e347644a1cc654fb4f82b85b5ee071ff7fe10b75ffa4adf82",
+      "theories/checker/eunoia/EoFuelLayers.v": "e4f653c7890d858cb8dba0f377b63117e13214939e4fa29efb62a23988c814af",
+      "theories/checker/eunoia/EoCompiledPrograms.v": "18a9bd06a48a1f5b0cf5287d3b29e4cc80d3d27b68e72684df689265930165b0",
+      "theories/checker/eunoia/EunoiaLocal.v": "69a743ef859e67a47b1da2ef31368356352f66bec22573a04bc67e8cb714fee9",
+      "theories/checker/eunoia/EunoiaDirectScoped.v": "fb484bf9c8f8b47b5ce6499c859e8da8b542e97cd27b9a1ee8fa299c51191c12",
+      "theories/checker/eunoia/EoOrder.v": "3da2c8f89b6a3249294c43351db6487744efc5cc2eaae8f0e28b215106ec6423",
+      "theories/checker/eunoia/CpcStaged.v": "0ad15c2bc6cebb61b4e996562fd86f181b1085f6da166cd0e1593c3fea69d49a",
+      "theories/checker/eunoia/CpcStagedEval.v": "9f82c0be31427374f1c2f795f47413241019e28bdac537436d6bf33624d51cff",
+      "theories/checker/eunoia/EunoiaAdapter.v": "ec70153da127145f91b9abb3d130e4ac72bcc83e697c01e9a78c189898bbc065",
+      "theories/checker/eunoia/EoIndexed.v": "978fdbd1a5aa0b0f0616d4fa2991ad23d05de6147c21eeb0cf05ccc829d07b26",
+      "theories/checker/eunoia/EoStaged.v": "d88588ec932d995938517f7c1dd3541424b52023d68fc871ab9989ee88ac8d6f",
+      "theories/checker/eunoia/EoSpecialized.v": "144fe07892679156294c63f381b75cab843aaa8896c19264759b7eb473e2cecc",
+      "theories/checker/eunoia/EunoiaSpecialized.v": "43d33c453f0afff8e249877bf29343d7be8606313d3a5a6d08c0ae72b2aed71f",
+      "theories/checker/eunoia/CpcIndexed.v": "af751048d257545a89b29de204196868b6478b852c957b21ab26b8e114bc0349",
+      "theories/checker/eunoia/EunoiaMemoTests.v": "56eb4aadd94799c1fe7f5e8b1f34f0e6fba62abe3b9d67ee88e363c15af28697",
+      "theories/checker/eunoia/EunoiaLiaTests.v": "6e38a1ce6c2d9f31be90bee3ad4ee676c63ff643fb8e0c077505f5c2dc40c40e",
+      "theories/checker/eunoia/EunoiaProgramIndexScoped.v": "3d82a5ec745f13048801175d9e76098ed7c1892d72a7e3910651fed5eb32598f",
+      "theories/checker/eunoia/EunoiaModelDagTests.v": "27952045f4edcb1b3f5266b0ff6cdf3a3e7f4aa4f10e88083597759db840375d",
+      "theories/checker/eunoia/CpcStagedRules.v": "10ed01f2f93089dda9b92d63e8a04575f2943f6b14287e796e07fd9f79b49de4",
+      "theories/checker/eunoia/EoCheckedMemo.v": "b3441ab268aee30deed3ab29d730d0c96e77b82672456aa28fd77fe6ef627e42",
+      "theories/checker/eunoia/CpcMemo.v": "07ac1586fedbb2d236ecb8587e7314ff34d2856f23f24da19648463804d36c3c",
+      "theories/checker/eunoia/EoArithmeticTests.v": "bd3e089b07c47da68de5500563c94262496b350f6f272c5225ef3f6f0c51091d",
+      "theories/checker/eunoia/EunoiaMemo.v": "96ecdec67317033737528d8f27ed5a19d4523249f6a0cda24f4537542bba99d3",
+      "theories/checker/eunoia/EunoiaIntegerEmbeddingTests.v": "5abcaecc662d3f9e82e5cfaf38105f05809710971964fbf81bb180a69d491fea",
+      "theories/checker/eunoia/EoMemoCollector.v": "e1a7cb2cf4969fb8c4a5fe9fd2aca02f0f07d334fa9e609349a4381ed242c802",
+      "theories/checker/eunoia/EunoiaTacticTests.v": "41ed1640a1c2dbdc8e1640667ad192bd35d7bcd7d305975ca657cb8ca1ae4edf",
+      "theories/checker/eunoia/EunoiaTheoryTests.v": "1140e53b7780270a13d22f11a0577ddd1c08e6c7a3212f5bf1e916a0120ccd76",
+      "theories/checker/eunoia/EunoiaDirectTests.v": "66d062d20885489864ae92cda8cb955d8f221a1f1146af20288510c081665727",
+      "theories/checker/eunoia/EunoiaTactic.v": "9ff9a60b4943317adaaf0372cfe531cf6613340586521c1650111a77916a6cb8",
+      "theories/checker/eunoia/EunoiaDirectFlat.v": "33b92e865c6fe3948bd4865fe132a11730ee9455f2580eb31e7cd297013168f8",
+      "theories/checker/eunoia/EunoiaChecker.v": "0c74f7e18383c14cbaec3cdc3e6d312fa4d877de679a5a2b9e3fdbfcea2f28d2",
+      "theories/checker/eunoia/EunoiaHelperCacheTests.v": "3a41b2d8007aa75498af66e6f7eae7dcf5e97fedb1aa9af0254c94d127f2c793",
+      "theories/checker/eunoia/EunoiaIntegerEmbedding.v": "9c38ec8bb299485e5498f196b6683f91a823970aa23390c084bb9ed8d861e5c1",
+      "theories/checker/eunoia/EunoiaUf.v": "0e8fd678976976936f533af21a337e44545736b8e67e779b764d0b1be7150bbc",
+      "theories/checker/eunoia/CpcMemoCollector.v": "66b3184a4c5475b92309050bd3a28e1f9f9767453befac8900c31c4e8e93fac1",
+      "theories/checker/eunoia/EunoiaBridgeTests.v": "ec56f3e81bfa98b4c036e408db9281cc59e08dd7edafb54d8a87b505cbc85e50",
+      "theories/checker/eunoia/EoModelDagCache.v": "7738b905093db29d1f3291bc8eba56ad4073f40daea34f1cb49f538938eff1b8",
+      "theories/checker/eunoia/CpcDirectRules.v": "51b7ecc70a6c924743743c04940bb38f7e24d0e487f56e2cfdabfec0624f375b",
+      "theories/checker/eunoia/CpcDirectEntry.v": "c545a912a1033f87f46fa9319a1a4ff1150e1b4b4a71d2e8e6f1bf9403c4590a",
+      "theories/checker/eunoia/EoNameIndexTests.v": "8c8e13853fc26ba5747cd9f5e5ca843b67d098411aaa544aa34bb0071e806bab",
+      "theories/checker/eunoia/EunoiaScopeTests.v": "1e7e69fe6517cf718bd455b023695884f0f43ece09d39325e097f852b5b846eb",
+      "theories/checker/eunoia/CpcDirectEval.v": "0e4e05dc80f51b1f771c61b1b54db416b07e7dc16b034fe2c768ec585802a994",
+      "theories/checker/eunoia/CpcSpecialized.v": "92a36c8372b06425237d19ddb78604fe914f7ed03e8ff2478d48edabbff7b5d9",
+      "theories/checker/eunoia/EoRuntime.v": "09a893b95d1fecf0fafa211072117ae6c704933fc1e50e3c6db8429ba59d44f6",
+      "theories/checker/eunoia/EunoiaContextTests.v": "62c6ed7e0947248bf9843fb75d0bdec2653710b0fd985008a9136cd93d6e70fc",
+      "theories/checker/eunoia/EoArithmetic.v": "c6d5a1a2b8c737da219a20b23cf6a415fe6d6a8660c458df2b521df9f4695017",
+      "theories/checker/eunoia/EunoiaProgramIndex.v": "3d87b46af3297ad35e976ebb0c3ab83ee1bee1c2e23e16847c7137fa793ec70a",
+      "theories/checker/eunoia/EunoiaBoolTests.v": "b9f29e34b9048ed2f93b62d1edcc350cc24e77e91c8ef120ffd8863b83237d45",
+      "theories/structures/CompDecInstances.v": "a63a1fd6ef4e9eb81b7cc564a21984a883655dbc7c04472dd6376d2f448a0edf",
+      "theories/structures/FArray.v": "e7969f3c3a8964ed6757a2915585407be5ddf351ddaa3f65453439d2255950cc",
+      "theories/structures/BVList.v": "3657ae168c31be4d59496c05886377b86d8c02a7be501e2a9db291c3325ed45e",
+      "theories/utils/PArray.v": "b03dd95f0988b7dc0519b12946adfa26f039959276941d032f0d129ce3861f38",
+      "theories/utils/CompDec.v": "c2459af76e67bec80ce51135b3a04e67d1b7922335e522057acb7828fb5f285a",
+      "theories/utils/Misc.v": "76d016dd29b29742c8d5d222667600e46538fd69cad8e3a096df4fe657aa0fac",
+      "benchmarks/helper_cache.py": "b52cb043eb0724f91ed077881bb9288c1a9d01d19631bc522630e235540a8fb5",
+      "benchmarks/direct_helpers.py": "2ca208a39764d3381270294126fdcd87b4bdc22ee0a4e0deb0b413f1b5a65d17",
+      "benchmarks/run.py": "c63078b66e39a84df8fdf6823d76e1dd3ca4fea60e19c6192012737bf3f1ee96",
+      "benchmarks/test_bench.py": "089c2f69d64e0f7d688469139ef5629dc1ad4a3eeb8259e0dc8ea1d37c6caa94",
+      "benchmarks/report.py": "45be356ecb252e98ebd8c6f3585f24abbfe94ef93d58c2bb34ff1b29bf69fbc5",
+      "benchmarks/cases.json": "bc26a870ca2b0154dc64bd44053af9b0c55ecb81d62b66a147efa7d2f0bd286f"
+    },
+    "cpu_max": "400000 100000",
+    "version": "The Rocq Prover, version 9.2\ncompiled with OCaml 4.14.2",
+    "kernel_checked_results": 6,
+    "medians_cpu_s": {
+      "transitivity": {
+        "repeated_vm": 0.008,
+        "proof_vm": 0.0,
+        "reflexivity": 0.0,
+        "qed": 0.001
+      },
+      "congruence": {
+        "repeated_vm": 0.003,
+        "proof_vm": 0.0,
+        "reflexivity": 0.0,
+        "qed": 0.0
+      },
+      "linear_scaling": {
+        "repeated_vm": 0.006,
+        "proof_vm": 0.0,
+        "reflexivity": 0.0,
+        "qed": 0.001
+      },
+      "checked_shared_primitive": {
+        "repeated_vm": 0.016,
+        "proof_vm": 0.002,
+        "reflexivity": 0.0,
+        "qed": 0.003
+      },
+      "unused_invalid_primitive_entry_rejected": {
+        "repeated_vm": 0.051,
+        "proof_vm": 0.004,
+        "reflexivity": 0.0,
+        "qed": 0.005
+      },
+      "invalid_primitive_after_conflict_rejected": {
+        "repeated_vm": 0.019,
+        "proof_vm": 0.002,
+        "reflexivity": 0.0,
+        "qed": 0.005
+      }
+    }
+  },
+  "provenance_sha256": "d3a862e2159d92fc2b72e688302cbd6d96f0b428682379cfbb7c6a2c6928fbeb",
+  "tooling_sha256": {
+    "tools/check-assumptions.py": "deaa1658d901fcc1bc465df80b714532c9eb036da7f2a5361c935a4d69aa16ad",
+    "benchmarks/run.py": "c63078b66e39a84df8fdf6823d76e1dd3ca4fea60e19c6192012737bf3f1ee96",
+    "benchmarks/cases.json": "bc26a870ca2b0154dc64bd44053af9b0c55ecb81d62b66a147efa7d2f0bd286f"
+  }
+}
