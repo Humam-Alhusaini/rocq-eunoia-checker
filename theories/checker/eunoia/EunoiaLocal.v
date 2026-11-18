@@ -242,6 +242,14 @@ Section Context.
       Some (Plan [id1; id2] pos [l] (@Euf_Checker.BBOp _ _ _ _ pos id1 id2 l))
     | Checker_Ext.BBEq pos id1 id2 l =>
       Some (Plan [id1; id2] pos [l] (@Euf_Checker.BBEq _ _ _ _ pos id1 id2 l))
+    | Checker_Ext.BBConcat pos id1 id2 l =>
+      Some (Plan [id1; id2] pos [l] (@Euf_Checker.BBConcat _ _ _ _ pos id1 id2 l))
+    | Checker_Ext.BBExtract pos id l =>
+      Some (Plan [id] pos [l] (@Euf_Checker.BBExtract _ _ _ _ pos id l))
+    | Checker_Ext.BBZextend pos id l =>
+      Some (Plan [id] pos [l] (@Euf_Checker.BBZextend _ _ _ _ pos id l))
+    | Checker_Ext.BBSextend pos id l =>
+      Some (Plan [id] pos [l] (@Euf_Checker.BBSextend _ _ _ _ pos id l))
     | _ => None
     end.
 

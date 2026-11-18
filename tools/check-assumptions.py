@@ -84,12 +84,12 @@ def main():
         command += ["--import", prefix]
         for theorem in theorems:
             command += ["--theorem", prefix + "." + module + "." + theorem]
-    for test_module in ("EunoiaBitvectorTests", "EunoiaArrayTests", "EunoiaModelDagTests", "EunoiaLocalDirectTests", "EunoiaTheoryTests", "EunoiaCertificateTests"):
+    for test_module in ("EunoiaBitvectorStructureTests", "EunoiaBitvectorTests", "EunoiaArrayTests", "EunoiaModelDagTests", "EunoiaLocalDirectTests", "EunoiaTheoryTests", "EunoiaCertificateTests"):
         module = "SMTCoq.checker.eunoia." + test_module
         command += ["--import", module]
         for theorem in re.findall(r"^\s*(?:Example|Theorem|Lemma)\s+(\w+)",
                 (ROOT / "theories/checker/eunoia" / (test_module + ".v")).read_text(), re.M):
-            command += ["--theorem", module + ("." + test_module if test_module in ("EunoiaBitvectorTests", "EunoiaArrayTests", "EunoiaLocalDirectTests", "EunoiaTheoryTests", "EunoiaCertificateTests") else "") + "." + theorem]
+            command += ["--theorem", module + ("." + test_module if test_module in ("EunoiaBitvectorStructureTests", "EunoiaBitvectorTests", "EunoiaArrayTests", "EunoiaLocalDirectTests", "EunoiaTheoryTests", "EunoiaCertificateTests") else "") + "." + theorem]
     module = "SMTCoq.checker.eunoia.CpcSpecialized"
     command += ["--import", module]
     command += ["--theorem", module + ".CpcSpecialized.rules_correct"]
